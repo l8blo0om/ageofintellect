@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Client Dashboard — The Age of Intellect</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold:       #B8954A;
+  --gold-light: #D4B373;
+  --gold-deep:  #8E6F30;
+  --gold-pale:  rgba(184,149,74,0.08);
+  --cream:      #FBF8F2;
+  --cream-deep: #F4EEDF;
+  --ink:        #2A2520;
+  --ink-soft:   #5C534A;
+  --rule:       rgba(184,149,74,0.22);
+  --rule-soft:  rgba(184,149,74,0.10);
+  --sidebar-w:  260px;
+  --green:      #4a8c5c;
+  --amber:      #c9862a;
+  --red:        #9b3a3a;
+  --blue:       #3a5f8c;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--cream-deep);
+  color: var(--ink);
+  font-family: 'Inter', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+/* ── LOGIN SCREEN ── */
+#loginScreen {
+  position: fixed; inset: 0;
+  background: var(--ink);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 9999;
+  transition: opacity 0.6s ease;
+}
+#loginScreen.hidden { opacity: 0; pointer-events: none; }
+
+.login-box {
+  width: 100%; max-width: 420px;
+  padding: 60px 48px;
+  border: 1px solid var(--rule);
+  text-align: center;
+}
+.login-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 48px; font-weight: 300;
+  color: var(--gold); letter-spacing: -0.02em;
+  margin-bottom: 6px;
+}
+.login-brand {
+  font-family: 'Inter', sans-serif;
+  font-size: 9px; font-weight: 600;
+  letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--gold-light); opacity: 0.7;
+  margin-bottom: 48px;
+}
+.login-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px; font-weight: 400;
+  color: var(--cream); margin-bottom: 32px;
+}
+.login-field {
+  margin-bottom: 16px; text-align: left;
+}
+.login-label {
+  font-size: 9px; font-weight: 600;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--gold); display: block; margin-bottom: 8px;
+}
+.login-input {
+  width: 100%;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(184,149,74,0.25);
+  color: var(--cream);
+  font-family: 'Inter', sans-serif;
+  font-size: 14px; padding: 13px 16px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+.login-input:focus { border-color: var(--gold); }
+.login-input::placeholder { color: rgba(255,255,255,0.2); }
+.login-btn {
+  width: 100%; margin-top: 8px;
+  background: var(--gold); border: none;
+  color: var(--ink);
+  font-family: 'Inter', sans-serif;
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 0.28em; text-transform: uppercase;
+  padding: 16px; cursor: pointer;
+  transition: background 0.3s;
+}
+.login-btn:hover { background: var(--gold-light); }
+.login-error {
+  font-size: 11px; color: #c97070;
+  margin-top: 12px; display: none;
+  letter-spacing: 0.05em;
+}
+.login-hint {
+  font-size: 10px; color: rgba(255,255,255,0.2);
+  margin-top: 28px; letter-spacing: 0.05em;
+  font-style: italic;
+}
+
+/* ── APP SHELL ── */
+#app { display: none; min-height: 100vh; }
+#app.visible { display: flex; }
+
+/* ── SIDEBAR ── */
+.sidebar {
+  width: var(--sidebar-w);
+  min-height: 100vh;
+  background: var(--ink);
+  display: flex; flex-direction: column;
+  position: fixed; top: 0; left: 0; bottom: 0;
+  z-index: 100;
+  border-right: 1px solid rgba(184,149,74,0.15);
+}
+.sidebar-logo {
+  padding: 32px 28px 24px;
+  border-bottom: 1px solid rgba(184,149,74,0.12);
+}
+.sidebar-logo-mark {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 26px; font-weight: 400;
+  color: var(--gold); letter-spacing: 0.04em;
+}
+.sidebar-logo-sub {
+  font-size: 8px; font-weight: 600;
+  letter-spacing: 0.28em; text-transform: uppercase;
+  color: rgba(212,179,115,0.45); margin-top: 3px;
+}
+
+.sidebar-client {
+  padding: 20px 28px;
+  border-bottom: 1px solid rgba(184,149,74,0.12);
+  display: flex; align-items: center; gap: 12px;
+}
+.client-avatar {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: var(--gold-deep);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 16px; color: var(--cream);
+  font-weight: 500; flex-shrink: 0;
+}
+.client-name {
+  font-size: 13px; font-weight: 500;
+  color: var(--cream); letter-spacing: 0.01em;
+}
+.client-status {
+  font-size: 9px; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--gold);
+  margin-top: 2px;
+}
+
+.sidebar-nav { flex: 1; padding: 16px 0; }
+.nav-section-label {
+  font-size: 8px; font-weight: 700;
+  letter-spacing: 0.3em; text-transform: uppercase;
+  color: rgba(184,149,74,0.4);
+  padding: 16px 28px 8px;
+}
+.nav-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 11px 28px;
+  font-size: 12px; font-weight: 500;
+  letter-spacing: 0.04em;
+  color: rgba(251,248,242,0.5);
+  cursor: pointer;
+  transition: color 0.2s, background 0.2s;
+  text-decoration: none;
+  border-left: 2px solid transparent;
+  margin-left: -1px;
+}
+.nav-item:hover { color: var(--cream); background: rgba(184,149,74,0.06); }
+.nav-item.active {
+  color: var(--gold-light);
+  background: rgba(184,149,74,0.1);
+  border-left-color: var(--gold);
+}
+.nav-icon { font-size: 15px; width: 20px; text-align: center; }
+.nav-badge {
+  margin-left: auto;
+  background: var(--gold);
+  color: var(--ink);
+  font-size: 9px; font-weight: 700;
+  padding: 2px 7px; border-radius: 10px;
+}
+
+.sidebar-footer {
+  padding: 20px 28px;
+  border-top: 1px solid rgba(184,149,74,0.12);
+}
+.logout-btn {
+  font-size: 10px; font-weight: 600;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: rgba(255,255,255,0.25);
+  cursor: pointer; background: none; border: none;
+  transition: color 0.3s;
+}
+.logout-btn:hover { color: rgba(255,255,255,0.5); }
+
+/* ── MAIN CONTENT ── */
+.main {
+  margin-left: var(--sidebar-w);
+  flex: 1; min-height: 100vh;
+  display: flex; flex-direction: column;
+}
+
+.topbar {
+  background: rgba(251,248,242,0.9);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--rule-soft);
+  padding: 18px 40px;
+  display: flex; align-items: center; justify-content: space-between;
+  position: sticky; top: 0; z-index: 50;
+}
+.topbar-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px; font-weight: 500;
+  color: var(--gold-deep); letter-spacing: 0.04em;
+}
+.topbar-date {
+  font-size: 11px; letter-spacing: 0.16em;
+  color: var(--ink-soft); text-transform: uppercase;
+}
+
+.content { padding: 40px; flex: 1; }
+
+/* ── PANELS ── */
+.panel { display: none; }
+.panel.active { display: block; }
+
+/* ── STAT STRIP ── */
+.stat-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 36px;
+}
+.stat-card {
+  background: var(--cream);
+  border: 1px solid var(--rule-soft);
+  padding: 24px 22px;
+  position: relative;
+  overflow: hidden;
+}
+.stat-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0;
+  width: 100%; height: 2px;
+  background: var(--gold); opacity: 0.4;
+}
+.stat-label {
+  font-size: 9px; font-weight: 600;
+  letter-spacing: 0.24em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 10px;
+}
+.stat-value {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 38px; font-weight: 400;
+  color: var(--gold-deep); line-height: 1;
+}
+.stat-sub {
+  font-size: 10px; color: var(--ink-soft);
+  letter-spacing: 0.1em; margin-top: 6px;
+}
+
+/* ── SECTION HEADERS ── */
+.s-header {
+  display: flex; align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+.s-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px; font-weight: 500;
+  color: var(--gold-deep); letter-spacing: 0.04em;
+}
+.s-link {
+  font-size: 10px; font-weight: 600;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--gold); text-decoration: none;
+  cursor: pointer;
+}
+.s-link:hover { color: var(--gold-deep); }
+
+/* ── PROJECT CARDS ── */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 16px;
+  margin-bottom: 40px;
+}
+.project-card {
+  background: var(--cream);
+  border: 1px solid var(--rule-soft);
+  padding: 24px 22px 20px;
+  transition: box-shadow 0.3s;
+}
+.project-card:hover { box-shadow: 0 8px 24px -8px rgba(184,149,74,0.15); }
+.project-top {
+  display: flex; align-items: flex-start;
+  justify-content: space-between; margin-bottom: 14px;
+}
+.project-type {
+  font-size: 9px; font-weight: 600;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--gold);
+}
+.status-pill {
+  font-size: 8.5px; font-weight: 700;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  padding: 4px 10px; border-radius: 2px;
+}
+.status-pill.active    { background: rgba(74,140,92,0.12);  color: var(--green); }
+.status-pill.review    { background: rgba(201,134,42,0.12); color: var(--amber); }
+.status-pill.complete  { background: rgba(184,149,74,0.12); color: var(--gold-deep); }
+.status-pill.pending   { background: rgba(60,95,140,0.12);  color: var(--blue); }
+
+.project-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 19px; font-weight: 500;
+  color: var(--ink); margin-bottom: 6px;
+  letter-spacing: 0.02em;
+}
+.project-desc {
+  font-size: 12px; color: var(--ink-soft);
+  line-height: 1.6; margin-bottom: 16px;
+}
+.progress-label {
+  display: flex; justify-content: space-between;
+  font-size: 9px; font-weight: 600;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--ink-soft); margin-bottom: 6px;
+}
+.progress-bar {
+  height: 2px; background: var(--rule-soft);
+  margin-bottom: 16px;
+}
+.progress-fill {
+  height: 100%; background: var(--gold);
+  transition: width 1s ease;
+}
+.project-meta {
+  display: flex; gap: 20px;
+  font-size: 10px; color: var(--ink-soft);
+  letter-spacing: 0.06em;
+}
+.project-meta span { display: flex; align-items: center; gap: 4px; }
+
+/* ── DELIVERABLES TABLE ── */
+.table-wrap {
+  background: var(--cream);
+  border: 1px solid var(--rule-soft);
+  margin-bottom: 36px;
+  overflow: hidden;
+}
+.d-table { width: 100%; border-collapse: collapse; }
+.d-table th {
+  font-size: 9px; font-weight: 700;
+  letter-spacing: 0.26em; text-transform: uppercase;
+  color: var(--gold); padding: 14px 20px;
+  text-align: left;
+  background: var(--cream-deep);
+  border-bottom: 1px solid var(--rule-soft);
+}
+.d-table td {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--rule-soft);
+  font-size: 13px; color: var(--ink);
+  vertical-align: middle;
+}
+.d-table tr:last-child td { border-bottom: none; }
+.d-table tr:hover td { background: var(--gold-pale); }
+.file-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 15px; font-weight: 500;
+  color: var(--ink); letter-spacing: 0.02em;
+}
+.file-size { font-size: 11px; color: var(--ink-soft); margin-top: 2px; }
+.file-type-badge {
+  font-size: 8px; font-weight: 700;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  padding: 4px 9px;
+  background: var(--cream-deep);
+  border: 1px solid var(--rule);
+  color: var(--gold-deep);
+  white-space: nowrap;
+}
+.dl-btn {
+  font-family: 'Inter', sans-serif;
+  font-size: 9px; font-weight: 700;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--gold-deep);
+  background: none;
+  border: 1px solid var(--rule);
+  padding: 8px 16px; cursor: pointer;
+  transition: all 0.3s;
+  white-space: nowrap;
+  text-decoration: none; display: inline-block;
+}
+.dl-btn:hover { background: var(--gold); color: var(--cream); border-color: var(--gold); }
+
+/* ── INVOICES ── */
+.invoice-row { cursor: pointer; }
+.inv-amount {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 17px; font-weight: 500;
+  color: var(--gold-deep);
+}
+.inv-status { display: flex; align-items: center; gap: 6px; }
+.inv-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+}
+.inv-dot.paid    { background: var(--green); }
+.inv-dot.pending { background: var(--amber); }
+.inv-dot.overdue { background: var(--red); }
+.inv-status-text { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; }
+.inv-status-text.paid    { color: var(--green); }
+.inv-status-text.pending { color: var(--amber); }
+.inv-status-text.overdue { color: var(--red); }
+
+/* ── MESSAGES ── */
+.message-list { display: flex; flex-direction: column; gap: 12px; }
+.message-card {
+  background: var(--cream);
+  border: 1px solid var(--rule-soft);
+  padding: 20px 22px;
+  display: flex; gap: 16px;
+  align-items: flex-start;
+}
+.message-card.unread { border-left: 2px solid var(--gold); }
+.msg-avatar {
+  width: 34px; height: 34px; border-radius: 50%;
+  background: var(--gold-deep);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 14px; color: var(--cream);
+  flex-shrink: 0;
+}
+.msg-body { flex: 1; }
+.msg-from {
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--gold-deep); margin-bottom: 4px;
+}
+.msg-preview {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 15px; font-weight: 300;
+  color: var(--ink); line-height: 1.5;
+  font-style: italic;
+}
+.msg-time {
+  font-size: 10px; color: var(--ink-soft);
+  letter-spacing: 0.1em; white-space: nowrap;
+}
+.msg-unread-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--gold); flex-shrink: 0; margin-top: 6px;
+}
+
+/* ── BOOK NEW SERVICE ── */
+.book-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 12px;
+  margin-bottom: 40px;
+}
+.book-card {
+  background: var(--cream);
+  border: 1px solid var(--rule-soft);
+  padding: 28px 22px;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-align: center;
+}
+.book-card:hover {
+  border-color: var(--gold);
+  box-shadow: 0 8px 24px -8px rgba(184,149,74,0.2);
+}
+.book-icon { font-size: 28px; margin-bottom: 12px; }
+.book-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 17px; font-weight: 500;
+  color: var(--gold-deep); margin-bottom: 6px;
+}
+.book-price {
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 0.14em;
+  color: var(--gold);
+}
+
+/* ── EMPTY STATE ── */
+.empty-state {
+  text-align: center; padding: 60px 24px;
+  color: var(--ink-soft);
+}
+.empty-mark {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 60px; color: var(--rule); margin-bottom: 16px;
+}
+.empty-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px; font-style: italic;
+  color: var(--ink-soft);
+}
+
+/* ── MOBILE ── */
+@media (max-width: 900px) {
+  .sidebar { transform: translateX(-100%); transition: transform 0.3s; }
+  .sidebar.open { transform: translateX(0); }
+  .main { margin-left: 0; }
+  .stat-strip { grid-template-columns: repeat(2, 1fr); }
+  .content { padding: 24px 16px; }
+  .topbar { padding: 16px 20px; }
+  .topbar-date { display: none; }
+  .mobile-menu-btn {
+    display: flex; align-items: center; justify-content: center;
+    width: 36px; height: 36px;
+    background: none; border: 1px solid var(--rule);
+    font-size: 18px; cursor: pointer; color: var(--ink);
+  }
+}
+@media (min-width: 901px) {
+  .mobile-menu-btn { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════ LOGIN ══════════════════════════════════ -->
+<div id="loginScreen">
+  <div class="login-box">
+    <div class="login-logo">AI</div>
+    <div class="login-brand">The Age of Intellect · Client Portal</div>
+    <div class="login-title">Welcome back.</div>
+    <form onsubmit="doLogin(event)">
+      <div class="login-field">
+        <label class="login-label">Email</label>
+        <input class="login-input" type="email" id="loginEmail" placeholder="your@email.com" required>
+      </div>
+      <div class="login-field">
+        <label class="login-label">Access Code</label>
+        <input class="login-input" type="password" id="loginPass" placeholder="••••••" required>
+      </div>
+      <button type="submit" class="login-btn">Enter Dashboard</button>
+      <div class="login-error" id="loginError">Invalid credentials. Try again.</div>
+    </form>
+    <div class="login-hint">Demo: any email · code: <strong style="color:rgba(255,255,255,0.4)">1936</strong></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════ APP ══════════════════════════════════ -->
+<div id="app">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <div class="sidebar-logo-mark">The Age of Intellect</div>
+      <div class="sidebar-logo-sub">Client Portal</div>
+    </div>
+
+    <div class="sidebar-client">
+      <div class="client-avatar" id="clientInitial">J</div>
+      <div>
+        <div class="client-name" id="clientName">Loading...</div>
+        <div class="client-status">Active Client</div>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Overview</div>
+      <a class="nav-item active" onclick="showPanel('overview')">
+        <span class="nav-icon">◈</span> Dashboard
+      </a>
+      <a class="nav-item" onclick="showPanel('projects')">
+        <span class="nav-icon">◉</span> My Projects
+        <span class="nav-badge">3</span>
+      </a>
+      <a class="nav-item" onclick="showPanel('deliverables')">
+        <span class="nav-icon">↓</span> Deliverables
+        <span class="nav-badge">2</span>
+      </a>
+
+      <div class="nav-section-label">Billing</div>
+      <a class="nav-item" onclick="showPanel('invoices')">
+        <span class="nav-icon">◻</span> Invoices
+      </a>
+
+      <div class="nav-section-label">Work With Us</div>
+      <a class="nav-item" onclick="showPanel('book')">
+        <span class="nav-icon">✦</span> Book a Service
+      </a>
+      <a class="nav-item" onclick="showPanel('messages')">
+        <span class="nav-icon">✉</span> Messages
+        <span class="nav-badge">1</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <button class="logout-btn" onclick="doLogout()">← Sign Out</button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main">
+    <div class="topbar">
+      <div style="display:flex;align-items:center;gap:16px;">
+        <button class="mobile-menu-btn" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
+        <div class="topbar-title" id="panelTitle">Dashboard</div>
+      </div>
+      <div class="topbar-date" id="topbarDate"></div>
+    </div>
+
+    <div class="content">
+
+      <!-- ── OVERVIEW ── -->
+      <div class="panel active" id="panel-overview">
+
+        <div class="stat-strip">
+          <div class="stat-card">
+            <div class="stat-label">Active Projects</div>
+            <div class="stat-value">3</div>
+            <div class="stat-sub">2 in production</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Deliverables Ready</div>
+            <div class="stat-value">2</div>
+            <div class="stat-sub">Available to download</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Total Invested</div>
+            <div class="stat-value">$1,950</div>
+            <div class="stat-sub">Across 3 services</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Balance Due</div>
+            <div class="stat-value">$500</div>
+            <div class="stat-sub" style="color:var(--amber)">Due May 20</div>
+          </div>
+        </div>
+
+        <div class="s-header">
+          <div class="s-title">Active Projects</div>
+          <span class="s-link" onclick="showPanel('projects')">View All →</span>
+        </div>
+
+        <div class="projects-grid">
+          <div class="project-card">
+            <div class="project-top">
+              <div class="project-type">Music Production</div>
+              <div class="status-pill active">In Production</div>
+            </div>
+            <div class="project-name">Full Production — "Gravity"</div>
+            <div class="project-desc">Complete song with vocals, instrumentals, and mastering. Stems + all formats on delivery.</div>
+            <div class="progress-label"><span>Progress</span><span>65%</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:65%"></div></div>
+            <div class="project-meta">
+              <span>📅 Due Jun 3</span>
+              <span>🎵 Full Production · $500</span>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <div class="project-top">
+              <div class="project-type">Video Content</div>
+              <div class="status-pill review">In Review</div>
+            </div>
+            <div class="project-name">Short Form Bundle — 5 Reels</div>
+            <div class="project-desc">5 × 59-second videos with effects and platform optimization. First draft ready for review.</div>
+            <div class="progress-label"><span>Progress</span><span>90%</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:90%"></div></div>
+            <div class="project-meta">
+              <span>📅 Due May 22</span>
+              <span>🎥 Short Form Bundle · $450</span>
+            </div>
+          </div>
+
+          <div class="project-card">
+            <div class="project-top">
+              <div class="project-type">AI Visual Design</div>
+              <div class="status-pill complete">Complete</div>
+            </div>
+            <div class="project-name">Visual Identity Kit</div>
+            <div class="project-desc">5 cohesive AI images, branded color palette, and style guide. All platform formats delivered.</div>
+            <div class="progress-label"><span>Progress</span><span>100%</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:100%;background:var(--green)"></div></div>
+            <div class="project-meta">
+              <span>✅ Delivered May 1</span>
+              <span>🎨 Visual Identity · $300</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="s-header">
+          <div class="s-title">Ready to Download</div>
+          <span class="s-link" onclick="showPanel('deliverables')">View All →</span>
+        </div>
+        <div class="table-wrap">
+          <table class="d-table">
+            <thead>
+              <tr><th>File</th><th>Project</th><th>Type</th><th>Date</th><th></th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <div class="file-name">Visual_Identity_Kit_FINAL.zip</div>
+                  <div class="file-size">142 MB</div>
+                </td>
+                <td>Visual Identity Kit</td>
+                <td><span class="file-type-badge">ZIP</span></td>
+                <td>May 1, 2026</td>
+                <td><a class="dl-btn" href="mailto:bishop.niia@gmail.com?subject=File Request: Visual Identity Kit">Request File →</a></td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="file-name">StyleGuide_AOI.pdf</div>
+                  <div class="file-size">4.2 MB</div>
+                </td>
+                <td>Visual Identity Kit</td>
+                <td><span class="file-type-badge">PDF</span></td>
+                <td>May 1, 2026</td>
+                <td><a class="dl-btn" href="mailto:bishop.niia@gmail.com?subject=File Request: Style Guide PDF">Request File →</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div><!-- /overview -->
+
+      <!-- ── PROJECTS ── -->
+      <div class="panel" id="panel-projects">
+        <div class="projects-grid">
+          <div class="project-card">
+            <div class="project-top">
+              <div class="project-type">Music Production</div>
+              <div class="status-pill active">In Production</div>
+            </div>
+            <div class="project-name">Full Production — "Gravity"</div>
+            <div class="project-desc">Complete song with vocals, instrumentals, and mastering. Stems + all formats on delivery.</div>
+            <div class="progress-label"><span>Progress</span><span>65%</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:65%"></div></div>
+            <div class="project-meta"><span>📅 Due Jun 3</span><span>$500</span></div>
+          </div>
+          <div class="project-card">
+            <div class="project-top">
+              <div class="project-type">Video Content</div>
+              <div class="status-pill review">In Review</div>
+            </div>
+            <div class="project-name">Short Form Bundle — 5 Reels</div>
+            <div class="project-desc">5 × 59-second videos with effects and platform optimization. First draft ready for review.</div>
+            <div class="progress-label"><span>Progress</span><span>90%</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:90%"></div></div>
+            <div class="project-meta"><span>📅 Due May 22</span><span>$450</span></div>
+          </div>
+          <div class="project-card">
+            <div class="project-top">
+              <div class="project-type">AI Visual Design</div>
+              <div class="status-pill complete">Complete</div>
+            </div>
+            <div class="project-name">Visual Identity Kit</div>
+            <div class="project-desc">5 cohesive AI images, branded color palette, and style guide. All platform formats delivered.</div>
+            <div class="progress-label"><span>Progress</span><span>100%</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:100%;background:var(--green)"></div></div>
+            <div class="project-meta"><span>✅ Delivered May 1</span><span>$300</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── DELIVERABLES ── -->
+      <div class="panel" id="panel-deliverables">
+        <div class="table-wrap">
+          <table class="d-table">
+            <thead>
+              <tr><th>File</th><th>Project</th><th>Type</th><th>Delivered</th><th></th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <div class="file-name">Visual_Identity_Kit_FINAL.zip</div>
+                  <div class="file-size">142 MB · 5 images + assets</div>
+                </td>
+                <td>Visual Identity Kit</td>
+                <td><span class="file-type-badge">ZIP</span></td>
+                <td>May 1, 2026</td>
+                <td><a class="dl-btn" href="mailto:bishop.niia@gmail.com?subject=File Request: Visual Identity Kit">Request File →</a></td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="file-name">StyleGuide_AOI.pdf</div>
+                  <div class="file-size">4.2 MB · Brand guide</div>
+                </td>
+                <td>Visual Identity Kit</td>
+                <td><span class="file-type-badge">PDF</span></td>
+                <td>May 1, 2026</td>
+                <td><a class="dl-btn" href="mailto:bishop.niia@gmail.com?subject=File Request: Style Guide PDF">Request File →</a></td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="file-name">Reels_Draft_v1.mp4</div>
+                  <div class="file-size">Awaiting approval</div>
+                </td>
+                <td>Short Form Bundle</td>
+                <td><span class="file-type-badge">MP4</span></td>
+                <td>Pending review</td>
+                <td><a class="dl-btn" href="mailto:bishop.niia@gmail.com?subject=Feedback: Short Form Bundle Draft">Send Feedback →</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ── INVOICES ── -->
+      <div class="panel" id="panel-invoices">
+        <div class="stat-strip" style="grid-template-columns:repeat(3,1fr);margin-bottom:28px;">
+          <div class="stat-card">
+            <div class="stat-label">Total Billed</div>
+            <div class="stat-value">$1,950</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Paid</div>
+            <div class="stat-value" style="color:var(--green)">$1,450</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Balance Due</div>
+            <div class="stat-value" style="color:var(--amber)">$500</div>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table class="d-table">
+            <thead>
+              <tr><th>Invoice</th><th>Service</th><th>Date</th><th>Amount</th><th>Status</th><th></th></tr>
+            </thead>
+            <tbody>
+              <tr class="invoice-row">
+                <td><strong style="font-size:12px;letter-spacing:0.1em;">#AOI-004</strong></td>
+                <td>Full Production — "Gravity"</td>
+                <td>May 6, 2026</td>
+                <td><div class="inv-amount">$500</div></td>
+                <td>
+                  <div class="inv-status">
+                    <div class="inv-dot pending"></div>
+                    <span class="inv-status-text pending">Due May 20</span>
+                  </div>
+                </td>
+                <td><a class="dl-btn" href="mailto:bishop.niia@gmail.com?subject=Invoice %23AOI-004 — Payment">Pay Now →</a></td>
+              </tr>
+              <tr class="invoice-row">
+                <td><strong style="font-size:12px;letter-spacing:0.1em;">#AOI-003</strong></td>
+                <td>Short Form Bundle</td>
+                <td>Apr 28, 2026</td>
+                <td><div class="inv-amount">$450</div></td>
+                <td>
+                  <div class="inv-status">
+                    <div class="inv-dot paid"></div>
+                    <span class="inv-status-text paid">Paid</span>
+                  </div>
+                </td>
+                <td><a class="dl-btn" href="mailto:bishop.niia@gmail.com?subject=Receipt %23AOI-003">Receipt →</a></td>
+              </tr>
+              <tr class="invoice-row">
+                <td><strong style="font-size:12px;letter-spacing:0.1em;">#AOI-002</strong></td>
+                <td>Visual Identity Kit</td>
+                <td>Apr 10, 2026</td>
+                <td><div class="inv-amount">$300</div></td>
+                <td>
+                  <div class="inv-status">
+                    <div class="inv-dot paid"></div>
+                    <span class="inv-status-text paid">Paid</span>
+                  </div>
+                </td>
+                <td><a class="dl-btn" href="mailto:bishop.niia@gmail.com?subject=Receipt %23AOI-002">Receipt →</a></td>
+              </tr>
+              <tr class="invoice-row">
+                <td><strong style="font-size:12px;letter-spacing:0.1em;">#AOI-001</strong></td>
+                <td>Beat Basics</td>
+                <td>Mar 22, 2026</td>
+                <td><div class="inv-amount">$150</div></td>
+                <td>
+                  <div class="inv-status">
+                    <div class="inv-dot paid"></div>
+                    <span class="inv-status-text paid">Paid</span>
+                  </div>
+                </td>
+                <td><a class="dl-btn" href="mailto:bishop.niia@gmail.com?subject=Receipt %23AOI-001">Receipt →</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ── BOOK ── -->
+      <div class="panel" id="panel-book">
+        <p style="font-family:'Cormorant Garamond',serif;font-size:17px;color:var(--ink-soft);font-style:italic;margin-bottom:28px;">
+          Click any service below — it will open a pre-filled inquiry to bishop.niia@gmail.com.
+        </p>
+        <div class="book-grid">
+          <div class="book-card" onclick="bookService('Music Production')">
+            <div class="book-icon">🎵</div>
+            <div class="book-name">Music Production</div>
+            <div class="book-price">From $150</div>
+          </div>
+          <div class="book-card" onclick="bookService('Video Content')">
+            <div class="book-icon">🎥</div>
+            <div class="book-name">Video Content</div>
+            <div class="book-price">From $200</div>
+          </div>
+          <div class="book-card" onclick="bookService('AI Visual Design')">
+            <div class="book-icon">🎨</div>
+            <div class="book-name">AI Visual Design</div>
+            <div class="book-price">From $75</div>
+          </div>
+          <div class="book-card" onclick="bookService('Headshots & Brand Photos')">
+            <div class="book-icon">📸</div>
+            <div class="book-name">Headshots &amp; Brand Photos</div>
+            <div class="book-price">From $200</div>
+          </div>
+          <div class="book-card" onclick="bookService('Social Media')">
+            <div class="book-icon">📱</div>
+            <div class="book-name">Social Media</div>
+            <div class="book-price">From $300</div>
+          </div>
+          <div class="book-card" onclick="bookService('Podcast Features')">
+            <div class="book-icon">📻</div>
+            <div class="book-name">Podcast Features</div>
+            <div class="book-price">From $150</div>
+          </div>
+          <div class="book-card" onclick="bookService('30-Second Personalized Card')">
+            <div class="book-icon">✦</div>
+            <div class="book-name">30-Second Card</div>
+            <div class="book-price">$30</div>
+          </div>
+          <div class="book-card" onclick="bookService('1-Minute Personalized Card')">
+            <div class="book-icon">✦</div>
+            <div class="book-name">1-Minute Card</div>
+            <div class="book-price">$50</div>
+          </div>
+          <div class="book-card" onclick="bookService('48-Hour Website')">
+            <div class="book-icon">⚡</div>
+            <div class="book-name">48-Hour Website</div>
+            <div class="book-price">$199 flat</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── MESSAGES ── -->
+      <div class="panel" id="panel-messages">
+        <div class="message-list">
+          <div class="message-card unread">
+            <div class="msg-avatar">N</div>
+            <div class="msg-body">
+              <div class="msg-from">Niia — The Age of Intellect</div>
+              <div class="msg-preview">"Hey! Your Short Form Bundle first draft is ready for review. Let me know your thoughts and I'll turn around revisions within 24 hours."</div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;">
+              <div class="msg-time">Today, 10:42am</div>
+              <div class="msg-unread-dot"></div>
+            </div>
+          </div>
+          <div class="message-card">
+            <div class="msg-avatar">N</div>
+            <div class="msg-body">
+              <div class="msg-from">Niia — The Age of Intellect</div>
+              <div class="msg-preview">"Visual Identity Kit is complete and delivered! Files are in your Deliverables tab. Loved working on this one — the color palette came out 🔥"</div>
+            </div>
+            <div class="msg-time">May 1, 9:15am</div>
+          </div>
+          <div class="message-card">
+            <div class="msg-avatar">N</div>
+            <div class="msg-body">
+              <div class="msg-from">Niia — The Age of Intellect</div>
+              <div class="msg-preview">"Production on 'Gravity' is underway. Got the initial track structure locked in — sending you a rough reference by end of week."</div>
+            </div>
+            <div class="msg-time">Apr 30, 2:00pm</div>
+          </div>
+        </div>
+        <div style="margin-top:24px;">
+          <a class="dl-btn" href="mailto:bishop.niia@gmail.com?subject=Message from Client Dashboard" style="font-size:10px;">
+            Reply via Email →
+          </a>
+        </div>
+      </div>
+
+    </div><!-- /content -->
+  </div><!-- /main -->
+</div><!-- /app -->
+
+<script>
+  // ── DATE ──
+  const d = new Date();
+  document.getElementById('topbarDate').textContent =
+    d.toLocaleDateString('en-US', { weekday:'long', month:'long', day:'numeric', year:'numeric' });
+
+  // ── LOGIN ──
+  // Demo credentials — swap with whatever you want
+  const CLIENTS = {
+    'bishop.niia@gmail.com': { pass: '1936', name: 'Niia Bishop' },
+    // Add real clients: 'client@email.com': { pass: 'CODE', name: 'Client Name' }
+  };
+
+  function doLogin(e) {
+    e.preventDefault();
+    const email = document.getElementById('loginEmail').value.trim().toLowerCase();
+    const pass  = document.getElementById('loginPass').value;
+    const err   = document.getElementById('loginError');
+
+    // Demo mode: accept any email with code "1936"
+    const client = CLIENTS[email] || (pass === '1936' ? { name: email.split('@')[0] } : null);
+
+    if (client) {
+      const name = client.name || email.split('@')[0];
+      document.getElementById('clientName').textContent = name;
+      document.getElementById('clientInitial').textContent = name.charAt(0).toUpperCase();
+      err.style.display = 'none';
+      document.getElementById('loginScreen').classList.add('hidden');
+      setTimeout(() => {
+        document.getElementById('loginScreen').style.display = 'none';
+        document.getElementById('app').classList.add('visible');
+      }, 600);
+    } else {
+      err.style.display = 'block';
+    }
+  }
+
+  function doLogout() {
+    document.getElementById('app').classList.remove('visible');
+    document.getElementById('loginScreen').style.display = 'flex';
+    setTimeout(() => document.getElementById('loginScreen').classList.remove('hidden'), 10);
+    document.getElementById('loginEmail').value = '';
+    document.getElementById('loginPass').value = '';
+  }
+
+  // ── NAVIGATION ──
+  const panelTitles = {
+    overview:     'Dashboard',
+    projects:     'My Projects',
+    deliverables: 'Deliverables',
+    invoices:     'Invoices',
+    book:         'Book a Service',
+    messages:     'Messages',
+  };
+
+  function showPanel(name) {
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    document.getElementById('panel-' + name).classList.add('active');
+    document.querySelectorAll('.nav-item').forEach(n => {
+      if (n.getAttribute('onclick') === "showPanel('" + name + "')") n.classList.add('active');
+    });
+    document.getElementById('panelTitle').textContent = panelTitles[name] || name;
+    document.getElementById('sidebar').classList.remove('open');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // ── BOOK SERVICE ──
+  function bookService(service) {
+    const subj = encodeURIComponent('New Booking Request — ' + service);
+    const body = encodeURIComponent('Hi Niia,\n\nI\'d like to book: ' + service + '\n\nDetails:\n');
+    window.location.href = 'mailto:bishop.niia@gmail.com?subject=' + subj + '&body=' + body;
+  }
+</script>
+</body>
+</html>
