@@ -1330,6 +1330,47 @@ body { top: 0 !important; }
   .spotlight-card, .spotlight-placeholder { flex: 0 0 85%; }
 }
 /* ============================================================ */
+/* ===== MODEL TICKER ========================================== */
+/* ============================================================ */
+.model-ticker {
+  width: 100%;
+  overflow: hidden;
+  margin-top: 8px;
+  padding: 18px 0;
+  border-top: 1px solid rgba(168,120,42,0.2);
+  border-bottom: 1px solid rgba(168,120,42,0.2);
+  mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+}
+.model-ticker-track {
+  display: flex;
+  gap: 0;
+  width: max-content;
+  animation: tickerScroll 60s linear infinite;
+}
+.model-ticker-track:hover { animation-play-state: paused; }
+.model-ticker-track span {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: rgba(240,232,216,0.45);
+  white-space: nowrap;
+  padding: 0 28px;
+  position: relative;
+}
+.model-ticker-track span::after {
+  content: '·';
+  position: absolute;
+  right: 0;
+  color: rgba(168,120,42,0.4);
+  transform: translateX(50%);
+}
+@keyframes tickerScroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* ============================================================ */
 /* ===== MUSIC SPLASH SCREEN =================================== */
 /* ============================================================ */
 .music-splash {
@@ -1864,7 +1905,33 @@ body { top: 0 !important; }
       <div class="logo-card">GarageBand</div>
     </div>
 
-    <p class="stack-foot reveal">+ 100 specialized models behind the curtain</p>
+    <p class="stack-foot reveal">Models we deploy — updated as the field moves:</p>
+
+    <div class="model-ticker reveal">
+      <div class="model-ticker-track">
+        <span>Seedance 2.0</span><span>Seedance 2.0 Fast</span><span>Seedance 1.5 Pro</span><span>Seedance 1.0 Pro</span><span>Seedance 1.0 Fast</span><span>Seedance 1.0 Lite</span>
+        <span>Kling 3.0</span><span>Kling 3.0 Omni</span><span>Kling 3.0 Motion Control</span><span>Kling 2.6</span><span>Kling 2.6 Motion Control</span><span>Kling 2.5</span><span>Kling 2.1</span><span>Kling 2.1 Master</span><span>Kling O1</span>
+        <span>Google Veo 3.1</span><span>Google Veo 3.1 Fast</span><span>Google Veo 3.1 Lite</span>
+        <span>Runway Gen-4.5</span><span>Runway Gen 4</span>
+        <span>MiniMax Hailuo 2.3</span><span>MiniMax Hailuo 2.3 Fast</span><span>MiniMax Hailuo 02</span><span>MiniMax Live Illustrations</span>
+        <span>OpenAI Sora 2 Pro</span><span>OpenAI Sora 2</span>
+        <span>Wan 2.7</span><span>Wan 2.6</span><span>Wan 2.5</span><span>Wan 2.2</span>
+        <span>PixVerse 6</span><span>PixVerse 5.5</span>
+        <span>Veed Fabric 1.0</span><span>Veed Fabric 1.0 Fast</span>
+        <span>Omni Human 1.5</span><span>Grok</span><span>LTX 2 Fast</span><span>LTX 2 Pro</span>
+        <!-- duplicate for seamless loop -->
+        <span>Seedance 2.0</span><span>Seedance 2.0 Fast</span><span>Seedance 1.5 Pro</span><span>Seedance 1.0 Pro</span><span>Seedance 1.0 Fast</span><span>Seedance 1.0 Lite</span>
+        <span>Kling 3.0</span><span>Kling 3.0 Omni</span><span>Kling 3.0 Motion Control</span><span>Kling 2.6</span><span>Kling 2.6 Motion Control</span><span>Kling 2.5</span><span>Kling 2.1</span><span>Kling 2.1 Master</span><span>Kling O1</span>
+        <span>Google Veo 3.1</span><span>Google Veo 3.1 Fast</span><span>Google Veo 3.1 Lite</span>
+        <span>Runway Gen-4.5</span><span>Runway Gen 4</span>
+        <span>MiniMax Hailuo 2.3</span><span>MiniMax Hailuo 2.3 Fast</span><span>MiniMax Hailuo 02</span><span>MiniMax Live Illustrations</span>
+        <span>OpenAI Sora 2 Pro</span><span>OpenAI Sora 2</span>
+        <span>Wan 2.7</span><span>Wan 2.6</span><span>Wan 2.5</span><span>Wan 2.2</span>
+        <span>PixVerse 6</span><span>PixVerse 5.5</span>
+        <span>Veed Fabric 1.0</span><span>Veed Fabric 1.0 Fast</span>
+        <span>Omni Human 1.5</span><span>Grok</span><span>LTX 2 Fast</span><span>LTX 2 Pro</span>
+      </div>
+    </div>
 
   </div>
 </section>
