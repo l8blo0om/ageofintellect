@@ -1329,6 +1329,131 @@ body { top: 0 !important; }
 @media (max-width: 600px) {
   .spotlight-card, .spotlight-placeholder { flex: 0 0 85%; }
 }
+/* ============================================================ */
+/* ===== MUSIC SPLASH SCREEN =================================== */
+/* ============================================================ */
+.music-splash {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: #0A0806;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 600ms var(--ease), visibility 600ms;
+}
+.music-splash.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+.music-splash-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  padding: 40px 24px;
+  text-align: center;
+  animation: splashIn 900ms var(--ease) forwards;
+}
+@keyframes splashIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.music-splash-logo {
+  width: min(220px, 50vw);
+  height: auto;
+  border-radius: 4px;
+}
+.music-splash-eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 6px;
+}
+.music-splash-title {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(22px, 4vw, 32px);
+  font-weight: 300;
+  font-style: italic;
+  color: #F0E8D8;
+  letter-spacing: -0.01em;
+}
+.music-splash-btns {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  margin-top: 8px;
+}
+.music-splash-yes {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 14px 36px;
+  background: var(--gold);
+  color: #0A0806;
+  border: none;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: background 200ms, transform 150ms;
+}
+.music-splash-yes:hover { background: var(--gold-bright); transform: translateY(-1px); }
+.music-splash-no {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: none;
+  border: none;
+  color: rgba(240,232,216,0.35);
+  cursor: pointer;
+  transition: color 200ms;
+}
+.music-splash-no:hover { color: rgba(240,232,216,0.65); }
+
+/* Floating music pill — shows after splash dismissed with sound */
+.music-pill {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  background: rgba(18,14,10,0.92);
+  border: 1px solid rgba(168,120,42,0.3);
+  backdrop-filter: blur(12px);
+  border-radius: 40px;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 400ms, transform 400ms;
+  pointer-events: none;
+}
+.music-pill.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
+.music-pill-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--gold);
+  animation: pulse 1.8s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%,100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.5; transform: scale(0.75); }
+}
+.music-pill-text {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(240,232,216,0.7);
+}
 </style>
 </head>
 <body>
@@ -1360,6 +1485,12 @@ body { top: 0 !important; }
   <a href="dashboard.html" class="nav-client-btn">Client Login</a>
   <a href="#contact" class="btn nav-cta btn-arrow">Start a project</a>
 </nav>
+<!-- Floating music pill -->
+<div class="music-pill" id="musicPill" title="Now playing: Touché Pussycat, Vol. 1">
+  <div class="music-pill-dot"></div>
+  <span class="music-pill-text">Touché Pussycat, Vol. 1</span>
+</div>
+
 <!-- Google Translate (hidden — driven by flag buttons above) -->
 <div id="google_translate_element" style="display:none;"></div>
 
@@ -2128,6 +2259,30 @@ body { top: 0 !important; }
 </footer>
 
 <!-- ==================================================================== -->
+<!-- ===== MUSIC SPLASH SCREEN ========================================== -->
+<!-- ==================================================================== -->
+<div class="music-splash" id="musicSplash" role="dialog" aria-modal="true" aria-label="Enter site">
+  <div class="music-splash-inner">
+    <img src="assets/logoblack.jpg" alt="The Age of Intellect" class="music-splash-logo">
+    <div class="music-splash-album">
+      <p class="music-splash-eyebrow">Now Playing</p>
+      <p class="music-splash-title">Touché Pussycat, Vol. 1</p>
+    </div>
+    <div class="music-splash-btns">
+      <button class="music-splash-yes" onclick="enterWithSound()">▶&nbsp;&nbsp;Enter with sound</button>
+      <button class="music-splash-no" onclick="enterSilent()">Enter without sound</button>
+    </div>
+  </div>
+  <!-- Apple Music embed — hidden until user opts in -->
+  <iframe id="appleMusicPlayer"
+    allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write"
+    frameborder="0" height="0" width="0"
+    style="position:absolute;opacity:0;pointer-events:none;"
+    sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation">
+  </iframe>
+</div>
+
+<!-- ==================================================================== -->
 <!-- ===== VIDEO MODAL ================================================== -->
 <!-- ==================================================================== -->
 <div class="modal" id="videoModal" role="dialog" aria-modal="true" aria-label="Video player">
@@ -2343,6 +2498,32 @@ body { top: 0 !important; }
   })();
 
 })();
+
+/* ============================================================ */
+/* MUSIC SPLASH                                                  */
+/* ============================================================ */
+function enterWithSound() {
+  var player = document.getElementById('appleMusicPlayer');
+  player.src = 'https://embed.music.apple.com/us/album/touch%C3%A9-pussycat-vol-1/1889648702?autoPlay=1';
+  dismissSplash();
+  setTimeout(function() {
+    var pill = document.getElementById('musicPill');
+    if (pill) pill.classList.add('visible');
+  }, 800);
+}
+
+function enterSilent() {
+  dismissSplash();
+}
+
+function dismissSplash() {
+  var splash = document.getElementById('musicSplash');
+  if (splash) {
+    splash.classList.add('hidden');
+    setTimeout(function() { splash.style.display = 'none'; }, 650);
+  }
+}
+
 </script>
 
 <!-- ============================================================ -->
