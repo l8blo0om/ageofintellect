@@ -296,6 +296,32 @@ body {
 
 .nav-cta { padding: 10px 18px; font-size: 10.5px; }
 
+/* Language flag switcher */
+.lang-switcher {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin: 0 6px;
+}
+.lang-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 1;
+  padding: 3px 2px;
+  border-radius: 3px;
+  opacity: 0.45;
+  transition: opacity 150ms, transform 150ms;
+  filter: grayscale(0.3);
+}
+.lang-btn:hover { opacity: 0.85; transform: scale(1.15); }
+.lang-btn.lang-active { opacity: 1; filter: none; }
+/* Hide Google Translate toolbar */
+.goog-te-banner-frame, .skiptranslate { display: none !important; }
+body { top: 0 !important; }
+.goog-te-gadget { display: none !important; }
+
 /* Mobile nav: collapse links, keep CTA */
 @media (max-width: 860px) {
   .nav-links { display: none; }
@@ -1316,9 +1342,21 @@ body {
     <a href="#about">Studio</a>
     <a href="#pricing">Pricing</a>
   </div>
+  <div class="lang-switcher" id="langSwitcher">
+    <button class="lang-btn lang-active" onclick="setLang('en')" title="English">🇺🇸</button>
+    <button class="lang-btn" onclick="setLang('fr')" title="Français">🇫🇷</button>
+    <button class="lang-btn" onclick="setLang('es')" title="Español">🇪🇸</button>
+    <button class="lang-btn" onclick="setLang('pt')" title="Português">🇧🇷</button>
+    <button class="lang-btn" onclick="setLang('de')" title="Deutsch">🇩🇪</button>
+    <button class="lang-btn" onclick="setLang('zh-CN')" title="中文">🇨🇳</button>
+    <button class="lang-btn" onclick="setLang('ja')" title="日本語">🇯🇵</button>
+    <button class="lang-btn" onclick="setLang('hi')" title="हिन्दी">🇮🇳</button>
+  </div>
   <a href="dashboard.html" class="nav-client-btn">Client Login</a>
   <a href="#contact" class="btn nav-cta btn-arrow">Start a project</a>
 </nav>
+<!-- Google Translate (hidden — driven by flag buttons above) -->
+<div id="google_translate_element" style="display:none;"></div>
 
 <!-- ==================================================================== -->
 <!-- ===== HERO ========================================================= -->
@@ -2365,6 +2403,56 @@ body {
 
 })();
 </script>
+
+<!-- ============================================================ -->
+<!-- GOOGLE TRANSLATE — flag-driven, toolbar hidden               -->
+<!-- ============================================================ -->
+<script>
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'en',
+    autoDisplay: false
+  }, 'google_translate_element');
+}
+
+function setLang(lang) {
+  // Update active flag button
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('lang-active'));
+  event.currentTarget.classList.add('lang-active');
+
+  if (lang === 'en') {
+    // Reset to English — reload without translate cookie
+    var c = document.cookie.split(';');
+    for (var i = 0; i < c.length; i++) {
+      var e = c[i].indexOf('=');
+      var n = e > -1 ? c[i].substr(0, e) : c[i];
+      document.cookie = n.trim() + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/';
+    }
+    window.location.reload();
+    return;
+  }
+
+  // Trigger Google Translate select
+  var sel = document.querySelector('.goog-te-combo');
+  if (sel) {
+    sel.value = lang;
+    sel.dispatchEvent(new Event('change'));
+  } else {
+    // Widget not ready yet — wait for it
+    var tries = 0;
+    var interval = setInterval(function() {
+      var s = document.querySelector('.goog-te-combo');
+      if (s) {
+        s.value = lang;
+        s.dispatchEvent(new Event('change'));
+        clearInterval(interval);
+      }
+      if (++tries > 20) clearInterval(interval);
+    }, 200);
+  }
+}
+</script>
+<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
 </body>
 </html>
