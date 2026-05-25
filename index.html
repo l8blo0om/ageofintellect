@@ -1351,19 +1351,34 @@ body { top: 0 !important; }
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 32px;
+  gap: 28px;
   padding: 40px 24px;
   text-align: center;
+  width: min(520px, 94vw);
   animation: splashIn 900ms var(--ease) forwards;
 }
 @keyframes splashIn {
   from { opacity: 0; transform: translateY(16px); }
   to   { opacity: 1; transform: translateY(0); }
 }
+.music-splash-top {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  text-align: left;
+}
 .music-splash-logo {
-  width: min(220px, 50vw);
-  height: auto;
-  border-radius: 4px;
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+.music-splash-player {
+  width: 100%;
+  height: 450px;
+  border-radius: 12px;
+  overflow: hidden;
 }
 .music-splash-eyebrow {
   font-family: 'JetBrains Mono', monospace;
@@ -2263,23 +2278,30 @@ body { top: 0 !important; }
 <!-- ==================================================================== -->
 <div class="music-splash" id="musicSplash" role="dialog" aria-modal="true" aria-label="Enter site">
   <div class="music-splash-inner">
-    <img src="assets/logoblack.jpg" alt="The Age of Intellect" class="music-splash-logo">
-    <div class="music-splash-album">
-      <p class="music-splash-eyebrow">Now Playing</p>
-      <p class="music-splash-title">Touché Pussycat, Vol. 1</p>
+
+    <div class="music-splash-top">
+      <img src="assets/logoblack.jpg" alt="The Age of Intellect" class="music-splash-logo">
+      <div>
+        <p class="music-splash-eyebrow">✦ &nbsp;Now Streaming</p>
+        <p class="music-splash-title">Touché Pussycat, Vol. 1</p>
+      </div>
     </div>
+
+    <!-- Apple Music embed — visible on splash -->
+    <iframe id="appleMusicPlayer"
+      src="https://embed.music.apple.com/us/album/touch%C3%A9-pussycat-vol-1/1889648702"
+      allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write"
+      frameborder="0"
+      class="music-splash-player"
+      sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation">
+    </iframe>
+
     <div class="music-splash-btns">
       <button class="music-splash-yes" onclick="enterWithSound()">▶&nbsp;&nbsp;Enter with sound</button>
       <button class="music-splash-no" onclick="enterSilent()">Enter without sound</button>
     </div>
+
   </div>
-  <!-- Apple Music embed — hidden until user opts in -->
-  <iframe id="appleMusicPlayer"
-    allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write"
-    frameborder="0" height="0" width="0"
-    style="position:absolute;opacity:0;pointer-events:none;"
-    sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation">
-  </iframe>
 </div>
 
 <!-- ==================================================================== -->
@@ -2503,6 +2525,7 @@ body { top: 0 !important; }
 /* MUSIC SPLASH                                                  */
 /* ============================================================ */
 function enterWithSound() {
+  // Swap to autoplay version then dismiss
   var player = document.getElementById('appleMusicPlayer');
   player.src = 'https://embed.music.apple.com/us/album/touch%C3%A9-pussycat-vol-1/1889648702?autoPlay=1';
   dismissSplash();
