@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <rect width="1200" height="630" fill="#0E0C0A"/>
+
+  <!-- Subtle grain texture via a pattern -->
+  <defs>
+    <pattern id="grain" x="0" y="0" width="4" height="4" patternUnits="userSpaceOnUse">
+      <rect width="4" height="4" fill="transparent"/>
+      <circle cx="1" cy="1" r="0.6" fill="rgba(255,255,255,0.018)"/>
+      <circle cx="3" cy="3" r="0.5" fill="rgba(255,255,255,0.012)"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="630" fill="url(#grain)"/>
+
+  <!-- Top rule line in gold -->
+  <rect x="80" y="80" width="120" height="1.5" fill="#A8782A"/>
+
+  <!-- Eyebrow label -->
+  <text x="80" y="112" font-family="'Georgia', serif" font-size="13" letter-spacing="4" fill="#A8782A" text-anchor="start" font-weight="400">AI MULTIMEDIA STUDIO · TEGA CAY, SC</text>
+
+  <!-- Main wordmark -->
+  <text x="80" y="240" font-family="'Georgia', 'Times New Roman', serif" font-size="96" fill="#F0E8D8" font-weight="300" letter-spacing="-2">Age</text>
+  <text x="80" y="350" font-family="'Georgia', 'Times New Roman', serif" font-size="96" fill="#F0E8D8" font-weight="300" letter-spacing="-2">of</text>
+  <text x="80" y="460" font-family="'Georgia', 'Times New Roman', serif" font-size="96" fill="#F0E8D8" font-weight="300" letter-spacing="-2" font-style="italic">Intellect.</text>
+
+  <!-- Right side tagline -->
+  <text x="1120" y="430" font-family="'Georgia', serif" font-size="14" letter-spacing="3" fill="rgba(240,232,216,0.45)" text-anchor="end" font-weight="400">PRECISION ON</text>
+  <text x="1120" y="452" font-family="'Georgia', serif" font-size="14" letter-spacing="3" fill="rgba(240,232,216,0.45)" text-anchor="end" font-weight="400">HIGH DEMAND</text>
+
+  <!-- Bottom rule -->
+  <rect x="80" y="540" width="1040" height="1" fill="rgba(168,120,42,0.25)"/>
+
+  <!-- Bottom URL -->
+  <text x="80" y="566" font-family="'Georgia', serif" font-size="13" letter-spacing="2" fill="rgba(240,232,216,0.35)" font-weight="400">ageofintellect.com</text>
+  <text x="1120" y="566" font-family="'Georgia', serif" font-size="13" letter-spacing="2" fill="#A8782A" text-anchor="end" font-weight="400">✦</text>
+</svg>
