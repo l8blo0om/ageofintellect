@@ -1330,6 +1330,65 @@ body { top: 0 !important; }
   .spotlight-card, .spotlight-placeholder { flex: 0 0 85%; }
 }
 /* ============================================================ */
+/* ===== TOOL CATEGORIES ======================================= */
+/* ============================================================ */
+.tools-cats {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  margin-top: 48px;
+}
+.tools-cat {
+  border-top: 1px solid rgba(168,120,42,0.2);
+  padding-top: 24px;
+}
+.tools-cat-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  gap: 16px;
+}
+.tools-cat-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.tools-cat-count {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: rgba(240,232,216,0.3);
+}
+.tools-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.tchip {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  padding: 5px 12px;
+  border-radius: 2px;
+  border: 1px solid rgba(240,232,216,0.1);
+  color: rgba(240,232,216,0.45);
+  background: rgba(240,232,216,0.04);
+  white-space: nowrap;
+  transition: border-color 200ms, color 200ms;
+}
+.tchip:hover { border-color: rgba(168,120,42,0.4); color: rgba(240,232,216,0.75); }
+.tchip.hi {
+  border-color: rgba(168,120,42,0.35);
+  color: rgba(240,232,216,0.75);
+  background: rgba(168,120,42,0.08);
+}
+.tchip.hi:hover { border-color: var(--gold); color: var(--gold-bright); }
+
+/* ============================================================ */
 /* ===== MODEL TICKER ========================================== */
 /* ============================================================ */
 .model-ticker {
@@ -1889,13 +1948,14 @@ body { top: 0 !important; }
 
     <div class="sec-head reveal">
       <p class="eyebrow">— The Stack — 004</p>
-      <h2 class="display">We work with the world's best AI tools <em>so you don't have to.</em></h2>
+      <h2 class="display">Every tool that <em>matters.</em></h2>
       <p>The instruments matter less than the hand that uses them.
-         These are the eight we reach for most.</p>
+         Here's what's in ours.</p>
     </div>
 
+    <!-- Primary Platforms -->
     <div class="stack-grid reveal">
-      <div class="logo-card">Higgsfield</div>
+      <div class="logo-card">Higgsfield.ai</div>
       <div class="logo-card">Freepik</div>
       <div class="logo-card">Runway</div>
       <div class="logo-card">ElevenLabs</div>
@@ -1903,34 +1963,85 @@ body { top: 0 !important; }
       <div class="logo-card">Claude</div>
       <div class="logo-card">ChatGPT</div>
       <div class="logo-card">GarageBand</div>
+      <div class="logo-card">CapCut</div>
+      <div class="logo-card">Pika</div>
+      <div class="logo-card">Magenta</div>
+      <div class="logo-card">Topaz</div>
     </div>
 
-    <p class="stack-foot reveal">Models we deploy — updated as the field moves:</p>
+    <!-- Categorized tool chips -->
+    <div class="tools-cats reveal">
 
-    <div class="model-ticker reveal">
-      <div class="model-ticker-track">
-        <span>Seedance 2.0</span><span>Seedance 2.0 Fast</span><span>Seedance 1.5 Pro</span><span>Seedance 1.0 Pro</span><span>Seedance 1.0 Fast</span><span>Seedance 1.0 Lite</span>
-        <span>Kling 3.0</span><span>Kling 3.0 Omni</span><span>Kling 3.0 Motion Control</span><span>Kling 2.6</span><span>Kling 2.6 Motion Control</span><span>Kling 2.5</span><span>Kling 2.1</span><span>Kling 2.1 Master</span><span>Kling O1</span>
-        <span>Google Veo 3.1</span><span>Google Veo 3.1 Fast</span><span>Google Veo 3.1 Lite</span>
-        <span>Runway Gen-4.5</span><span>Runway Gen 4</span>
-        <span>MiniMax Hailuo 2.3</span><span>MiniMax Hailuo 2.3 Fast</span><span>MiniMax Hailuo 02</span><span>MiniMax Live Illustrations</span>
-        <span>OpenAI Sora 2 Pro</span><span>OpenAI Sora 2</span>
-        <span>Wan 2.7</span><span>Wan 2.6</span><span>Wan 2.5</span><span>Wan 2.2</span>
-        <span>PixVerse 6</span><span>PixVerse 5.5</span>
-        <span>Veed Fabric 1.0</span><span>Veed Fabric 1.0 Fast</span>
-        <span>Omni Human 1.5</span><span>Grok</span><span>LTX 2 Fast</span><span>LTX 2 Pro</span>
-        <!-- duplicate for seamless loop -->
-        <span>Seedance 2.0</span><span>Seedance 2.0 Fast</span><span>Seedance 1.5 Pro</span><span>Seedance 1.0 Pro</span><span>Seedance 1.0 Fast</span><span>Seedance 1.0 Lite</span>
-        <span>Kling 3.0</span><span>Kling 3.0 Omni</span><span>Kling 3.0 Motion Control</span><span>Kling 2.6</span><span>Kling 2.6 Motion Control</span><span>Kling 2.5</span><span>Kling 2.1</span><span>Kling 2.1 Master</span><span>Kling O1</span>
-        <span>Google Veo 3.1</span><span>Google Veo 3.1 Fast</span><span>Google Veo 3.1 Lite</span>
-        <span>Runway Gen-4.5</span><span>Runway Gen 4</span>
-        <span>MiniMax Hailuo 2.3</span><span>MiniMax Hailuo 2.3 Fast</span><span>MiniMax Hailuo 02</span><span>MiniMax Live Illustrations</span>
-        <span>OpenAI Sora 2 Pro</span><span>OpenAI Sora 2</span>
-        <span>Wan 2.7</span><span>Wan 2.6</span><span>Wan 2.5</span><span>Wan 2.2</span>
-        <span>PixVerse 6</span><span>PixVerse 5.5</span>
-        <span>Veed Fabric 1.0</span><span>Veed Fabric 1.0 Fast</span>
-        <span>Omni Human 1.5</span><span>Grok</span><span>LTX 2 Fast</span><span>LTX 2 Pro</span>
+      <div class="tools-cat">
+        <div class="tools-cat-head">
+          <span class="tools-cat-label">Image &amp; Visual Tools</span>
+          <span class="tools-cat-count">18 tools</span>
+        </div>
+        <div class="tools-chips">
+          <span class="tchip hi">Angles 2.0</span><span class="tchip hi">Soul Cinema</span><span class="tchip hi">Higgsfield Popcorn</span><span class="tchip">Shots</span><span class="tchip">Zooms</span><span class="tchip">Expand Image</span><span class="tchip">Color Grading</span><span class="tchip">Face Swap</span><span class="tchip">Character Swap</span><span class="tchip">Image Upscale</span><span class="tchip">Relight</span><span class="tchip">Inpaint</span><span class="tchip">Skin Enhancer</span><span class="tchip">Fashion Factory</span><span class="tchip">Moodboard</span><span class="tchip">AI Stylist</span><span class="tchip">Cinematic Cameras</span><span class="tchip">Topaz</span>
+        </div>
       </div>
+
+      <div class="tools-cat">
+        <div class="tools-cat-head">
+          <span class="tools-cat-label">Image Models</span>
+          <span class="tools-cat-count">40 models</span>
+        </div>
+        <div class="tools-chips">
+          <span class="tchip hi">Higgsfield Soul 2.0</span><span class="tchip hi">Mystic 2.5</span><span class="tchip hi">FLUX.1 Kontext Pro</span><span class="tchip hi">FLUX.1 Kontext Max</span><span class="tchip hi">Google Imagen 4 Ultra</span><span class="tchip hi">Seedream 5 Lite</span><span class="tchip">GPT Image 2</span><span class="tchip">GPT Image 1.5</span><span class="tchip">Google Imagen 4</span><span class="tchip">Google Imagen 4 Fast</span><span class="tchip">Google Imagen 3</span><span class="tchip">Seedream 4.5</span><span class="tchip">Seedream 4</span><span class="tchip">FLUX.1</span><span class="tchip">FLUX.2 Pro</span><span class="tchip">FLUX.2 Max</span><span class="tchip">FLUX.2 Flex</span><span class="tchip">Mystic 2.5 Fluid</span><span class="tchip">Mystic 1.0</span><span class="tchip">Recraft V4</span><span class="tchip">Recraft V4 Pro</span><span class="tchip">Grok Imagine</span><span class="tchip">Qwen</span><span class="tchip">Z-Image</span>
+        </div>
+      </div>
+
+      <div class="tools-cat">
+        <div class="tools-cat-head">
+          <span class="tools-cat-label">Video Tools</span>
+          <span class="tools-cat-count">14 tools</span>
+        </div>
+        <div class="tools-chips">
+          <span class="tchip hi">Cinema Studio 3.5</span><span class="tchip hi">Lipsync Studio</span><span class="tchip hi">Higgsfield Animate</span><span class="tchip">Create Video</span><span class="tchip">Mixed Media</span><span class="tchip">Edit Video</span><span class="tchip">Click to Ad</span><span class="tchip">URL to Ad</span><span class="tchip">Draw to Video</span><span class="tchip">Sketch to Video</span><span class="tchip">UGC Factory</span><span class="tchip">Video Upscale</span><span class="tchip">Vibe Motion</span><span class="tchip">Recast Studio</span>
+        </div>
+      </div>
+
+      <div class="tools-cat">
+        <div class="tools-cat-head">
+          <span class="tools-cat-label">Video Models</span>
+          <span class="tools-cat-count">38 models</span>
+        </div>
+        <div class="tools-chips">
+          <span class="tchip hi">Kling 3.0</span><span class="tchip hi">Kling 3.0 Motion Control</span><span class="tchip hi">Google Veo 3.1</span><span class="tchip hi">Sora 2 Pro</span><span class="tchip hi">Seedance 2.0</span><span class="tchip hi">Higgsfield DOP</span><span class="tchip hi">Runway Gen-4.5</span><span class="tchip">Kling 3.0 Omni</span><span class="tchip">Kling 2.6</span><span class="tchip">Kling 2.6 Motion Control</span><span class="tchip">Kling 2.5</span><span class="tchip">Kling 2.1 Master</span><span class="tchip">Kling O1</span><span class="tchip">Seedance 2.0 Fast</span><span class="tchip">Seedance 1.5 Pro</span><span class="tchip">Seedance 1.0 Pro</span><span class="tchip">Google Veo 3.1 Fast</span><span class="tchip">Google Veo 3.1 Lite</span><span class="tchip">Runway Gen 4</span><span class="tchip">MiniMax Hailuo 2.3</span><span class="tchip">MiniMax Hailuo 2.3 Fast</span><span class="tchip">MiniMax Live Illustrations</span><span class="tchip">Wan 2.7</span><span class="tchip">Wan 2.6</span><span class="tchip">Wan 2.5</span><span class="tchip">PixVerse 6</span><span class="tchip">PixVerse 5.5</span><span class="tchip">Veed Fabric 1.0</span><span class="tchip">Omni Human 1.5</span><span class="tchip">LTX 2 Pro</span><span class="tchip">LTX 2 Fast</span><span class="tchip">Pika</span><span class="tchip">Grok</span>
+        </div>
+      </div>
+
+      <div class="tools-cat">
+        <div class="tools-cat-head">
+          <span class="tools-cat-label">Audio, Voice &amp; Music</span>
+          <span class="tools-cat-count">10 tools</span>
+        </div>
+        <div class="tools-chips">
+          <span class="tchip hi">Eleven v3</span><span class="tchip hi">Suno</span><span class="tchip hi">GarageBand</span><span class="tchip hi">Magenta</span><span class="tchip">Minimax Speech 2.8 HD</span><span class="tchip">Seed Speech</span><span class="tchip">VibeVoice</span><span class="tchip">Voiceover</span><span class="tchip">Change Voice</span><span class="tchip">Translation</span>
+        </div>
+      </div>
+
+      <div class="tools-cat">
+        <div class="tools-cat-head">
+          <span class="tools-cat-label">Editing &amp; Production</span>
+          <span class="tools-cat-count">3 tools</span>
+        </div>
+        <div class="tools-chips">
+          <span class="tchip hi">CapCut</span><span class="tchip">Soul ID Character</span><span class="tchip">AI Influencer</span>
+        </div>
+      </div>
+
+      <div class="tools-cat">
+        <div class="tools-cat-head">
+          <span class="tools-cat-label">AI Intelligence</span>
+          <span class="tools-cat-count">2 systems</span>
+        </div>
+        <div class="tools-chips">
+          <span class="tchip hi">Claude</span><span class="tchip hi">ChatGPT</span>
+        </div>
+      </div>
+
     </div>
 
   </div>
