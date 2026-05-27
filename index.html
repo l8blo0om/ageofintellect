@@ -2490,11 +2490,11 @@ body { top: 0 !important; }
     <p class="music-splash-title">Welcome.</p>
     <p class="music-splash-sub">The studio is open.</p>
 
-    <!-- Hidden audio player — only activated on sound entry -->
-    <!-- display:none kills audio in browsers; use position+opacity instead -->
+    <!-- Hidden Spotify player — activated on sound entry only -->
     <iframe id="appleMusicPlayer"
       src=""
-      allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write"
+      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+      allowfullscreen
       frameborder="0"
       style="position:fixed; bottom:-200px; left:-200px; width:1px; height:1px; opacity:0; pointer-events:none;">
     </iframe>
@@ -2730,7 +2730,7 @@ body { top: 0 !important; }
 function enterWithSound() {
   // Swap to autoplay version then dismiss
   var player = document.getElementById('appleMusicPlayer');
-  player.src = 'https://embed.music.apple.com/us/album/touch%C3%A9-pussycat-vol-1/1889648702?autoPlay=1';
+  player.src = 'https://open.spotify.com/embed/album/3CGev6tR6bTQakJfLLsTHV?autoplay=1&theme=0';
   dismissSplash();
   setTimeout(function() {
     var pill = document.getElementById('musicPill');
