@@ -4,25 +4,29 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Berlin 1936 — National Sports Museum</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
     --ink: #f4ede0;
+    --paper: #0a0908;
     --warm: #c9a55a;
     --blood: #8b1a1a;
     --grey: #8a8074;
-    --serif: "Cormorant Garamond", "Playfair Display", Georgia, serif;
-    --sans: "Inter", "Helvetica Neue", Arial, sans-serif;
+    --serif: 'Fraunces', Georgia, serif;
+    --sans: 'Manrope', Helvetica, Arial, sans-serif;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  html, body {
-    width: 100%; height: 100%;
-    background: #000;
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
     color: var(--ink);
     font-family: var(--serif);
-    overflow: hidden;
+    line-height: 1.5;
+    overflow-x: hidden;
   }
 
-  /* Film grain overlay */
   body::after {
     content: "";
     position: fixed; inset: 0;
@@ -34,24 +38,17 @@
     pointer-events: none;
     z-index: 9999;
     mix-blend-mode: overlay;
-    opacity: 0.5;
-    animation: grain 0.6s steps(6) infinite;
+    opacity: 0.35;
+    animation: grain 0.8s steps(6) infinite;
   }
   @keyframes grain {
     0%   { transform: translate(0, 0); }
-    20%  { transform: translate(-1px, 1px); }
-    40%  { transform: translate(1px, -1px); }
-    60%  { transform: translate(-1px, -1px); }
-    80%  { transform: translate(1px, 1px); }
+    25%  { transform: translate(-1px, 1px); }
+    50%  { transform: translate(1px, -1px); }
+    75%  { transform: translate(-1px, -1px); }
   }
 
-  .vignette {
-    position: fixed; inset: 0;
-    background: radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.85) 100%);
-    pointer-events: none;
-    z-index: 50;
-  }
-
+  /* ===== START SCREEN ===== */
   #start {
     position: fixed; inset: 0;
     background: #000;
@@ -108,676 +105,468 @@
     opacity: 0.5;
   }
 
-  #stage { position: fixed; inset: 0; overflow: hidden; }
-
-  .scene {
-    position: absolute; inset: 0;
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    padding: 5vh 5vw;
-    opacity: 0;
-    transition: opacity 1.4s ease;
-    pointer-events: none;
-  }
-  .scene.active { opacity: 1; pointer-events: auto; }
-
-  .photo-bg {
-    position: absolute; inset: 0;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    filter: sepia(0.35) contrast(1.05) brightness(0.55) saturate(0.7);
-    opacity: 0;
-    animation: photoIn 2.5s ease forwards;
-    animation-delay: 0.3s;
-  }
-  .photo-bg::after {
-    content: "";
-    position: absolute; inset: 0;
-    background:
-      radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.75) 100%),
-      linear-gradient(180deg, rgba(0,0,0,0.3) 0%, transparent 30%, transparent 70%, rgba(0,0,0,0.6) 100%);
-  }
-  @keyframes photoIn {
-    from { opacity: 0; transform: scale(1.08); }
-    to   { opacity: 1; transform: scale(1); }
+  /* ===== PANELS ===== */
+  .panel {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 8vh 5vw;
+    border-bottom: 1px solid rgba(201,165,90,0.1);
+    position: relative;
   }
 
-  .date {
-    font-family: var(--sans);
-    font-size: 0.8rem;
-    letter-spacing: 0.6em;
-    color: var(--warm);
-    text-transform: uppercase;
-    opacity: 0;
-    animation: fadeUp 2s ease forwards;
-    z-index: 5;
-  }
-  .scene.active .date { animation-delay: 0.4s; }
-
-  .title-word {
-    font-family: var(--serif);
-    font-size: clamp(4rem, 14vw, 11rem);
-    font-weight: 400;
-    letter-spacing: -0.03em;
-    line-height: 0.95;
-    opacity: 0;
-    animation: fadeUp 2.4s ease forwards;
-    animation-delay: 1.2s;
-    z-index: 5;
-    text-shadow: 0 2px 30px rgba(0,0,0,0.8);
-  }
-
-  .scene-caption {
-    font-family: var(--serif);
-    font-size: clamp(1.3rem, 2.4vw, 2rem);
-    text-align: center;
-    max-width: 800px;
-    line-height: 1.5;
-    color: var(--ink);
-    opacity: 0;
-    animation: fadeUp 2s ease forwards;
-    animation-delay: 0.8s;
-    z-index: 5;
-    text-shadow: 0 2px 12px rgba(0,0,0,0.9);
-  }
-  .scene-caption.late { animation-delay: 2.5s; }
-  .scene-caption .quiet { color: rgba(244,237,224,0.7); font-style: italic; display: block; margin-top: 1rem; font-size: 0.85em; }
-  .scene-caption .em { color: var(--warm); font-style: italic; }
-
-  .label {
+  .panel-eyebrow {
     font-family: var(--sans);
     font-size: 0.7rem;
     letter-spacing: 0.5em;
     text-transform: uppercase;
     color: var(--warm);
-    margin-bottom: 2.5rem;
+    margin-bottom: 1.5rem;
     opacity: 0;
-    animation: fadeUp 1.6s ease forwards;
-    animation-delay: 0.3s;
-    z-index: 5;
+    transition: opacity 1.2s ease;
   }
-
-  .caption-bar {
-    position: absolute;
-    bottom: 12vh;
-    left: 50%;
-    transform: translateX(-50%);
-    max-width: 80vw;
-    text-align: center;
-    z-index: 5;
-    opacity: 0;
-    animation: fadeUp 1.6s ease forwards;
-    animation-delay: 0.6s;
-  }
-  .caption-bar .who {
-    font-family: var(--sans);
-    font-size: 0.7rem;
-    letter-spacing: 0.35em;
-    color: var(--warm);
-    text-transform: uppercase;
-    margin-bottom: 0.6rem;
-  }
-  .caption-bar .said {
-    font-family: var(--serif);
-    font-size: clamp(1.4rem, 2.6vw, 2.1rem);
-    line-height: 1.35;
-    font-style: italic;
-    text-shadow: 0 2px 12px rgba(0,0,0,0.95);
-  }
-
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(18px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-
-  .timestamp {
-    font-family: var(--sans);
-    font-size: clamp(3rem, 8vw, 6rem);
-    font-weight: 200;
-    letter-spacing: 0.05em;
-    color: var(--warm);
-    margin-top: 2rem;
-    opacity: 0;
-    z-index: 5;
-    text-shadow: 0 4px 30px rgba(0,0,0,0.9);
-  }
-  .scene.active .timestamp {
-    animation: stampIn 1.5s ease forwards;
-    animation-delay: 1.5s;
-  }
-  @keyframes stampIn {
-    0%   { opacity: 0; letter-spacing: 0.3em; }
-    100% { opacity: 1; letter-spacing: 0.05em; }
-  }
-  .stamp-label {
-    font-family: var(--sans);
-    font-size: 0.8rem;
-    letter-spacing: 0.4em;
-    color: var(--ink);
-    text-transform: uppercase;
-    margin-top: 0.8rem;
-    opacity: 0;
-    z-index: 5;
-  }
-  .scene.active .stamp-label { animation: fadeUp 1.2s ease forwards; animation-delay: 2.3s; }
-
-  .end-name {
+  .panel-title {
     font-family: var(--serif);
     font-size: clamp(2.5rem, 6vw, 4.5rem);
     font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    max-width: 900px;
     opacity: 0;
-    animation: fadeUp 2s ease forwards;
+    transition: opacity 1.4s ease 0.2s, transform 1.4s ease 0.2s;
+    transform: translateY(20px);
+  }
+  .panel-title em { font-style: italic; color: var(--warm); }
+  .panel-lead {
+    font-family: var(--serif);
+    font-size: clamp(1.1rem, 1.7vw, 1.35rem);
+    text-align: center;
+    max-width: 700px;
+    color: rgba(244,237,224,0.85);
+    line-height: 1.6;
+    margin-bottom: 3rem;
+    opacity: 0;
+    transition: opacity 1.4s ease 0.4s, transform 1.4s ease 0.4s;
+    transform: translateY(20px);
+  }
+
+  .panel.in .panel-eyebrow,
+  .panel.in .panel-title,
+  .panel.in .panel-lead { opacity: 1; transform: translateY(0); }
+
+  /* ===== VIDEO FRAME ===== */
+  .video-frame {
+    width: 100%;
+    max-width: 1100px;
+    aspect-ratio: 16 / 9;
+    position: relative;
+    border: 1px solid rgba(201,165,90,0.35);
+    background: #000;
+    box-shadow:
+      0 0 0 1px rgba(0,0,0,0.6) inset,
+      0 30px 80px -20px rgba(0,0,0,0.8),
+      0 0 60px -20px rgba(201,165,90,0.25);
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 1.6s ease 0.4s, transform 1.6s ease 0.4s;
+    margin-bottom: 2.5rem;
+  }
+  .panel.in .video-frame { opacity: 1; transform: translateY(0); }
+  .video-frame::before {
+    content: "";
+    position: absolute;
+    top: -1px; left: -1px; right: -1px; bottom: -1px;
+    border: 4px solid rgba(0,0,0,0.6);
+    pointer-events: none;
+    z-index: 4;
+  }
+  .video-frame iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    border: 0;
+  }
+
+  .corner {
+    position: absolute;
+    width: 14px; height: 14px;
+    border: 1px solid var(--warm);
     z-index: 5;
   }
-  .end-years {
+  .corner.tl { top: -1px; left: -1px; border-right: 0; border-bottom: 0; }
+  .corner.tr { top: -1px; right: -1px; border-left: 0; border-bottom: 0; }
+  .corner.bl { bottom: -1px; left: -1px; border-right: 0; border-top: 0; }
+  .corner.br { bottom: -1px; right: -1px; border-left: 0; border-top: 0; }
+
+  /* ===== AFTER-VIDEO CAPTION ===== */
+  .panel-caption {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: clamp(1.1rem, 1.6vw, 1.35rem);
+    text-align: center;
+    max-width: 720px;
+    color: var(--grey);
+    line-height: 1.6;
+    opacity: 0;
+    transition: opacity 1.4s ease 0.8s, transform 1.4s ease 0.8s;
+    transform: translateY(20px);
+  }
+  .panel.in .panel-caption { opacity: 1; transform: translateY(0); }
+  .panel-caption .em { color: var(--warm); font-style: italic; }
+  .panel-caption strong { color: var(--ink); font-weight: 500; font-style: normal; }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--sans);
+    font-size: 0.65rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--grey);
+    animation: pulse 2s ease-in-out infinite;
+    opacity: 0.5;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 0.3; transform: translate(-50%, 0); }
+    50%      { opacity: 0.8; transform: translate(-50%, 6px); }
+  }
+
+  /* ===== END CARD ===== */
+  #end {
+    min-height: 80vh;
+    background: #000;
+    text-align: center;
+  }
+  #end .end-name {
+    font-family: var(--serif);
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 400;
+    margin-bottom: 0.3rem;
+  }
+  #end .end-years {
     color: var(--grey);
     font-style: italic;
-    margin-top: 0.5rem;
-    opacity: 0;
-    animation: fadeUp 2s ease forwards;
-    animation-delay: 1s;
-    z-index: 5;
   }
-  .nsm-mark {
-    margin-top: 5rem;
+  #end .nsm-mark {
+    margin-top: 4rem;
     font-family: var(--sans);
     font-size: 0.8rem;
     letter-spacing: 0.5em;
     color: var(--warm);
     text-transform: uppercase;
-    opacity: 0;
-    animation: fadeUp 2s ease forwards;
-    animation-delay: 2.5s;
-    z-index: 5;
   }
-  .nsm-mission {
+  #end .nsm-mission {
     margin-top: 0.8rem;
     color: var(--grey);
     font-style: italic;
-    opacity: 0;
-    animation: fadeUp 2s ease forwards;
-    animation-delay: 3.2s;
-    z-index: 5;
   }
 
-  .controls {
+  .reel-nav {
     position: fixed;
-    bottom: 1.5rem;
-    right: 1.5rem;
+    top: 0; left: 0; right: 0;
     z-index: 100;
+    padding: 1.25rem 2rem;
     display: flex;
-    gap: 0.5rem;
-    opacity: 0;
-    transition: opacity 0.4s ease;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(180deg, rgba(0,0,0,0.6) 0%, transparent 100%);
+    pointer-events: none;
   }
-  .controls.show { opacity: 0.6; }
-  .controls.show:hover { opacity: 1; }
-  .ctrl-btn {
-    background: rgba(0,0,0,0.7);
-    border: 1px solid rgba(201,165,90,0.4);
-    color: var(--warm);
-    font-family: var(--sans);
-    font-size: 0.65rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    padding: 0.5rem 0.9rem;
-    cursor: pointer;
-    backdrop-filter: blur(6px);
+  .reel-mark {
+    font-family: var(--serif);
+    font-size: 0.95rem;
+    letter-spacing: 0.05em;
+    color: var(--ink);
+    pointer-events: auto;
   }
-  .ctrl-btn:hover { background: rgba(201,165,90,0.15); }
-
-  .volume-indicator {
-    position: fixed;
-    top: 1rem;
-    left: 1.5rem;
-    z-index: 100;
+  .reel-mark em { color: var(--warm); font-style: italic; }
+  .reel-back {
     font-family: var(--sans);
-    font-size: 0.65rem;
+    font-size: 0.7rem;
     letter-spacing: 0.3em;
-    color: var(--warm);
     text-transform: uppercase;
-    opacity: 0;
-    transition: opacity 0.4s ease;
+    color: var(--grey);
+    text-decoration: none;
+    border: 1px solid rgba(201,165,90,0.3);
+    padding: 0.5rem 1rem;
+    transition: all 0.3s ease;
+    pointer-events: auto;
   }
-  .volume-indicator.show { opacity: 0.6; }
-  .volume-indicator .dot {
-    display: inline-block;
-    width: 8px; height: 8px;
-    background: var(--warm);
-    border-radius: 50%;
-    margin-right: 0.5rem;
-    animation: pulse 1.5s ease-in-out infinite;
-    vertical-align: middle;
-  }
-  @keyframes pulse {
-    0%, 100% { opacity: 0.3; }
-    50%      { opacity: 1; }
+  .reel-back:hover {
+    color: var(--warm);
+    border-color: var(--warm);
   }
 
-  .progress {
+  .chapters {
     position: fixed;
-    top: 0; left: 0;
-    height: 2px;
-    background: var(--warm);
-    z-index: 150;
-    transition: width 0.3s ease;
-    width: 0;
+    left: 1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 90;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    pointer-events: auto;
+  }
+  .chapter {
+    width: 26px;
+    font-family: var(--sans);
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    color: var(--grey);
+    text-align: right;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-right: 1px solid rgba(201,165,90,0.25);
+    padding-right: 0.4rem;
+    text-decoration: none;
+  }
+  .chapter.active {
+    color: var(--warm);
+    border-right-color: var(--warm);
+  }
+  .chapter:hover { color: var(--ink); }
+
+  @media (max-width: 700px) {
+    .chapters { display: none; }
+    .reel-nav { padding: 1rem; }
+    .panel { padding: 6vh 4vw; }
   }
 </style>
 </head>
 <body>
 
-<div class="vignette"></div>
-<div class="progress" id="progress"></div>
-<div class="volume-indicator" id="vol"><span class="dot"></span>Sound on</div>
-
+<!-- ===== START SCREEN ===== -->
 <div id="start">
   <div class="preroll">National Sports Museum &nbsp;·&nbsp; Episode I</div>
   <h1>Berlin 1936</h1>
-  <div class="sub">A cinematic vignette</div>
+  <div class="sub">A cinematic vignette in four parts</div>
   <button id="playBtn">Begin</button>
-  <div class="note">Turn sound up · ~3 minutes</div>
+  <div class="note">Best with sound · ~8 minutes</div>
 </div>
 
-<div id="stage">
-
-  <div class="scene" data-duration="5000">
-    <div class="date">August 3, 1936</div>
-  </div>
-
-  <div class="scene" data-duration="6000">
-    <div class="photo-bg" style="background-image: url('https://rarehistoricalphotos.com/wp-content/uploads/2026/02/jesse-owens-photos-09.webp');"></div>
-    <div class="title-word">BERLIN</div>
-  </div>
-
-  <div class="scene" data-duration="8000">
-    <div class="photo-bg" style="background-image: url('https://rarehistoricalphotos.com/wp-content/uploads/2026/02/jesse-owens-photos-08.webp');"></div>
-    <div class="scene-caption late">
-      One hundred ten thousand people.<br>
-      Forty-nine nations.<br>
-      <span class="quiet">The largest stadium ever built for an Olympic Games.</span>
-    </div>
-  </div>
-
-  <div class="scene" data-duration="8000">
-    <div class="photo-bg" style="background-image: url('https://rarehistoricalphotos.com/wp-content/uploads/2026/02/jesse-owens-photos-11.webp');"></div>
-    <div class="scene-caption">
-      A twenty-two-year-old from Oakville, Alabama is about to make the host country look very small in front of all of them.
-      <span class="quiet">His name is James Cleveland Owens. Everyone calls him Jesse.</span>
-    </div>
-  </div>
-
-  <div class="scene" data-duration="4500">
-    <div class="label">Event Three &nbsp;·&nbsp; The Hundred Metres</div>
-    <div class="title-word" style="font-size: clamp(2rem, 5vw, 3.5rem);">3:15 P.M.</div>
-  </div>
-
-  <div class="scene" data-duration="9000">
-    <div class="photo-bg" style="background-image: url('https://3.bp.blogspot.com/-fVbQ97CA1-c/V2a36Y_6nbI/AAAAAAAAKZs/LfdL9ZL6t5Y8rj-BrlzrkroyXiQQwHNdwCLcB/s1600/Jesse%2BOwens%2Bwins%2Bgold%2Bin%2BNazi%2BGermany%252C%2B1936%2B2.jpg');"></div>
-    <div class="timestamp">10.3</div>
-    <div class="stamp-label">seconds &nbsp;·&nbsp; gold</div>
-  </div>
-
-  <div class="scene" data-duration="7500">
-    <div class="photo-bg" style="background-image: url('https://rarehistoricalphotos.com/wp-content/uploads/2026/02/jesse-owens-photos-03.webp');"></div>
-    <div class="scene-caption">
-      The 100. The 200. The long jump. The 4×100.
-      <span class="quiet">Four gold medals in eight days. A record that holds for forty-eight years.</span>
-    </div>
-  </div>
-
-  <div class="scene" data-duration="9000">
-    <div class="photo-bg" style="background-image: url('https://2.bp.blogspot.com/-UtRuyTVv04A/U5lnaUbgKgI/AAAAAAAAJV4/FG6zdyVG5uI/s1600/Jesse+Owens+wins+gold+in+Nazi+Germany,+1936.jpg');"></div>
-    <div class="label" style="position: absolute; top: 8vh;">The Medal Ceremony</div>
-    <div class="scene-caption late" style="position: absolute; bottom: 12vh;">
-      He raises his hand. The American anthem plays.
-      <span class="quiet">Somewhere in a private box, a small man does not stand.</span>
-    </div>
-  </div>
-
-  <div class="scene" data-duration="9500">
-    <div class="photo-bg" style="background-image: url('https://rarehistoricalphotos.com/wp-content/uploads/2026/02/jesse-owens-photos-10.webp');"></div>
-    <div class="scene-caption">
-      A German athlete named Luz Long — the man who finished second in the long jump — walks across the field and embraces him.
-      <span class="quiet">They will write to each other until Long dies on the Italian front in 1943.</span>
-    </div>
-  </div>
-
-  <div class="scene" data-duration="9500">
-    <div class="photo-bg" style="background-image: url('https://rarehistoricalphotos.com/wp-content/uploads/2026/02/jesse-owens-photos-14.webp');"></div>
-    <div class="scene-caption">
-      <span class="em">"Hitler didn't snub me.</span><br>
-      <span class="em">It was our President who snubbed me."</span>
-      <span class="quiet">— Jesse Owens</span>
-    </div>
-  </div>
-
-  <div class="scene" data-duration="9000">
-    <div class="photo-bg" style="background-image: url('https://rarehistoricalphotos.com/wp-content/uploads/2026/02/jesse-owens-photos-15.webp');"></div>
-    <div class="scene-caption">
-      He came home with four gold medals.
-      <span class="quiet">And entered his own reception at the Waldorf Astoria through the back door.</span>
-    </div>
-  </div>
-
-  <div class="scene" data-duration="4500">
-    <div class="label">Ninety Years Later</div>
-    <div class="title-word" style="font-size: clamp(2rem, 5vw, 3.5rem);">A Track in Brooklyn.</div>
-  </div>
-
-  <div class="scene" data-duration="6000">
-    <div class="photo-bg" style="background-image: linear-gradient(180deg, #2a3528 0%, #1a2218 60%, #0d130c 100%); filter: none;"></div>
-    <div class="scene-caption late">
-      Four people are standing near the finish line at golden hour.
-      <span class="quiet">Two are us. Two are runners catching their breath.</span>
-    </div>
-  </div>
-
-  <div class="scene" data-duration="6500">
-    <div class="photo-bg" style="background: linear-gradient(180deg, #3a4530 0%, #1a2218 70%, #0d130c 100%); filter: none;"></div>
-    <div class="caption-bar">
-      <div class="who">Darius</div>
-      <div class="said">"Owens' story is wild. Hitler refused to shake his hand. Walked out of the stadium."</div>
-    </div>
-  </div>
-
-  <div class="scene" data-duration="8500">
-    <div class="photo-bg" style="background: linear-gradient(180deg, #3a4530 0%, #1a2218 70%, #0d130c 100%); filter: none;"></div>
-    <div class="caption-bar">
-      <div class="who">Dr. Niia Bishop</div>
-      <div class="said">"Actually — Hitler acknowledged every winner the day before. The IOC told him: all of them or none. He chose none. It wasn't personal to Jesse."</div>
-    </div>
-  </div>
-
-  <div class="scene" data-duration="5500">
-    <div class="photo-bg" style="background: linear-gradient(180deg, #3a4530 0%, #1a2218 70%, #0d130c 100%); filter: none;"></div>
-    <div class="caption-bar">
-      <div class="who">Marisol</div>
-      <div class="said">"Wait. So the Nazi wasn't the one who snubbed him?"</div>
-    </div>
-  </div>
-
-  <div class="scene" data-duration="9000">
-    <div class="photo-bg" style="background: linear-gradient(180deg, #3a4530 0%, #1a2218 70%, #0d130c 100%); filter: none;"></div>
-    <div class="caption-bar">
-      <div class="who">Adam Slocum</div>
-      <div class="said">"Roosevelt never sent a telegram. Never called. Owens entered his own reception at the Waldorf Astoria through the back door."</div>
-    </div>
-  </div>
-
-  <div class="scene" data-duration="5000">
-    <div class="photo-bg" style="background: linear-gradient(180deg, #3a4530 0%, #1a2218 70%, #0d130c 100%); filter: none;"></div>
-    <div class="caption-bar">
-      <div class="who">Darius</div>
-      <div class="said">"The American president."</div>
-    </div>
-  </div>
-
-  <div class="scene" data-duration="8000">
-    <div class="photo-bg" style="background: linear-gradient(180deg, #3a4530 0%, #1a2218 70%, #0d130c 100%); filter: none;"></div>
-    <div class="caption-bar">
-      <div class="who">Dr. Niia Bishop</div>
-      <div class="said">"It took thirty-nine years before a sitting president put a medal on his chest. Gerald Ford. 1976."</div>
-    </div>
-  </div>
-
-  <div class="scene" data-duration="9000">
-    <div class="scene-caption">
-      The handshake snub never happened.
-      <span class="quiet">It was invented by American sportswriters who needed a villain abroad so they wouldn't have to write about the one at home.</span>
-    </div>
-  </div>
-
-  <div class="scene" data-duration="5500">
-    <div class="photo-bg" style="background: linear-gradient(180deg, #3a4530 0%, #1a2218 70%, #0d130c 100%); filter: none;"></div>
-    <div class="caption-bar">
-      <div class="who">Marisol</div>
-      <div class="said">"That's the story nobody tells."</div>
-    </div>
-  </div>
-
-  <div class="scene" data-duration="7000">
-    <div class="photo-bg" style="background: linear-gradient(180deg, #3a4530 0%, #1a2218 70%, #0d130c 100%); filter: none;"></div>
-    <div class="caption-bar">
-      <div class="who">Dr. Niia Bishop</div>
-      <div class="said">"That's exactly why we're building the museum."</div>
-    </div>
-  </div>
-
-  <div class="scene" data-duration="12000">
-    <div class="end-name">Jesse Owens</div>
-    <div class="end-years">1913 — 1980</div>
-    <div class="nsm-mark">National Sports Museum</div>
-    <div class="nsm-mission">Sports Are for Every BODY.</div>
-  </div>
-
+<!-- ===== TOP NAV ===== -->
+<div class="reel-nav">
+  <div class="reel-mark">National Sports Museum <em>· Episode I</em></div>
+  <a href="index.html" class="reel-back">← Studio</a>
 </div>
 
-<div class="controls" id="controls">
-  <button class="ctrl-btn" id="prevBtn">◀ Prev</button>
-  <button class="ctrl-btn" id="pauseBtn">Pause</button>
-  <button class="ctrl-btn" id="nextBtn">Next ▶</button>
-  <button class="ctrl-btn" id="muteBtn">Mute</button>
-  <button class="ctrl-btn" id="restartBtn">↺ Restart</button>
-</div>
+<!-- ===== CHAPTERS ===== -->
+<nav class="chapters" aria-label="Chapters">
+  <a href="#panel-1" class="chapter" data-panel="1">I</a>
+  <a href="#panel-2" class="chapter" data-panel="2">II</a>
+  <a href="#panel-3" class="chapter" data-panel="3">III</a>
+  <a href="#panel-4" class="chapter" data-panel="4">IV</a>
+</nav>
+
+<!-- ===== PANEL I — CINEMATIC INTRO ===== -->
+<section class="panel" id="panel-1">
+  <div class="panel-eyebrow">Panel I &nbsp;·&nbsp; Cinematic</div>
+  <h2 class="panel-title">Berlin, <em>August 1936</em>.</h2>
+  <p class="panel-lead">
+    One hundred ten thousand people. Forty-nine nations. The largest stadium ever built
+    for an Olympic Games. And a twenty-two-year-old from Oakville, Alabama who is about
+    to make the host country look very small in front of all of them.
+  </p>
+
+  <div class="video-frame">
+    <span class="corner tl"></span><span class="corner tr"></span>
+    <span class="corner bl"></span><span class="corner br"></span>
+    <iframe
+      id="player-1"
+      src="https://www.youtube.com/embed/WbGqx6kn3Fc?enablejsapi=1&rel=0&modestbranding=1&playsinline=1"
+      title="NSM — Berlin 1936 — Panel I — Intro"
+      frameborder="0"
+      allow="autoplay; encrypted-media; picture-in-picture"
+      allowfullscreen></iframe>
+  </div>
+
+  <p class="panel-caption">
+    His name was James Cleveland Owens. <strong>Everyone called him Jesse.</strong>
+  </p>
+  <div class="scroll-hint">Scroll ↓</div>
+</section>
+
+<!-- ===== PANEL II — COMMENTARY ===== -->
+<section class="panel" id="panel-2">
+  <div class="panel-eyebrow">Panel II &nbsp;·&nbsp; Commentary</div>
+  <h2 class="panel-title">Two witnesses at the <em>event</em>.</h2>
+  <p class="panel-lead">
+    Dr. Niia Bishop and Adam Slocum &mdash; on location in period dress &mdash; set up
+    the story most people think they know, and the one almost no one does.
+  </p>
+
+  <div class="video-frame">
+    <span class="corner tl"></span><span class="corner tr"></span>
+    <span class="corner bl"></span><span class="corner br"></span>
+    <iframe
+      id="player-2"
+      src="https://www.youtube.com/embed/jAZ4Yk2jjio?enablejsapi=1&rel=0&modestbranding=1&playsinline=1"
+      title="NSM — Berlin 1936 — Panel II — Commentary"
+      frameborder="0"
+      allow="autoplay; encrypted-media; picture-in-picture"
+      allowfullscreen></iframe>
+  </div>
+
+  <p class="panel-caption">
+    "Most people remember this day for one thing. <span class="em">They remember it wrong.</span>"
+  </p>
+</section>
+
+<!-- ===== PANEL III — IMMERSIVE RACE ===== -->
+<section class="panel" id="panel-3">
+  <div class="panel-eyebrow">Panel III &nbsp;·&nbsp; Immersive</div>
+  <h2 class="panel-title">The <em>hundred metres</em>.</h2>
+  <p class="panel-lead">
+    Row eleven, west grandstand. A man two seats down holds a pocket watch open in his palm.
+    He is timing it himself &mdash; he does not trust the officials. The starter raises the pistol.
+  </p>
+
+  <div class="video-frame">
+    <span class="corner tl"></span><span class="corner tr"></span>
+    <span class="corner bl"></span><span class="corner br"></span>
+    <iframe
+      id="player-3"
+      src="https://www.youtube.com/embed/5fwQhGhTYfo?enablejsapi=1&rel=0&modestbranding=1&playsinline=1"
+      title="NSM — Berlin 1936 — Panel III — Race"
+      frameborder="0"
+      allow="autoplay; encrypted-media; picture-in-picture"
+      allowfullscreen></iframe>
+  </div>
+
+  <p class="panel-caption">
+    Ten point three seconds. <strong>Gold.</strong> &mdash;&nbsp;the first of four in eight days.
+    A record that holds for forty-eight years.
+  </p>
+</section>
+
+<!-- ===== PANEL IV — MODERN DISCUSSION ===== -->
+<section class="panel" id="panel-4">
+  <div class="panel-eyebrow">Panel IV &nbsp;·&nbsp; The Real Story</div>
+  <h2 class="panel-title">Ninety years later. <em>A track in Brooklyn.</em></h2>
+  <p class="panel-lead">
+    Two young runners &mdash; Darius and Marisol &mdash; carry the version of the story
+    everyone is taught: that Hitler refused to shake Jesse's hand. The version that lets
+    the country off the hook. Niia and Adam set the record straight.
+  </p>
+
+  <div class="video-frame">
+    <span class="corner tl"></span><span class="corner tr"></span>
+    <span class="corner bl"></span><span class="corner br"></span>
+    <iframe
+      id="player-4"
+      src="https://www.youtube.com/embed/ffVAHhUohYc?enablejsapi=1&rel=0&modestbranding=1&playsinline=1"
+      title="NSM — Berlin 1936 — Panel IV — Modern"
+      frameborder="0"
+      allow="autoplay; encrypted-media; picture-in-picture"
+      allowfullscreen></iframe>
+  </div>
+
+  <p class="panel-caption">
+    "Hitler didn't snub me. <span class="em">It was our President who snubbed me.</span>"
+    <br><strong>&mdash; Jesse Owens</strong>
+  </p>
+</section>
+
+<!-- ===== END ===== -->
+<section class="panel" id="end">
+  <div class="end-name">Jesse Owens</div>
+  <div class="end-years">1913 &mdash; 1980</div>
+  <div class="nsm-mark">National Sports Museum</div>
+  <div class="nsm-mission">Sports Are for Every BODY.</div>
+</section>
+
+<!-- YouTube IFrame API -->
+<script src="https://www.youtube.com/iframe_api"></script>
 
 <script>
-  let audioCtx, master, droneGain, arpGain, swellGain, started = false, muted = false;
+  // ===== YouTube IFrame API setup =====
+  const players = {};
+  let apiReady = false;
+  const playerIds = ['player-1', 'player-2', 'player-3', 'player-4'];
 
-  function initAudio() {
-    if (started) return;
-    started = true;
-    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    master = audioCtx.createGain();
-    master.gain.value = 0;
-    master.gain.linearRampToValueAtTime(0.55, audioCtx.currentTime + 2);
-    master.connect(audioCtx.destination);
-
-    droneGain = audioCtx.createGain();
-    droneGain.gain.value = 0.35;
-    droneGain.connect(master);
-
-    [73.42, 87.31, 110.00, 146.83].forEach((f, i) => {
-      const osc = audioCtx.createOscillator();
-      osc.type = i % 2 === 0 ? 'sine' : 'triangle';
-      osc.frequency.value = f;
-      const g = audioCtx.createGain();
-      g.gain.value = 0.18 - (i * 0.025);
-      const lfo = audioCtx.createOscillator();
-      lfo.frequency.value = 0.06 + i * 0.018;
-      const lfoGain = audioCtx.createGain();
-      lfoGain.gain.value = 0.05;
-      lfo.connect(lfoGain).connect(g.gain);
-      osc.connect(g).connect(droneGain);
-      osc.start();
-      lfo.start();
+  // Global handler called by the YouTube API once it's loaded
+  window.onYouTubeIframeAPIReady = function() {
+    playerIds.forEach((id, idx) => {
+      players[id] = new YT.Player(id, {
+        events: {
+          onReady: () => { apiReady = true; },
+          onStateChange: (event) => {
+            if (event.data === YT.PlayerState.ENDED) {
+              const nextId = idx === playerIds.length - 1 ? 'end' : `panel-${idx + 2}`;
+              const nextPanel = document.getElementById(nextId);
+              if (nextPanel) nextPanel.scrollIntoView({ behavior: 'smooth' });
+            }
+          }
+        }
+      });
     });
+  };
 
-    arpGain = audioCtx.createGain();
-    arpGain.gain.value = 0.4;
-    arpGain.connect(master);
-
-    const arpNotes = [293.66, 349.23, 440.00, 587.33, 440.00, 349.23];
-    let noteIndex = 0;
-    function playArpNote() {
-      if (!audioCtx || audioCtx.state === 'closed') return;
-      const freq = arpNotes[noteIndex % arpNotes.length];
-      const now = audioCtx.currentTime;
-      const o1 = audioCtx.createOscillator();
-      o1.type = 'sine';
-      o1.frequency.value = freq;
-      const o2 = audioCtx.createOscillator();
-      o2.type = 'sine';
-      o2.frequency.value = freq * 2;
-      const g = audioCtx.createGain();
-      g.gain.setValueAtTime(0, now);
-      g.gain.linearRampToValueAtTime(0.22, now + 0.04);
-      g.gain.exponentialRampToValueAtTime(0.001, now + 3.5);
-      const g2 = audioCtx.createGain();
-      g2.gain.value = 0.08;
-      o1.connect(g);
-      o2.connect(g2).connect(g);
-      g.connect(arpGain);
-      o1.start(now);
-      o2.start(now);
-      o1.stop(now + 4);
-      o2.stop(now + 4);
-      noteIndex++;
-      setTimeout(playArpNote, 2200 + Math.random() * 400);
-    }
-    setTimeout(playArpNote, 800);
-
-    swellGain = audioCtx.createGain();
-    swellGain.gain.value = 0;
-    swellGain.connect(master);
-  }
-
-  function crowdRoar(durationSec = 3) {
-    if (!audioCtx) return;
-    const bufferSize = audioCtx.sampleRate * (durationSec + 0.5);
-    const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
-    const data = buffer.getChannelData(0);
-    for (let i = 0; i < bufferSize; i++) {
-      const t = i / audioCtx.sampleRate;
-      const env = Math.min(1, t / 0.5) * Math.max(0, 1 - (t - 0.5) / durationSec);
-      data[i] = (Math.random() * 2 - 1) * env;
-    }
-    const noise = audioCtx.createBufferSource();
-    noise.buffer = buffer;
-    const filt = audioCtx.createBiquadFilter();
-    filt.type = 'bandpass';
-    filt.frequency.value = 600;
-    filt.Q.value = 0.8;
-    const ng = audioCtx.createGain();
-    ng.gain.value = 0.45;
-    noise.connect(filt).connect(ng).connect(master);
-    noise.start();
-  }
-
-  function pistolCrack() {
-    if (!audioCtx) return;
-    const now = audioCtx.currentTime;
-    const osc = audioCtx.createOscillator();
-    osc.frequency.setValueAtTime(220, now);
-    osc.frequency.exponentialRampToValueAtTime(40, now + 0.15);
-    const g = audioCtx.createGain();
-    g.gain.setValueAtTime(0.6, now);
-    g.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
-    osc.connect(g).connect(master);
-    osc.start(now);
-    osc.stop(now + 0.5);
-  }
-
-  function anthemSwell() {
-    if (!audioCtx) return;
-    const now = audioCtx.currentTime;
-    [233.08, 293.66, 349.23, 466.16].forEach((f, i) => {
-      const osc = audioCtx.createOscillator();
-      osc.type = 'sine';
-      osc.frequency.value = f;
-      const g = audioCtx.createGain();
-      g.gain.setValueAtTime(0, now);
-      g.gain.linearRampToValueAtTime(0.13 - i * 0.02, now + 2);
-      g.gain.linearRampToValueAtTime(0.13 - i * 0.02, now + 6);
-      g.gain.linearRampToValueAtTime(0, now + 9);
-      osc.connect(g).connect(master);
-      osc.start(now);
-      osc.stop(now + 9.5);
-    });
-  }
-
-  function reflectiveChord() {
-    if (!audioCtx) return;
-    const now = audioCtx.currentTime;
-    [220, 261.63, 329.63].forEach((f, i) => {
-      const osc = audioCtx.createOscillator();
-      osc.type = 'sine';
-      osc.frequency.value = f;
-      const g = audioCtx.createGain();
-      g.gain.setValueAtTime(0, now);
-      g.gain.linearRampToValueAtTime(0.1, now + 1.5);
-      g.gain.linearRampToValueAtTime(0.1, now + 5);
-      g.gain.linearRampToValueAtTime(0, now + 8);
-      osc.connect(g).connect(master);
-      osc.start(now);
-      osc.stop(now + 8.5);
-    });
-  }
-
-  const scenes = document.querySelectorAll('.scene');
-  const progress = document.getElementById('progress');
-  const total = scenes.length;
-  let current = -1, timer = null, paused = false;
-
-  function show(idx) {
-    if (idx < 0 || idx >= total) return;
-    scenes.forEach(s => s.classList.remove('active'));
-    current = idx;
-    const scene = scenes[idx];
-    void scene.offsetWidth;
-    scene.classList.add('active');
-    progress.style.width = ((idx + 1) / total * 100) + '%';
-    handleAudioCue(idx);
-    if (paused) return;
-    const dur = parseInt(scene.dataset.duration || '5000', 10);
-    clearTimeout(timer);
-    timer = setTimeout(() => show(idx + 1), dur);
-  }
-
-  function handleAudioCue(idx) {
-    if (idx === 5) {
-      setTimeout(() => pistolCrack(), 700);
-      setTimeout(() => crowdRoar(3.5), 800);
-    }
-    if (idx === 7) setTimeout(anthemSwell, 800);
-    if (idx === 9) setTimeout(reflectiveChord, 600);
-    if (idx === 19) setTimeout(reflectiveChord, 400);
-    if (idx === 22) setTimeout(anthemSwell, 1500);
-  }
-
+  // ===== START SCREEN =====
   document.getElementById('playBtn').addEventListener('click', () => {
     document.getElementById('start').classList.add('hide');
-    initAudio();
-    setTimeout(() => show(0), 600);
-    document.getElementById('controls').classList.add('show');
-    document.getElementById('vol').classList.add('show');
+    setTimeout(() => {
+      document.getElementById('panel-1').scrollIntoView({ behavior: 'smooth' });
+      // Try to start panel 1's video — user gesture covers autoplay-with-sound
+      setTimeout(() => {
+        if (players['player-1'] && players['player-1'].playVideo) {
+          players['player-1'].playVideo();
+        }
+      }, 800);
+    }, 600);
   });
 
-  document.getElementById('nextBtn').addEventListener('click', () => {
-    clearTimeout(timer);
-    show(Math.min(current + 1, total - 1));
-  });
-  document.getElementById('prevBtn').addEventListener('click', () => {
-    clearTimeout(timer);
-    show(Math.max(current - 1, 0));
-  });
-  document.getElementById('pauseBtn').addEventListener('click', (e) => {
-    paused = !paused;
-    e.target.textContent = paused ? 'Play' : 'Pause';
-    if (paused) clearTimeout(timer);
-    else {
-      const dur = parseInt(scenes[current].dataset.duration || '5000', 10);
-      timer = setTimeout(() => show(current + 1), dur * 0.4);
-    }
-  });
-  document.getElementById('restartBtn').addEventListener('click', () => {
-    clearTimeout(timer);
-    show(0);
-  });
-  document.getElementById('muteBtn').addEventListener('click', (e) => {
-    if (!master) return;
-    muted = !muted;
-    master.gain.linearRampToValueAtTime(muted ? 0 : 0.55, audioCtx.currentTime + 0.3);
-    e.target.textContent = muted ? 'Unmute' : 'Mute';
-    document.getElementById('vol').style.opacity = muted ? '0' : '0.6';
-  });
+  // ===== FADE-IN PANELS + AUTO-PLAY VIDEO ON ENTER =====
+  const panels = document.querySelectorAll('.panel');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('in');
+        const iframe = e.target.querySelector('iframe');
+        if (iframe && players[iframe.id] && players[iframe.id].playVideo) {
+          players[iframe.id].playVideo();
+        }
+      } else {
+        // Pause when scrolled away — no audio bleed between panels
+        const iframe = e.target.querySelector('iframe');
+        if (iframe && players[iframe.id] && players[iframe.id].pauseVideo) {
+          players[iframe.id].pauseVideo();
+        }
+      }
+    });
+  }, { threshold: 0.35 });
+  panels.forEach(p => obs.observe(p));
 
+  // ===== CHAPTER MARKERS — highlight active panel =====
+  const chapters = document.querySelectorAll('.chapter');
+  const chapterObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const idx = e.target.id.split('-')[1];
+        chapters.forEach(c => c.classList.toggle('active', c.dataset.panel === idx));
+      }
+    });
+  }, { threshold: 0.5 });
+  panels.forEach(p => { if (p.id.startsWith('panel-')) chapterObs.observe(p); });
+
+  // ===== KEYBOARD =====
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowRight') document.getElementById('nextBtn').click();
-    if (e.key === 'ArrowLeft')  document.getElementById('prevBtn').click();
-    if (e.key === ' ')          { e.preventDefault(); document.getElementById('pauseBtn').click(); }
-    if (e.key === 'm' || e.key === 'M') document.getElementById('muteBtn').click();
+    if (e.key === 'ArrowDown' || e.key === 'PageDown') {
+      const cur = [...panels].find(p => {
+        const r = p.getBoundingClientRect();
+        return r.top >= -50 && r.top < 100;
+      });
+      if (cur && cur.nextElementSibling) cur.nextElementSibling.scrollIntoView({ behavior: 'smooth' });
+    }
   });
 </script>
 
