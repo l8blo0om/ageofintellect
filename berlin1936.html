@@ -111,10 +111,17 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    padding: 8vh 5vw;
+    justify-content: flex-start;
+    padding: 14vh 5vw 10vh;
     border-bottom: 1px solid rgba(201,165,90,0.1);
     position: relative;
+  }
+  .panel-inner {
+    width: 100%;
+    max-width: 1100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   .panel-eyebrow {
@@ -143,11 +150,11 @@
   .panel-title em { font-style: italic; color: var(--warm); }
   .panel-lead {
     font-family: var(--serif);
-    font-size: clamp(1.1rem, 1.7vw, 1.35rem);
+    font-size: clamp(1.15rem, 1.7vw, 1.35rem);
     text-align: center;
-    max-width: 700px;
-    color: rgba(244,237,224,0.85);
-    line-height: 1.6;
+    max-width: 720px;
+    color: rgba(244,237,224,0.88);
+    line-height: 1.65;
     margin-bottom: 3rem;
     opacity: 0;
     transition: opacity 1.4s ease 0.4s, transform 1.4s ease 0.4s;
@@ -157,6 +164,41 @@
   .panel.in .panel-eyebrow,
   .panel.in .panel-title,
   .panel.in .panel-lead { opacity: 1; transform: translateY(0); }
+
+  /* ===== STATS BAR ===== */
+  .stats {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 2rem 0 3rem;
+    opacity: 0;
+    transition: opacity 1.4s ease 0.5s, transform 1.4s ease 0.5s;
+    transform: translateY(20px);
+  }
+  .panel.in .stats { opacity: 1; transform: translateY(0); }
+  .stat {
+    text-align: center;
+    min-width: 130px;
+  }
+  .stat .num {
+    font-family: var(--serif);
+    font-size: clamp(2rem, 3.5vw, 2.8rem);
+    font-weight: 300;
+    color: var(--warm);
+    letter-spacing: -0.02em;
+    line-height: 1;
+    display: block;
+  }
+  .stat .lbl {
+    font-family: var(--sans);
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--grey);
+    margin-top: 0.6rem;
+    display: block;
+  }
 
   /* ===== VIDEO FRAME ===== */
   .video-frame {
@@ -173,7 +215,7 @@
     opacity: 0;
     transform: translateY(30px);
     transition: opacity 1.6s ease 0.4s, transform 1.6s ease 0.4s;
-    margin-bottom: 2.5rem;
+    margin-bottom: 3rem;
   }
   .panel.in .video-frame { opacity: 1; transform: translateY(0); }
   .video-frame::before {
@@ -204,22 +246,79 @@
   .corner.bl { bottom: -1px; left: -1px; border-right: 0; border-top: 0; }
   .corner.br { bottom: -1px; right: -1px; border-left: 0; border-top: 0; }
 
-  /* ===== AFTER-VIDEO CAPTION ===== */
-  .panel-caption {
-    font-family: var(--serif);
-    font-style: italic;
-    font-size: clamp(1.1rem, 1.6vw, 1.35rem);
-    text-align: center;
-    max-width: 720px;
-    color: var(--grey);
-    line-height: 1.6;
+  /* ===== AFTER-VIDEO CONTENT ===== */
+  .panel-context {
+    width: 100%;
+    max-width: 820px;
+    margin-top: 1rem;
     opacity: 0;
-    transition: opacity 1.4s ease 0.8s, transform 1.4s ease 0.8s;
+    transition: opacity 1.4s ease 0.6s, transform 1.4s ease 0.6s;
     transform: translateY(20px);
   }
-  .panel.in .panel-caption { opacity: 1; transform: translateY(0); }
-  .panel-caption .em { color: var(--warm); font-style: italic; }
-  .panel-caption strong { color: var(--ink); font-weight: 500; font-style: normal; }
+  .panel.in .panel-context { opacity: 1; transform: translateY(0); }
+
+  .panel-prose {
+    font-family: var(--serif);
+    font-size: clamp(1.05rem, 1.5vw, 1.2rem);
+    color: rgba(244,237,224,0.85);
+    line-height: 1.7;
+    margin-bottom: 1.8rem;
+  }
+  .panel-prose em { color: var(--warm); font-style: italic; }
+  .panel-prose strong { color: var(--ink); font-weight: 500; }
+
+  .pullquote {
+    border-left: 2px solid var(--warm);
+    padding: 0.4rem 0 0.4rem 1.5rem;
+    margin: 2rem 0;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: clamp(1.2rem, 1.8vw, 1.5rem);
+    color: var(--ink);
+    line-height: 1.5;
+  }
+  .pullquote .src {
+    display: block;
+    margin-top: 1rem;
+    font-family: var(--sans);
+    font-style: normal;
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--warm);
+  }
+
+  .timeline {
+    border-top: 1px solid rgba(201,165,90,0.2);
+    border-bottom: 1px solid rgba(201,165,90,0.2);
+    padding: 1.5rem 0;
+    margin: 2.5rem 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.2rem 2rem;
+  }
+  .timeline-row {
+    display: grid;
+    grid-template-columns: 60px 1fr;
+    gap: 1rem;
+    align-items: baseline;
+  }
+  .timeline-year {
+    font-family: var(--sans);
+    font-size: 0.85rem;
+    color: var(--warm);
+    letter-spacing: 0.05em;
+    font-weight: 500;
+  }
+  .timeline-event {
+    font-family: var(--serif);
+    font-size: 0.95rem;
+    color: rgba(244,237,224,0.8);
+    line-height: 1.45;
+  }
+  @media (max-width: 700px) {
+    .timeline { grid-template-columns: 1fr; }
+  }
 
   .scroll-hint {
     position: absolute;
@@ -241,7 +340,7 @@
 
   /* ===== END CARD ===== */
   #end {
-    min-height: 80vh;
+    min-height: 90vh;
     background: #000;
     text-align: center;
   }
@@ -254,9 +353,19 @@
   #end .end-years {
     color: var(--grey);
     font-style: italic;
+    margin-bottom: 3rem;
+  }
+  #end .coda {
+    max-width: 600px;
+    font-family: var(--serif);
+    font-style: italic;
+    color: rgba(244,237,224,0.75);
+    line-height: 1.7;
+    font-size: 1.05rem;
+    margin: 0 auto 4rem;
   }
   #end .nsm-mark {
-    margin-top: 4rem;
+    margin-top: 2rem;
     font-family: var(--sans);
     font-size: 0.8rem;
     letter-spacing: 0.5em;
@@ -268,7 +377,17 @@
     color: var(--grey);
     font-style: italic;
   }
+  #end .next-ep {
+    margin-top: 5rem;
+    font-family: var(--sans);
+    font-size: 0.65rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--grey);
+    opacity: 0.6;
+  }
 
+  /* ===== NAV / CHAPTERS ===== */
   .reel-nav {
     position: fixed;
     top: 0; left: 0; right: 0;
@@ -338,7 +457,9 @@
   @media (max-width: 700px) {
     .chapters { display: none; }
     .reel-nav { padding: 1rem; }
-    .panel { padding: 6vh 4vw; }
+    .panel { padding: 10vh 4vw 6vh; }
+    .stats { gap: 1rem; }
+    .stat { min-width: 100px; }
   }
 </style>
 </head>
@@ -350,7 +471,7 @@
   <h1>Berlin 1936</h1>
   <div class="sub">A cinematic vignette in four parts</div>
   <button id="playBtn">Begin</button>
-  <div class="note">Best with sound · ~8 minutes</div>
+  <div class="note">Best with sound · ~10 minutes</div>
 </div>
 
 <!-- ===== TOP NAV ===== -->
@@ -369,131 +490,279 @@
 
 <!-- ===== PANEL I — CINEMATIC INTRO ===== -->
 <section class="panel" id="panel-1">
-  <div class="panel-eyebrow">Panel I &nbsp;·&nbsp; Cinematic</div>
-  <h2 class="panel-title">Berlin, <em>August 1936</em>.</h2>
-  <p class="panel-lead">
-    One hundred ten thousand people. Forty-nine nations. The largest stadium ever built
-    for an Olympic Games. And a twenty-two-year-old from Oakville, Alabama who is about
-    to make the host country look very small in front of all of them.
-  </p>
+  <div class="panel-inner">
+    <div class="panel-eyebrow">Panel I &nbsp;·&nbsp; Cinematic</div>
+    <h2 class="panel-title">Berlin, <em>August 1936</em>.</h2>
+    <p class="panel-lead">
+      The largest stadium ever built for an Olympic Games. Forty-nine nations.
+      One hundred ten thousand seats — and a twenty-two-year-old from Oakville,
+      Alabama who is about to make the host country look very small in front of all of them.
+    </p>
 
-  <div class="video-frame">
-    <span class="corner tl"></span><span class="corner tr"></span>
-    <span class="corner bl"></span><span class="corner br"></span>
-    <iframe
-      id="player-1"
-      src="https://www.youtube.com/embed/WbGqx6kn3Fc?enablejsapi=1&rel=0&modestbranding=1&playsinline=1"
-      title="NSM — Berlin 1936 — Panel I — Intro"
-      frameborder="0"
-      allow="autoplay; encrypted-media; picture-in-picture"
-      allowfullscreen></iframe>
+    <div class="stats">
+      <div class="stat"><span class="num">110,000</span><span class="lbl">Spectators</span></div>
+      <div class="stat"><span class="num">49</span><span class="lbl">Nations</span></div>
+      <div class="stat"><span class="num">3,963</span><span class="lbl">Athletes</span></div>
+      <div class="stat"><span class="num">1</span><span class="lbl">Sharecropper's son</span></div>
+    </div>
+
+    <div class="video-frame">
+      <span class="corner tl"></span><span class="corner tr"></span>
+      <span class="corner bl"></span><span class="corner br"></span>
+      <iframe
+        id="player-1"
+        src="https://www.youtube.com/embed/WbGqx6kn3Fc?enablejsapi=1&rel=0&modestbranding=1&playsinline=1"
+        title="NSM — Berlin 1936 — Panel I — Intro"
+        frameborder="0"
+        allow="autoplay; encrypted-media; picture-in-picture"
+        allowfullscreen></iframe>
+    </div>
+
+    <div class="panel-context">
+      <p class="panel-prose">
+        Hitler had spent <strong>$25 million</strong> turning Berlin into a stage set. Anti-Semitic
+        posters were taken down. Buildings were whitewashed. The city was rehearsed,
+        polished, and held its pose. The Reichssportfeld — designed by Werner March,
+        built into the Grunewald hillside — was the centerpiece. Granite, limestone,
+        Olympic rings cast in bronze. The Games were meant as a coronation of
+        Aryan supremacy in front of the entire world.
+      </p>
+
+      <p class="panel-prose">
+        James Cleveland Owens — son of a sharecropper, grandson of a slave —
+        had stepped off the SS Manhattan three weeks earlier. He was 22 years old.
+        He had eight individual NCAA titles, more than anyone in history.
+        He could not, in many parts of his own country, sit at the front of a bus
+        or stay in a white-only hotel. <em>He had come to run anyway.</em>
+      </p>
+
+      <div class="pullquote">
+        "Everyone called him Jesse."
+        <span class="src">— A schoolteacher in Cleveland, 1922</span>
+      </div>
+    </div>
+    <div class="scroll-hint">Scroll ↓</div>
   </div>
-
-  <p class="panel-caption">
-    His name was James Cleveland Owens. <strong>Everyone called him Jesse.</strong>
-  </p>
-  <div class="scroll-hint">Scroll ↓</div>
 </section>
 
 <!-- ===== PANEL II — COMMENTARY ===== -->
 <section class="panel" id="panel-2">
-  <div class="panel-eyebrow">Panel II &nbsp;·&nbsp; Commentary</div>
-  <h2 class="panel-title">Two witnesses at the <em>event</em>.</h2>
-  <p class="panel-lead">
-    Dr. Niia Bishop and Adam Slocum &mdash; on location in period dress &mdash; set up
-    the story most people think they know, and the one almost no one does.
-  </p>
+  <div class="panel-inner">
+    <div class="panel-eyebrow">Panel II &nbsp;·&nbsp; Commentary</div>
+    <h2 class="panel-title">Two witnesses at the <em>event</em>.</h2>
+    <p class="panel-lead">
+      Dr. Niia Bishop and Adam Slocum — on location in period dress —
+      set up the story most people think they know, and the one almost no one does.
+      The eight days that broke a regime's myth, and a country's promise.
+    </p>
 
-  <div class="video-frame">
-    <span class="corner tl"></span><span class="corner tr"></span>
-    <span class="corner bl"></span><span class="corner br"></span>
-    <iframe
-      id="player-2"
-      src="https://www.youtube.com/embed/jAZ4Yk2jjio?enablejsapi=1&rel=0&modestbranding=1&playsinline=1"
-      title="NSM — Berlin 1936 — Panel II — Commentary"
-      frameborder="0"
-      allow="autoplay; encrypted-media; picture-in-picture"
-      allowfullscreen></iframe>
+    <div class="video-frame">
+      <span class="corner tl"></span><span class="corner tr"></span>
+      <span class="corner bl"></span><span class="corner br"></span>
+      <iframe
+        id="player-2"
+        src="https://www.youtube.com/embed/jAZ4Yk2jjio?enablejsapi=1&rel=0&modestbranding=1&playsinline=1"
+        title="NSM — Berlin 1936 — Panel II — Commentary"
+        frameborder="0"
+        allow="autoplay; encrypted-media; picture-in-picture"
+        allowfullscreen></iframe>
+    </div>
+
+    <div class="panel-context">
+      <p class="panel-prose">
+        Before the gun goes off, you need to know who is watching, and what
+        they came expecting to see. The American team almost wasn't there at all —
+        the NAACP had urged a boycott, and Owens himself initially supported
+        withdrawal. Avery Brundage, head of the American Olympic Committee,
+        called the boycotters <em>"un-American agitators."</em> The team sailed.
+      </p>
+
+      <div class="pullquote">
+        "Most people remember this day for one thing. They remember it <em>wrong</em>."
+        <span class="src">— Dr. Niia Bishop</span>
+      </div>
+
+      <p class="panel-prose">
+        The story everyone has been told is simple: Hitler refused to shake
+        Jesse Owens' hand. He walked out of the stadium. He could not bear
+        to acknowledge a Black man's victory. <strong>This story is not true.</strong>
+        Not the way it's been told. What actually happened is more complicated,
+        and ultimately more damning — for a different country.
+      </p>
+    </div>
   </div>
-
-  <p class="panel-caption">
-    "Most people remember this day for one thing. <span class="em">They remember it wrong.</span>"
-  </p>
 </section>
 
 <!-- ===== PANEL III — IMMERSIVE RACE ===== -->
 <section class="panel" id="panel-3">
-  <div class="panel-eyebrow">Panel III &nbsp;·&nbsp; Immersive</div>
-  <h2 class="panel-title">The <em>hundred metres</em>.</h2>
-  <p class="panel-lead">
-    Row eleven, west grandstand. A man two seats down holds a pocket watch open in his palm.
-    He is timing it himself &mdash; he does not trust the officials. The starter raises the pistol.
-  </p>
+  <div class="panel-inner">
+    <div class="panel-eyebrow">Panel III &nbsp;·&nbsp; Immersive</div>
+    <h2 class="panel-title">The <em>hundred metres</em>.</h2>
+    <p class="panel-lead">
+      Row eleven, west grandstand. A man two seats down holds a pocket watch
+      open in his palm. He is timing it himself — he does not trust the officials.
+      The starter raises the pistol. The stadium folds itself into a single, low hum.
+    </p>
 
-  <div class="video-frame">
-    <span class="corner tl"></span><span class="corner tr"></span>
-    <span class="corner bl"></span><span class="corner br"></span>
-    <iframe
-      id="player-3"
-      src="https://www.youtube.com/embed/5fwQhGhTYfo?enablejsapi=1&rel=0&modestbranding=1&playsinline=1"
-      title="NSM — Berlin 1936 — Panel III — Race"
-      frameborder="0"
-      allow="autoplay; encrypted-media; picture-in-picture"
-      allowfullscreen></iframe>
+    <div class="video-frame">
+      <span class="corner tl"></span><span class="corner tr"></span>
+      <span class="corner bl"></span><span class="corner br"></span>
+      <iframe
+        id="player-3"
+        src="https://www.youtube.com/embed/5fwQhGhTYfo?enablejsapi=1&rel=0&modestbranding=1&playsinline=1"
+        title="NSM — Berlin 1936 — Panel III — Race"
+        frameborder="0"
+        allow="autoplay; encrypted-media; picture-in-picture"
+        allowfullscreen></iframe>
+    </div>
+
+    <div class="panel-context">
+      <div class="stats">
+        <div class="stat"><span class="num">10.3s</span><span class="lbl">100 metres</span></div>
+        <div class="stat"><span class="num">20.7s</span><span class="lbl">200 metres</span></div>
+        <div class="stat"><span class="num">8.06m</span><span class="lbl">Long jump</span></div>
+        <div class="stat"><span class="num">39.8s</span><span class="lbl">4 × 100 relay</span></div>
+      </div>
+
+      <p class="panel-prose">
+        Four gold medals in eight days. A record that holds for <strong>forty-eight years</strong>,
+        until Carl Lewis matches it in Los Angeles in 1984. The crowd — one hundred
+        thousand Germans, told for years what to believe about the people Owens came from —
+        chanted his name. <em>"Yes-say O-vens. Yes-say O-vens."</em>
+      </p>
+
+      <div class="pullquote">
+        "When I came back to my native country, after all the stories about Hitler,
+        I couldn't ride in the front of the bus. I had to go to the back door.
+        I couldn't live where I wanted."
+        <span class="src">— Jesse Owens</span>
+      </div>
+
+      <p class="panel-prose">
+        And in the middle of the long-jump competition — when Owens had fouled
+        his first two attempts and was one bad jump from elimination — a German
+        athlete named <strong>Luz Long</strong> walked over and suggested he take off
+        from six inches behind the board. Owens qualified. Long finished second.
+        Owens won gold. Long crossed the field, embraced him in full view of Hitler's
+        box, and walked him on a victory lap arm in arm. <em>They wrote to each other
+        for seven years</em>, until Long was killed in Sicily in 1943.
+      </p>
+    </div>
   </div>
-
-  <p class="panel-caption">
-    Ten point three seconds. <strong>Gold.</strong> &mdash;&nbsp;the first of four in eight days.
-    A record that holds for forty-eight years.
-  </p>
 </section>
 
 <!-- ===== PANEL IV — MODERN DISCUSSION ===== -->
 <section class="panel" id="panel-4">
-  <div class="panel-eyebrow">Panel IV &nbsp;·&nbsp; The Real Story</div>
-  <h2 class="panel-title">Ninety years later. <em>A track in Brooklyn.</em></h2>
-  <p class="panel-lead">
-    Two young runners &mdash; Darius and Marisol &mdash; carry the version of the story
-    everyone is taught: that Hitler refused to shake Jesse's hand. The version that lets
-    the country off the hook. Niia and Adam set the record straight.
-  </p>
+  <div class="panel-inner">
+    <div class="panel-eyebrow">Panel IV &nbsp;·&nbsp; The Real Story</div>
+    <h2 class="panel-title">Ninety years later. <em>A track in Brooklyn.</em></h2>
+    <p class="panel-lead">
+      Two young runners — Darius and Marisol — carry the version of the story
+      everyone is taught: that Hitler refused to shake Jesse's hand. The version
+      that lets the country off the hook. Niia and Adam set the record straight.
+    </p>
 
-  <div class="video-frame">
-    <span class="corner tl"></span><span class="corner tr"></span>
-    <span class="corner bl"></span><span class="corner br"></span>
-    <iframe
-      id="player-4"
-      src="https://www.youtube.com/embed/ffVAHhUohYc?enablejsapi=1&rel=0&modestbranding=1&playsinline=1"
-      title="NSM — Berlin 1936 — Panel IV — Modern"
-      frameborder="0"
-      allow="autoplay; encrypted-media; picture-in-picture"
-      allowfullscreen></iframe>
+    <div class="video-frame">
+      <span class="corner tl"></span><span class="corner tr"></span>
+      <span class="corner bl"></span><span class="corner br"></span>
+      <iframe
+        id="player-4"
+        src="https://www.youtube.com/embed/ffVAHhUohYc?enablejsapi=1&rel=0&modestbranding=1&playsinline=1"
+        title="NSM — Berlin 1936 — Panel IV — Modern"
+        frameborder="0"
+        allow="autoplay; encrypted-media; picture-in-picture"
+        allowfullscreen></iframe>
+    </div>
+
+    <div class="panel-context">
+      <p class="panel-prose">
+        Here is what actually happened. Hitler congratulated the German winners
+        from his box on Day 1 of the Games. Olympic officials told him: <em>all of them
+        or none.</em> He chose none. By the time Owens won the 100 metres on Day 2,
+        Hitler was no longer publicly receiving any victor. It wasn't personal.
+        Owens, by his own account, was waved at by Hitler from across the stadium —
+        and waved back.
+      </p>
+
+      <div class="pullquote">
+        "Hitler didn't snub me. <em>It was our President who snubbed me.</em>
+        The President didn't even send me a telegram."
+        <span class="src">— Jesse Owens</span>
+      </div>
+
+      <p class="panel-prose">
+        Franklin Roosevelt never called. Never wrote. Never invited Owens to the
+        White House. When Owens returned to a ticker-tape parade in New York,
+        he and his family could not find a hotel in Manhattan that would take them.
+        He entered his own reception at the Waldorf Astoria <strong>through the
+        service entrance</strong> — because the front door was off-limits to Black guests.
+        The four-time gold medalist took the freight elevator to his own banquet.
+      </p>
+
+      <div class="timeline">
+        <div class="timeline-row">
+          <span class="timeline-year">1936</span>
+          <span class="timeline-event">Four gold medals in Berlin. No telegram from FDR.</span>
+        </div>
+        <div class="timeline-row">
+          <span class="timeline-year">1937</span>
+          <span class="timeline-event">Owens races horses for money at Negro League halftimes.</span>
+        </div>
+        <div class="timeline-row">
+          <span class="timeline-year">1943</span>
+          <span class="timeline-event">Luz Long dies in Sicily. Last letter arrives weeks later.</span>
+        </div>
+        <div class="timeline-row">
+          <span class="timeline-year">1955</span>
+          <span class="timeline-event">Eisenhower names Owens an "Ambassador of Sport."</span>
+        </div>
+        <div class="timeline-row">
+          <span class="timeline-year">1976</span>
+          <span class="timeline-event">Gerald Ford awards Presidential Medal of Freedom — 40 years late.</span>
+        </div>
+        <div class="timeline-row">
+          <span class="timeline-year">1980</span>
+          <span class="timeline-event">Owens dies of lung cancer, Tucson, Arizona. He was 66.</span>
+        </div>
+      </div>
+
+      <p class="panel-prose">
+        The handshake snub never happened. <em>The story was invented by American
+        sportswriters</em> who needed a villain abroad so they wouldn't have to write
+        about the one at home. Berlin loved Jesse Owens. America made him take
+        the back door of a hotel in his own honor.
+      </p>
+    </div>
   </div>
-
-  <p class="panel-caption">
-    "Hitler didn't snub me. <span class="em">It was our President who snubbed me.</span>"
-    <br><strong>&mdash; Jesse Owens</strong>
-  </p>
 </section>
 
 <!-- ===== END ===== -->
 <section class="panel" id="end">
-  <div class="end-name">Jesse Owens</div>
-  <div class="end-years">1913 &mdash; 1980</div>
-  <div class="nsm-mark">National Sports Museum</div>
-  <div class="nsm-mission">Sports Are for Every BODY.</div>
+  <div class="panel-inner">
+    <div class="end-name">Jesse Owens</div>
+    <div class="end-years">1913 &mdash; 1980</div>
+
+    <p class="coda">
+      He once said <em>"the battles that count aren't the ones for gold medals.
+      The struggles within yourself — the invisible, inevitable battles inside
+      all of us — that's where it's at."</em>
+    </p>
+
+    <div class="nsm-mark">National Sports Museum</div>
+    <div class="nsm-mission">Sports Are for Every BODY.</div>
+
+    <div class="next-ep">Episode II &nbsp;·&nbsp; Miracle on Ice, 1980 &nbsp;·&nbsp; Coming Soon</div>
+  </div>
 </section>
 
 <!-- YouTube IFrame API -->
 <script src="https://www.youtube.com/iframe_api"></script>
 
 <script>
-  // ===== YouTube IFrame API setup =====
   const players = {};
   let apiReady = false;
   const playerIds = ['player-1', 'player-2', 'player-3', 'player-4'];
 
-  // Global handler called by the YouTube API once it's loaded
   window.onYouTubeIframeAPIReady = function() {
     playerIds.forEach((id, idx) => {
       players[id] = new YT.Player(id, {
@@ -511,12 +780,10 @@
     });
   };
 
-  // ===== START SCREEN =====
   document.getElementById('playBtn').addEventListener('click', () => {
     document.getElementById('start').classList.add('hide');
     setTimeout(() => {
       document.getElementById('panel-1').scrollIntoView({ behavior: 'smooth' });
-      // Try to start panel 1's video — user gesture covers autoplay-with-sound
       setTimeout(() => {
         if (players['player-1'] && players['player-1'].playVideo) {
           players['player-1'].playVideo();
@@ -525,7 +792,6 @@
     }, 600);
   });
 
-  // ===== FADE-IN PANELS + AUTO-PLAY VIDEO ON ENTER =====
   const panels = document.querySelectorAll('.panel');
   const obs = new IntersectionObserver((entries) => {
     entries.forEach(e => {
@@ -536,17 +802,15 @@
           players[iframe.id].playVideo();
         }
       } else {
-        // Pause when scrolled away — no audio bleed between panels
         const iframe = e.target.querySelector('iframe');
         if (iframe && players[iframe.id] && players[iframe.id].pauseVideo) {
           players[iframe.id].pauseVideo();
         }
       }
     });
-  }, { threshold: 0.35 });
+  }, { threshold: 0.25 });
   panels.forEach(p => obs.observe(p));
 
-  // ===== CHAPTER MARKERS — highlight active panel =====
   const chapters = document.querySelectorAll('.chapter');
   const chapterObs = new IntersectionObserver((entries) => {
     entries.forEach(e => {
@@ -558,7 +822,6 @@
   }, { threshold: 0.5 });
   panels.forEach(p => { if (p.id.startsWith('panel-')) chapterObs.observe(p); });
 
-  // ===== KEYBOARD =====
   document.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowDown' || e.key === 'PageDown') {
       const cur = [...panels].find(p => {
