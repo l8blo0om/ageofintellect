@@ -168,10 +168,10 @@
   /* ===== STATS BAR ===== */
   .stats {
     display: flex;
-    gap: 2rem;
+    gap: 3rem;
     justify-content: center;
     flex-wrap: wrap;
-    margin: 2rem 0 3rem;
+    margin: 3rem 0 4rem;
     opacity: 0;
     transition: opacity 1.4s ease 0.5s, transform 1.4s ease 0.5s;
     transform: translateY(20px);
@@ -179,11 +179,11 @@
   .panel.in .stats { opacity: 1; transform: translateY(0); }
   .stat {
     text-align: center;
-    min-width: 130px;
+    min-width: 180px;
   }
   .stat .num {
     font-family: var(--serif);
-    font-size: clamp(2rem, 3.5vw, 2.8rem);
+    font-size: clamp(3.5rem, 6vw, 5.5rem);
     font-weight: 300;
     color: var(--warm);
     letter-spacing: -0.02em;
@@ -192,11 +192,11 @@
   }
   .stat .lbl {
     font-family: var(--sans);
-    font-size: 0.65rem;
-    letter-spacing: 0.3em;
+    font-size: 0.85rem;
+    letter-spacing: 0.35em;
     text-transform: uppercase;
     color: var(--grey);
-    margin-top: 0.6rem;
+    margin-top: 1rem;
     display: block;
   }
 
@@ -386,6 +386,34 @@
     color: var(--grey);
     opacity: 0.6;
   }
+  #end .hosts-credit {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(201,165,90,0.18);
+    max-width: 540px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  #end .hosts-credit .role {
+    font-family: var(--sans);
+    font-size: 0.65rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--warm);
+    margin-bottom: 1rem;
+  }
+  #end .hosts-credit .host-line {
+    font-family: var(--serif);
+    font-size: 1rem;
+    color: var(--ink);
+    line-height: 1.5;
+    margin-bottom: 0.4rem;
+  }
+  #end .hosts-credit .host-line .aff {
+    font-style: italic;
+    color: var(--grey);
+    font-size: 0.9rem;
+  }
 
   /* ===== NAV / CHAPTERS ===== */
   .reel-nav {
@@ -458,8 +486,8 @@
     .chapters { display: none; }
     .reel-nav { padding: 1rem; }
     .panel { padding: 10vh 4vw 6vh; }
-    .stats { gap: 1rem; }
-    .stat { min-width: 100px; }
+    .stats { gap: 1.5rem; }
+    .stat { min-width: 130px; }
   }
 </style>
 </head>
@@ -467,7 +495,7 @@
 
 <!-- ===== START SCREEN ===== -->
 <div id="start">
-  <div class="preroll">National Sports Museum &nbsp;·&nbsp; Episode I</div>
+  <div class="preroll">National Sports Museum</div>
   <h1>Berlin 1936</h1>
   <div class="sub">A cinematic vignette in four parts</div>
   <button id="playBtn">Begin</button>
@@ -476,7 +504,7 @@
 
 <!-- ===== TOP NAV ===== -->
 <div class="reel-nav">
-  <div class="reel-mark">National Sports Museum <em>· Episode I</em></div>
+  <div class="reel-mark">National Sports Museum</div>
   <a href="index.html" class="reel-back">← Studio</a>
 </div>
 
@@ -532,8 +560,9 @@
         James Cleveland Owens — son of a sharecropper, grandson of a slave —
         had stepped off the SS Manhattan three weeks earlier. He was 22 years old.
         He had eight individual NCAA titles, more than anyone in history.
-        He could not, in many parts of his own country, sit at the front of a bus
-        or stay in a white-only hotel. <em>He had come to run anyway.</em>
+        In many parts of his own country, he could not be born in the same hospital,
+        swear on the same Bible, or be buried in the same ground as the neighbors he
+        lived among. <em>He had come to run anyway.</em>
       </p>
 
       <div class="pullquote">
@@ -661,7 +690,7 @@
     <p class="panel-lead">
       Two young runners &mdash; Darius and Marisol &mdash; carry the version of the
       story everyone is taught: that Hitler refused to shake Jesse's hand. The version
-      that lets the country off the hook. Dr. Niia Bishop sets the record straight.
+      that lets the country off the hook. Niia Bishop, PhD sets the record straight.
     </p>
 
     <div class="video-frame">
@@ -677,15 +706,6 @@
     </div>
 
     <div class="panel-context">
-      <p class="panel-prose">
-        Here is what actually happened. Hitler congratulated the German winners
-        from his box on Day 1 of the Games. Olympic officials told him: <em>all of them
-        or none.</em> He chose none. By the time Owens won the 100 metres on Day 2,
-        Hitler was no longer publicly receiving any victor. It wasn't personal.
-        Owens, by his own account, was waved at by Hitler from across the stadium —
-        and waved back.
-      </p>
-
       <div class="pullquote">
         "Hitler didn't snub me. <em>It was our President who snubbed me.</em>
         The President didn't even send me a telegram."
@@ -729,36 +749,21 @@
       </div>
 
       <p class="panel-prose">
-        The handshake snub never happened. The story was invented by American
-        sportswriters who needed a simpler villain &mdash; and it stuck for ninety
-        years because the truer version is harder to hold.
-      </p>
-
-      <p class="panel-prose">
-        What is astonishing is what a single moment in sport can hold at once.
-        <strong>History. Culture. Identity. World politics. And the small,
-        almost unbearable kindness of one human being helping another.</strong>
-        <em>All of it stacked into eight days in Berlin in 1936.</em>
-      </p>
-
-      <p class="panel-prose">
         A sharecropper's son from Oakville, Alabama wins his first gold because
-        his German competitor crosses the field and gives him advice. They embrace
-        in front of Hitler's box. They write each other for seven years, until
-        a war ends the correspondence. Owens comes home and cannot enter his own
-        banquet through the front door.
+        his German competitor helps him. They embrace in front of Hitler's box.
+        They write each other for seven years, until a war ends it. Owens comes
+        home and cannot enter his own banquet through the front door.
       </p>
 
       <p class="panel-prose">
-        That's the irony. And it's also the beauty. <em>In the country that was
-        supposed to hate him, he found a friend. In the country that was supposed
-        to love him, he found the service elevator.</em>
+        The country that was supposed to hate him gave him a friend.
+        <em>The country that was supposed to love him gave him the service elevator.</em>
+        That's the irony &mdash; and the beauty.
       </p>
 
       <p class="panel-prose">
-        Sport doesn't fix the world. <strong>It shows us &mdash; clearly &mdash;
-        what is actually there. And what is actually there is always more than
-        one thing at once.</strong>
+        Sport doesn't fix the world. <strong>It shows us what is there. And what
+        is there is always more than one thing at once.</strong>
       </p>
     </div>
   </div>
@@ -779,7 +784,11 @@
     <div class="nsm-mark">National Sports Museum</div>
     <div class="nsm-mission">Sports Are for Every BODY.</div>
 
-    <div class="next-ep">Episode II &nbsp;·&nbsp; Miracle on Ice, 1980 &nbsp;·&nbsp; Coming Soon</div>
+    <div class="hosts-credit">
+      <div class="role">Hosts</div>
+      <div class="host-line">Niia Bishop, PhD &nbsp;·&nbsp; <span class="aff">University of Michigan</span></div>
+      <div class="host-line">Adam Slocum &nbsp;·&nbsp; <span class="aff">Founder, National Sports Museum</span></div>
+    </div>
   </div>
 </section>
 
@@ -812,23 +821,18 @@
     document.getElementById('start').classList.add('hide');
     setTimeout(() => {
       document.getElementById('panel-1').scrollIntoView({ behavior: 'smooth' });
-      setTimeout(() => {
-        if (players['player-1'] && players['player-1'].playVideo) {
-          players['player-1'].playVideo();
-        }
-      }, 800);
     }, 600);
   });
 
+  // Fade-in panels on scroll. Videos do NOT auto-play — viewer clicks each one.
+  // Videos still auto-pause when scrolled away (so audio doesn't bleed between panels
+  // if a viewer started one and then scrolled), and the next panel still auto-scrolls
+  // into view when a video ends.
   const panels = document.querySelectorAll('.panel');
   const obs = new IntersectionObserver((entries) => {
     entries.forEach(e => {
       if (e.isIntersecting) {
         e.target.classList.add('in');
-        const iframe = e.target.querySelector('iframe');
-        if (iframe && players[iframe.id] && players[iframe.id].playVideo) {
-          players[iframe.id].playVideo();
-        }
       } else {
         const iframe = e.target.querySelector('iframe');
         if (iframe && players[iframe.id] && players[iframe.id].pauseVideo) {
