@@ -226,23 +226,6 @@
     display: block;
     border: 0;
   }
-  /* Shroud — covers YouTube's title overlay at the top of each iframe.
-     Hidden by default so the play button is unobstructed; fades in on hover
-     when YouTube would otherwise render the title and channel name. */
-  .video-frame .shroud-top {
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 72px;
-    background: linear-gradient(180deg,
-      rgba(0,0,0,1) 0%,
-      rgba(0,0,0,0.95) 55%,
-      rgba(0,0,0,0) 100%);
-    z-index: 3;
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.25s ease;
-  }
-  .video-frame:hover .shroud-top { opacity: 1; }
 
   .corner {
     position: absolute;
@@ -541,9 +524,17 @@
     <div class="panel-eyebrow">Panel I &nbsp;·&nbsp; Cinematic</div>
     <h2 class="panel-title">Berlin, <em>August 1936</em>.</h2>
     <p class="panel-lead">
-      A summer Hitler intended as a coronation. The world is here.
-      A twenty-two-year-old from Oakville, Alabama is about to make it
-      rethink what it thought it knew.
+      Adolf Hitler had paused his plans for a coronation ceremony to welcome the
+      entire world to his nation for the 11th Olympic Games. Germans of all classes
+      and over 150,000 foreigners of means were watching in person, another 162,000
+      urban Germans in Berlin and Potsdam watched via live broadcast, and people
+      from countless nations were tuned in to their radios. Hitler's book Mein Kampf
+      had called it "a sin against all reason to train a born half-ape." A
+      twenty-two-year-old from Oakville, Alabama was set to prove to everyone
+      with eyes to see and ears to hear that he was not half-ape, nor three-fifths
+      of a man. He was all man &mdash; maybe even Superman during those games. And his
+      one-in-a-million talent represented millions of black bodies yearning for
+      recognition of their humanity.
     </p>
 
     <div class="stats">
@@ -556,7 +547,6 @@
     <div class="video-frame">
       <span class="corner tl"></span><span class="corner tr"></span>
       <span class="corner bl"></span><span class="corner br"></span>
-      <div class="shroud-top"></div>
       <iframe
         id="player-1"
         src="https://www.youtube.com/embed/JWsyG3tQwK8?enablejsapi=1&rel=0&modestbranding=1&playsinline=1"
@@ -607,7 +597,6 @@
     <div class="video-frame">
       <span class="corner tl"></span><span class="corner tr"></span>
       <span class="corner bl"></span><span class="corner br"></span>
-      <div class="shroud-top"></div>
       <iframe
         id="player-2"
         src="https://www.youtube.com/embed/slTranZXm58?enablejsapi=1&rel=0&modestbranding=1&playsinline=1"
@@ -619,17 +608,29 @@
 
     <div class="panel-context">
       <p class="panel-prose">
-        Before the gun goes off, you need to know who is watching, and what
-        they came expecting to see. The American team almost wasn't there at all —
-        the NAACP had urged a boycott, and Owens himself initially supported
-        withdrawal. Avery Brundage, head of the American Olympic Committee,
-        called the boycotters <em>"un-American agitators."</em> The team sailed.
+        The American team almost didn't go to Berlin at all. The Nuremberg
+        Laws &mdash; the Nazi statutes that stripped German Jews of citizenship
+        and outlawed marriages between Jews and non-Jews &mdash; had been on the
+        books for nearly a year. Jewish athletes had been systematically barred
+        from training facilities, sports clubs, even from competing for their own
+        country. The NAACP and several American Jewish organizations urged a
+        boycott. Owens himself, briefly, agreed. <em>"If there are minorities in
+        Germany who are being discriminated against,"</em> he said publicly,
+        <em>"the United States should withdraw from the 1936 Olympics."</em>
+      </p>
+
+      <p class="panel-prose">
+        Avery Brundage, head of the American Olympic Committee, was unmoved.
+        He sailed to Germany to look into the rumors himself, was hosted by
+        Nazi officials, and reported back that the persecution had been exaggerated.
+        He called the boycott supporters <em>"un-American agitators."</em>
+        <strong>The team sailed.</strong>
       </p>
 
       <p class="panel-prose">
         The story everyone has been told is simple: Hitler refused to shake
         Jesse Owens' hand. He walked out of the stadium. He could not bear
-        to acknowledge a Black man's victory. <strong>This story is not true.</strong>
+        to acknowledge an African-American man's victory. <strong>This story is not true.</strong>
         Not the way it's been told. What actually happened is more complicated,
         and ultimately more revealing &mdash; about a different country.
       </p>
@@ -651,7 +652,6 @@
     <div class="video-frame">
       <span class="corner tl"></span><span class="corner tr"></span>
       <span class="corner bl"></span><span class="corner br"></span>
-      <div class="shroud-top"></div>
       <iframe
         id="player-3"
         src="https://www.youtube.com/embed/YO0XdnrQnBw?enablejsapi=1&rel=0&modestbranding=1&playsinline=1"
@@ -712,7 +712,6 @@
     <div class="video-frame">
       <span class="corner tl"></span><span class="corner tr"></span>
       <span class="corner bl"></span><span class="corner br"></span>
-      <div class="shroud-top"></div>
       <iframe
         id="player-4"
         src="https://www.youtube.com/embed/TE7N1aMH_i0?enablejsapi=1&rel=0&modestbranding=1&playsinline=1"
@@ -734,7 +733,7 @@
         White House. When Owens returned to a ticker-tape parade in New York,
         he and his family could not find a hotel in Manhattan that would take them.
         He entered his own reception at the Waldorf Astoria <strong>through the
-        service entrance</strong> — because the front door was off-limits to Black guests.
+        service entrance</strong> &mdash; because the front door was off-limits to African-American guests.
         The four-time gold medalist took the freight elevator to his own banquet.
       </p>
 
@@ -793,9 +792,9 @@
     <div class="end-years">1913 &mdash; 1980</div>
 
     <p class="coda">
-      He once said <em>"the battles that count aren't the ones for gold medals.
-      The struggles within yourself — the invisible, inevitable battles inside
-      all of us — that's where it's at."</em>
+      He once said <em>"the battles that count aren't the ones for gold medals.<br>
+      The struggles within yourself &mdash; the invisible, inevitable battles inside
+      all of us &mdash; that's where it's at."</em>
     </p>
 
     <a href="http://www.VNSM.US" target="_blank" rel="noopener" class="nsm-mark">National Sports Museum</a>
