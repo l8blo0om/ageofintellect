@@ -3,16 +3,25 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Berlin 1936 — National Sports Museum</title>
+<title>Miracle on Ice 1980 — National Sports Museum</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- ============================================================ -->
+<!--  YOUTUBE IDs — REPLACE THESE WHEN VIDEOS ARE READY            -->
+<!--  Search for MIRACLE_INTRO_ID, MIRACLE_COMMENTARY_ID,          -->
+<!--  MIRACLE_GAME_ID, and MIRACLE_MODERN_ID below and swap        -->
+<!--  in the 11-character YouTube IDs.                             -->
+<!-- ============================================================ -->
+
 <style>
   :root {
     --ink: #f4ede0;
-    --paper: #0a0908;
+    --paper: #050810;
     --warm: #c9a55a;
-    --blood: #8b1a1a;
+    --ice: #6fa8d6;
+    --blood: #b8202b;
     --grey: #8a8074;
     --serif: 'Fraunces', Georgia, serif;
     --sans: 'Manrope', Helvetica, Arial, sans-serif;
@@ -72,6 +81,8 @@
     font-weight: 400;
     letter-spacing: -0.02em;
     margin-bottom: 0.5rem;
+    text-align: center;
+    line-height: 1;
   }
   #start .sub {
     color: var(--grey);
@@ -168,10 +179,10 @@
   /* ===== STATS BAR ===== */
   .stats {
     display: flex;
-    gap: 3rem;
+    gap: 2rem;
     justify-content: center;
     flex-wrap: wrap;
-    margin: 3rem 0 4rem;
+    margin: 2rem 0 3rem;
     opacity: 0;
     transition: opacity 1.4s ease 0.5s, transform 1.4s ease 0.5s;
     transform: translateY(20px);
@@ -179,11 +190,11 @@
   .panel.in .stats { opacity: 1; transform: translateY(0); }
   .stat {
     text-align: center;
-    min-width: 180px;
+    min-width: 130px;
   }
   .stat .num {
     font-family: var(--serif);
-    font-size: clamp(3.5rem, 6vw, 5.5rem);
+    font-size: clamp(2rem, 3.5vw, 2.8rem);
     font-weight: 300;
     color: var(--warm);
     letter-spacing: -0.02em;
@@ -192,11 +203,11 @@
   }
   .stat .lbl {
     font-family: var(--sans);
-    font-size: 0.85rem;
-    letter-spacing: 0.35em;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
     text-transform: uppercase;
     color: var(--grey);
-    margin-top: 1rem;
+    margin-top: 0.6rem;
     display: block;
   }
 
@@ -234,23 +245,6 @@
     display: block;
     border: 0;
   }
-  /* Shroud — covers YouTube's title overlay at the top of each iframe.
-     Hidden by default so the play button is unobstructed; fades in on hover
-     when YouTube would otherwise render the title and channel name. */
-  .video-frame .shroud-top {
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 72px;
-    background: linear-gradient(180deg,
-      rgba(0,0,0,1) 0%,
-      rgba(0,0,0,0.95) 55%,
-      rgba(0,0,0,0) 100%);
-    z-index: 3;
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.25s ease;
-  }
-  .video-frame:hover .shroud-top { opacity: 1; }
 
   .corner {
     position: absolute;
@@ -305,6 +299,46 @@
     color: var(--warm);
   }
 
+  .iconic-call {
+    border: 1px solid rgba(201,165,90,0.4);
+    background: rgba(201,165,90,0.05);
+    padding: 1.8rem 2rem;
+    margin: 2rem 0;
+    font-family: var(--serif);
+    text-align: center;
+  }
+  .iconic-call .countdown {
+    font-family: var(--sans);
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    color: var(--warm);
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+  .iconic-call .line {
+    font-style: italic;
+    font-size: clamp(1.3rem, 2vw, 1.7rem);
+    color: var(--ink);
+    line-height: 1.4;
+  }
+  .iconic-call .yes {
+    display: block;
+    margin-top: 1rem;
+    font-style: normal;
+    font-weight: 500;
+    color: var(--warm);
+    letter-spacing: 0.05em;
+    font-size: clamp(1.8rem, 3vw, 2.5rem);
+  }
+  .iconic-call .attrib {
+    margin-top: 1.2rem;
+    font-family: var(--sans);
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    color: var(--grey);
+    text-transform: uppercase;
+  }
+
   .timeline {
     border-top: 1px solid rgba(201,165,90,0.2);
     border-bottom: 1px solid rgba(201,165,90,0.2);
@@ -335,6 +369,40 @@
   }
   @media (max-width: 700px) {
     .timeline { grid-template-columns: 1fr; }
+  }
+
+  .scoreboard {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+    margin: 2.5rem 0;
+    padding: 1.5rem 2rem;
+    border: 1px solid rgba(201,165,90,0.3);
+    background: rgba(0,0,0,0.3);
+    font-family: var(--sans);
+  }
+  .scoreboard .team {
+    text-align: center;
+  }
+  .scoreboard .team-name {
+    font-size: 0.7rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--grey);
+    margin-bottom: 0.5rem;
+  }
+  .scoreboard .team-score {
+    font-family: var(--serif);
+    font-size: clamp(2.5rem, 4vw, 3.5rem);
+    font-weight: 300;
+    color: var(--ink);
+  }
+  .scoreboard .team-score.win { color: var(--warm); }
+  .scoreboard .divider {
+    color: var(--grey);
+    font-size: 1.2rem;
+    opacity: 0.5;
   }
 
   .scroll-hint {
@@ -402,34 +470,6 @@
     text-transform: uppercase;
     color: var(--grey);
     opacity: 0.6;
-  }
-  #end .hosts-credit {
-    margin-top: 3rem;
-    padding-top: 2rem;
-    border-top: 1px solid rgba(201,165,90,0.18);
-    max-width: 540px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  #end .hosts-credit .role {
-    font-family: var(--sans);
-    font-size: 0.65rem;
-    letter-spacing: 0.4em;
-    text-transform: uppercase;
-    color: var(--warm);
-    margin-bottom: 1rem;
-  }
-  #end .hosts-credit .host-line {
-    font-family: var(--serif);
-    font-size: 1rem;
-    color: var(--ink);
-    line-height: 1.5;
-    margin-bottom: 0.4rem;
-  }
-  #end .hosts-credit .host-line .aff {
-    font-style: italic;
-    color: var(--grey);
-    font-size: 0.9rem;
   }
 
   /* ===== NAV / CHAPTERS ===== */
@@ -503,8 +543,9 @@
     .chapters { display: none; }
     .reel-nav { padding: 1rem; }
     .panel { padding: 10vh 4vw 6vh; }
-    .stats { gap: 1.5rem; }
-    .stat { min-width: 130px; }
+    .stats { gap: 1rem; }
+    .stat { min-width: 100px; }
+    .scoreboard { gap: 1.5rem; padding: 1rem; }
   }
 </style>
 </head>
@@ -513,7 +554,7 @@
 <!-- ===== START SCREEN ===== -->
 <div id="start">
   <div class="preroll">National Sports Museum</div>
-  <h1>Berlin 1936</h1>
+  <h1>Miracle on Ice<br>1980</h1>
   <div class="sub">A cinematic vignette in four parts</div>
   <button id="playBtn">Begin</button>
   <div class="note">Best with sound · ~10 minutes</div>
@@ -537,55 +578,37 @@
 <section class="panel" id="panel-1">
   <div class="panel-inner">
     <div class="panel-eyebrow">Panel I &nbsp;·&nbsp; Cinematic</div>
-    <h2 class="panel-title">Berlin, <em>August 1936</em>.</h2>
+    <h2 class="panel-title">Lake Placid. <em>February 22, 1980</em>.</h2>
     <p class="panel-lead">
-      A summer Hitler intended as a coronation. The world is here.
-      A twenty-two-year-old from Oakville, Alabama is about to make
-      the host country look very small in front of all of them.
+      A small town in the Adirondacks. An 8,500-seat arena.
+      And twenty college kids no one expected to win.
     </p>
 
     <div class="stats">
-      <div class="stat"><span class="num">110,000</span><span class="lbl">Spectators</span></div>
-      <div class="stat"><span class="num">49</span><span class="lbl">Nations</span></div>
-      <div class="stat"><span class="num">3,963</span><span class="lbl">Athletes</span></div>
-      <div class="stat"><span class="num">1</span><span class="lbl">Sharecropper's son</span></div>
+      <div class="stat"><span class="num">21</span><span class="lbl">US avg. age</span></div>
+      <div class="stat"><span class="num">8,500</span><span class="lbl">Arena seats</span></div>
+      <div class="stat"><span class="num">4</span><span class="lbl">Soviet golds in a row</span></div>
+      <div class="stat"><span class="num">110</span><span class="lbl">Days in Iran</span></div>
     </div>
 
     <div class="video-frame">
       <span class="corner tl"></span><span class="corner tr"></span>
       <span class="corner bl"></span><span class="corner br"></span>
-      <div class="shroud-top"></div>
       <iframe
         id="player-1"
-        src="https://www.youtube.com/embed/JWsyG3tQwK8?enablejsapi=1&rel=0&modestbranding=1&playsinline=1"
-        title="NSM — Berlin 1936 — Panel I — Intro"
+        src="https://www.youtube.com/embed/MIRACLE_INTRO_ID?enablejsapi=1&rel=0&modestbranding=1&playsinline=1"
+        title="NSM — Miracle on Ice — Panel I — Intro"
         frameborder="0"
         allow="autoplay; encrypted-media; picture-in-picture"
         allowfullscreen></iframe>
     </div>
 
     <div class="panel-context">
-      <p class="panel-prose">
-        Hitler had spent <strong>$25 million</strong> turning Berlin into a stage set. Anti-Semitic
-        posters were taken down. Buildings were whitewashed. The city was rehearsed,
-        polished, and held its pose. The Reichssportfeld — designed by Werner March,
-        built into the Grunewald hillside — was the centerpiece. Granite, limestone,
-        Olympic rings cast in bronze. The Games were meant as a coronation of
-        Aryan supremacy in front of the entire world.
-      </p>
-
-      <p class="panel-prose">
-        James Cleveland Owens — son of a sharecropper, grandson of a slave —
-        had stepped off the SS Manhattan three weeks earlier. He was 22 years old.
-        He had eight individual NCAA titles, more than anyone in history.
-        In many parts of his own country, he could not be born in the same hospital,
-        swear on the same Bible, or be buried in the same ground as the neighbors he
-        lived among. <em>He had come to run anyway.</em>
-      </p>
-
       <div class="pullquote">
-        "Everyone called him Jesse."
-        <span class="src">— A schoolteacher in Cleveland, 1922</span>
+        "Great moments are born from great opportunity, and that's what you have
+        here tonight, boys. If we played 'em ten times, they might win nine.
+        <em>But not this game. Not tonight.</em>"
+        <span class="src">— Herb Brooks, locker room, before puck drop</span>
       </div>
     </div>
     <div class="scroll-hint">Scroll ↓</div>
@@ -596,21 +619,21 @@
 <section class="panel" id="panel-2">
   <div class="panel-inner">
     <div class="panel-eyebrow">Panel II &nbsp;·&nbsp; Commentary</div>
-    <h2 class="panel-title">Two witnesses at the <em>event</em>.</h2>
+    <h2 class="panel-title">A witness outside the <em>arena</em>.</h2>
     <p class="panel-lead">
-      Dr. Niia Bishop and Adam Slocum — on location in period dress —
-      set up the story most people think they know, and the one almost no one does.
-      The eight days that broke a regime's myth, and a country's promise.
+      Adam Slocum &mdash; on location in a wool overcoat, Games program in hand,
+      breath visible in the cold &mdash; explains how a team of college amateurs
+      and minor leaguers ended up on the ice across from the closest thing
+      sport has ever produced to a dynasty.
     </p>
 
     <div class="video-frame">
       <span class="corner tl"></span><span class="corner tr"></span>
       <span class="corner bl"></span><span class="corner br"></span>
-      <div class="shroud-top"></div>
       <iframe
         id="player-2"
-        src="https://www.youtube.com/embed/slTranZXm58?enablejsapi=1&rel=0&modestbranding=1&playsinline=1"
-        title="NSM — Berlin 1936 — Panel II — Commentary"
+        src="https://www.youtube.com/embed/MIRACLE_COMMENTARY_ID?enablejsapi=1&rel=0&modestbranding=1&playsinline=1"
+        title="NSM — Miracle on Ice — Panel II — Commentary"
         frameborder="0"
         allow="autoplay; encrypted-media; picture-in-picture"
         allowfullscreen></iframe>
@@ -618,85 +641,101 @@
 
     <div class="panel-context">
       <p class="panel-prose">
-        Before the gun goes off, you need to know who is watching, and what
-        they came expecting to see. The American team almost wasn't there at all —
-        the NAACP had urged a boycott, and Owens himself initially supported
-        withdrawal. Avery Brundage, head of the American Olympic Committee,
-        called the boycotters <em>"un-American agitators."</em> The team sailed.
+        Herb Brooks &mdash; the coach &mdash; had been the last man cut from the
+        1960 US Olympic team that won gold in Squaw Valley. He carried that for
+        twenty years. When he was given the 1980 team, he did not pick the
+        best twenty Americans available. <em>He picked the right twenty.</em>
+        Conditioned them past exhaustion. Made them hate him so they would not
+        hate each other. Ran them through what came to be called <strong>"Herbies"</strong> —
+        end-to-end sprints that did not stop until somebody threw up.
       </p>
 
       <div class="pullquote">
-        "Most people remember this day for one thing. They remember it <em>wrong</em>."
-        <span class="src">— Dr. Niia Bishop</span>
+        "The legs feed the wolf, gentlemen. <em>The legs feed the wolf.</em>"
+        <span class="src">— Herb Brooks</span>
       </div>
 
       <p class="panel-prose">
-        The story everyone has been told is simple: Hitler refused to shake
-        Jesse Owens' hand. He walked out of the stadium. He could not bear
-        to acknowledge a Black man's victory. <strong>This story is not true.</strong>
-        Not the way it's been told. What actually happened is more complicated,
-        and ultimately more damning — for a different country.
+        The Soviet team had played together for a decade. Soldiers on paper.
+        Professionals in practice. <strong>Vladislav Tretiak</strong> in goal —
+        widely considered the best goaltender in the world. Boris Mikhailov,
+        Valeri Kharlamov, Sergei Makarov on the wings. They had not lost a
+        meaningful international match in years. They were not afraid of
+        twenty college kids. They had no reason to be.
       </p>
     </div>
   </div>
 </section>
 
-<!-- ===== PANEL III — IMMERSIVE RACE ===== -->
+<!-- ===== PANEL III — IMMERSIVE GAME ===== -->
 <section class="panel" id="panel-3">
   <div class="panel-inner">
     <div class="panel-eyebrow">Panel III &nbsp;·&nbsp; Immersive</div>
-    <h2 class="panel-title">The <em>hundred metres</em>.</h2>
+    <h2 class="panel-title">On the <em>ice</em>.</h2>
     <p class="panel-lead">
-      Row eleven, west grandstand. A man two seats down holds a pocket watch
-      open in his palm. He is timing it himself — he does not trust the officials.
-      The starter raises the pistol. The stadium folds itself into a single, low hum.
+      You are standing at center ice in your regular clothes. The game roars around you.
+      A man in a brown wool suit skates up beside you. Adam Slocum, somehow.
+      He points to the scoreboard. There are ten minutes left in the third period
+      and the United States is leading the Soviet Union 4 to 3.
     </p>
 
     <div class="video-frame">
       <span class="corner tl"></span><span class="corner tr"></span>
       <span class="corner bl"></span><span class="corner br"></span>
-      <div class="shroud-top"></div>
       <iframe
         id="player-3"
-        src="https://www.youtube.com/embed/YO0XdnrQnBw?enablejsapi=1&rel=0&modestbranding=1&playsinline=1"
-        title="NSM — Berlin 1936 — Panel III — Race"
+        src="https://www.youtube.com/embed/MIRACLE_GAME_ID?enablejsapi=1&rel=0&modestbranding=1&playsinline=1"
+        title="NSM — Miracle on Ice — Panel III — The Game"
         frameborder="0"
         allow="autoplay; encrypted-media; picture-in-picture"
         allowfullscreen></iframe>
     </div>
 
     <div class="panel-context">
-      <div class="stats">
-        <div class="stat"><span class="num">10.3s</span><span class="lbl">100 metres</span></div>
-        <div class="stat"><span class="num">20.7s</span><span class="lbl">200 metres</span></div>
-        <div class="stat"><span class="num">8.06m</span><span class="lbl">Long jump</span></div>
-        <div class="stat"><span class="num">39.8s</span><span class="lbl">4 × 100 relay</span></div>
-      </div>
-
       <p class="panel-prose">
-        Four gold medals in eight days. A record that holds for <strong>forty-eight years</strong>,
-        until Carl Lewis matches it in Los Angeles in 1984. The crowd — one hundred
-        thousand Germans, told for years what to believe about the people Owens came from —
-        chanted his name. <em>"Yes-say O-vens. Yes-say O-vens."</em>
+        Soviet coach Viktor Tikhonov had pulled Tretiak after the first period &mdash;
+        a decision Tretiak would later call <em>the biggest mistake of Tikhonov's career</em>.
+        The backup goaltender, Vladimir Myshkin, was good. He was not Tretiak.
+        At the end of the second, the score was 3&ndash;2 USSR. Then Mark Johnson
+        scored on a power play eight minutes into the third. <strong>Mike Eruzione</strong> —
+        the captain, a kid from Winthrop, Massachusetts who would never play
+        a single NHL game in his life — buried a wrist shot from the slot at 10:00.
+        <em>USA 4. USSR 3.</em> Ten minutes to defend it.
       </p>
 
-      <div class="pullquote">
-        "When I came back to my native country, after all the stories about Hitler,
-        I couldn't ride in the front of the bus. I had to go to the back door.
-        I couldn't live where I wanted."
-        <span class="src">— Jesse Owens</span>
+      <div class="scoreboard">
+        <div class="team">
+          <div class="team-name">USA</div>
+          <div class="team-score win">4</div>
+        </div>
+        <div class="divider">—</div>
+        <div class="team">
+          <div class="team-name">USSR</div>
+          <div class="team-score">3</div>
+        </div>
       </div>
 
       <p class="panel-prose">
-        And in the middle of the long-jump competition — when Owens had fouled
-        his first two attempts and was one bad jump from elimination — a German
-        athlete named <strong>Luz Long</strong> walked over and suggested he take off
-        from six inches behind the board. Owens qualified. Long finished second.
-        Owens won gold. Long crossed the field, embraced him in full view of Hitler's
-        box, and walked him on a victory lap arm in arm. <em>They wrote to each other
-        for seven years.</em> <strong>Ludwig "Luz" Long &mdash; conscripted into the
-        Wehrmacht &mdash; was killed in battle on Sicily during the Allied invasion
-        on July 14, 1943.</strong> He was thirty.
+        The Soviets came in waves. Twenty-four shots at <strong>Jim Craig</strong> in goal.
+        He stopped twenty-three of them. The clock ran down. The crowd at Lake Placid
+        chanted U-S-A so loud you could hear it three blocks from the arena.
+        <em>Eleven seconds.</em>
+      </p>
+
+      <div class="iconic-call">
+        <div class="countdown">11 seconds &nbsp;·&nbsp; 10 &nbsp;·&nbsp; 9 &nbsp;·&nbsp; 8</div>
+        <div class="line">
+          "Morrow, up to Silk. Five seconds left in the game.
+          <span class="yes">Do you believe in miracles?!<br>YES!"</span>
+        </div>
+        <div class="attrib">Al Michaels &nbsp;·&nbsp; ABC Sports</div>
+      </div>
+
+      <p class="panel-prose">
+        The bench cleared. Sticks went into the air. Twenty kids in red, white and blue
+        stacked themselves into a single pile of bodies at center ice. Jim Craig
+        skated in a circle with the American flag around his shoulders looking for
+        his father in the stands. <em>It was 5:30 in the afternoon on a Friday in February.</em>
       </p>
     </div>
   </div>
@@ -706,85 +745,97 @@
 <section class="panel" id="panel-4">
   <div class="panel-inner">
     <div class="panel-eyebrow">Panel IV &nbsp;·&nbsp; The Real Story</div>
-    <h2 class="panel-title">Ninety years later. <em>A track in Brooklyn.</em></h2>
+    <h2 class="panel-title">Forty-six years later. <em>A rink in Brooklyn.</em></h2>
     <p class="panel-lead">
-      Two young runners &mdash; Darius and Marisol &mdash; carry the version of the
-      story everyone is taught: that Hitler refused to shake Jesse's hand. The version
-      that lets the country off the hook. Niia Bishop, PhD sets the record straight.
+      Two young skaters &mdash; Darius and Marisol &mdash; carry the version of
+      the story everyone is taught: the gold medal moment, the American underdog,
+      the perfect storybook ending. Niia Bishop, PhD adds the footnotes the
+      feel-good version always skips.
     </p>
 
     <div class="video-frame">
       <span class="corner tl"></span><span class="corner tr"></span>
       <span class="corner bl"></span><span class="corner br"></span>
-      <div class="shroud-top"></div>
       <iframe
         id="player-4"
-        src="https://www.youtube.com/embed/TE7N1aMH_i0?enablejsapi=1&rel=0&modestbranding=1&playsinline=1"
-        title="NSM — Berlin 1936 — Panel IV — Modern"
+        src="https://www.youtube.com/embed/MIRACLE_MODERN_ID?enablejsapi=1&rel=0&modestbranding=1&playsinline=1"
+        title="NSM — Miracle on Ice — Panel IV — Modern"
         frameborder="0"
         allow="autoplay; encrypted-media; picture-in-picture"
         allowfullscreen></iframe>
     </div>
 
     <div class="panel-context">
+      <p class="panel-prose">
+        First &mdash; <strong>they didn't win the gold by beating the Soviets.</strong>
+        That was the medal round, not the final. Two days later they still had to
+        play <strong>Finland for the gold</strong>, and they were down 2&ndash;1
+        going into the third period. They almost gave it back. They scored three
+        unanswered. <em>USA 4, Finland 2.</em> Then they got the gold.
+      </p>
+
       <div class="pullquote">
-        "Hitler didn't snub me. <em>It was our President who snubbed me.</em>
-        The President didn't even send me a telegram."
-        <span class="src">— Jesse Owens</span>
+        "If you lose this game, you'll take it to your <em>graves</em>."
+        <span class="src">— Herb Brooks, between periods, USA vs. Finland</span>
       </div>
 
       <p class="panel-prose">
-        Franklin Roosevelt never called. Never wrote. Never invited Owens to the
-        White House. When Owens returned to a ticker-tape parade in New York,
-        he and his family could not find a hotel in Manhattan that would take them.
-        He entered his own reception at the Waldorf Astoria <strong>through the
-        service entrance</strong> — because the front door was off-limits to Black guests.
-        The four-time gold medalist took the freight elevator to his own banquet.
+        Second &mdash; <strong>Mike Eruzione never played a professional hockey game.</strong>
+        Not one. The captain who scored the winning goal in the most famous game
+        in American sports history played 11 minutes and 21 seconds of NHL hockey
+        in his entire life. <em>Zero, technically.</em> He retired from competitive
+        hockey to do speaking engagements and was inducted into Hall of Fames
+        instead of skating in any of them. He became one of the most successful
+        motivational speakers in American sport.
+      </p>
+
+      <p class="panel-prose">
+        Third &mdash; <strong>Jimmy Carter never publicly received the team.</strong>
+        There was a perfunctory South Lawn ceremony for all the medalists, no real
+        focus on hockey, while the country was still consumed with Iran.
+        The president was running for re-election in November and would lose
+        in a landslide to Reagan. The team that had saved the country's mood
+        for a long weekend was, within months, mostly back at college,
+        back in the minor leagues, back to ordinary life.
       </p>
 
       <div class="timeline">
         <div class="timeline-row">
-          <span class="timeline-year">1936</span>
-          <span class="timeline-event">Four gold medals in Berlin. No telegram from FDR.</span>
+          <span class="timeline-year">1979</span>
+          <span class="timeline-event">Soviet Red Army wins NHL Challenge Cup 6&ndash;0. Considered untouchable.</span>
         </div>
         <div class="timeline-row">
-          <span class="timeline-year">1937</span>
-          <span class="timeline-event">Owens races horses for money at Negro League halftimes.</span>
+          <span class="timeline-year">Feb 9</span>
+          <span class="timeline-event">Exhibition at Madison Square Garden. USSR 10, USA 3.</span>
         </div>
         <div class="timeline-row">
-          <span class="timeline-year">1943</span>
-          <span class="timeline-event">Luz Long killed in battle, Allied invasion of Sicily. Last letter arrives weeks later.</span>
+          <span class="timeline-year">Feb 22</span>
+          <span class="timeline-event">USA defeats USSR 4&ndash;3, Lake Placid. The Miracle.</span>
         </div>
         <div class="timeline-row">
-          <span class="timeline-year">1955</span>
-          <span class="timeline-event">Eisenhower names Owens an "Ambassador of Sport."</span>
+          <span class="timeline-year">Feb 24</span>
+          <span class="timeline-event">USA beats Finland 4&ndash;2 from behind. Gold medal.</span>
         </div>
         <div class="timeline-row">
-          <span class="timeline-year">1976</span>
-          <span class="timeline-event">Gerald Ford awards Presidential Medal of Freedom — 40 years late.</span>
+          <span class="timeline-year">Nov 4</span>
+          <span class="timeline-event">Carter loses 489&ndash;49 to Reagan. Hostages remain in Tehran.</span>
         </div>
         <div class="timeline-row">
-          <span class="timeline-year">1980</span>
-          <span class="timeline-event">Owens dies of lung cancer, Tucson, Arizona. He was 66.</span>
+          <span class="timeline-year">2003</span>
+          <span class="timeline-event">Herb Brooks dies in a single-car accident. Age 66.</span>
         </div>
       </div>
 
       <p class="panel-prose">
-        A sharecropper's son from Oakville, Alabama wins his first gold because
-        his German competitor helps him. They embrace in front of Hitler's box.
-        They write each other for seven years, until a war ends it. Owens comes
-        home and cannot enter his own banquet through the front door.
+        The story remembers a country in red, white and blue ecstasy. <em>The story
+        forgets the country went right back to being the country.</em> Inflation,
+        the hostages, the line at the gas station. The miracle did not fix America.
+        It gave America two hours where it was united around something it could
+        be proud of. That's all the miracle was supposed to do.
       </p>
 
       <p class="panel-prose">
-        The country that was supposed to hate him gave him a friend.
-        <em>The country that was supposed to love him gave him the service elevator.</em>
-        That's the irony &mdash; and the beauty.
-      </p>
-
-      <p class="panel-prose">
-        Sport doesn't fix the world. <strong>It shows us what is there. And what
-        is there is always more than one thing at once.</strong>
+        That's enough.
       </p>
     </div>
   </div>
@@ -793,23 +844,18 @@
 <!-- ===== END ===== -->
 <section class="panel" id="end">
   <div class="panel-inner">
-    <div class="end-name">Jesse Owens</div>
-    <div class="end-years">1913 &mdash; 1980</div>
+    <div class="end-name">USA 4 &nbsp;·&nbsp; USSR 3</div>
+    <div class="end-years">Lake Placid &nbsp;·&nbsp; February 22, 1980</div>
 
     <p class="coda">
-      He once said <em>"the battles that count aren't the ones for gold medals.
-      The struggles within yourself — the invisible, inevitable battles inside
-      all of us — that's where it's at."</em>
+      Herb Brooks once said, <em>"You're meant to be here. This moment is yours.
+      You were born to be a player. You were meant to be here.
+      This moment is yours."</em>
     </p>
 
     <div class="nsm-mark">National Sports Museum</div>
     <div class="nsm-mission">Sports Are for Every BODY.</div>
 
-    <div class="hosts-credit">
-      <div class="role">Hosts</div>
-      <div class="host-line">Niia Bishop, PhD &nbsp;·&nbsp; <span class="aff">University of Michigan</span></div>
-      <div class="host-line">Adam Slocum &nbsp;·&nbsp; <span class="aff">Founder, National Sports Museum</span></div>
-    </div>
   </div>
 </section>
 
@@ -842,18 +888,23 @@
     document.getElementById('start').classList.add('hide');
     setTimeout(() => {
       document.getElementById('panel-1').scrollIntoView({ behavior: 'smooth' });
+      setTimeout(() => {
+        if (players['player-1'] && players['player-1'].playVideo) {
+          players['player-1'].playVideo();
+        }
+      }, 800);
     }, 600);
   });
 
-  // Fade-in panels on scroll. Videos do NOT auto-play — viewer clicks each one.
-  // Videos still auto-pause when scrolled away (so audio doesn't bleed between panels
-  // if a viewer started one and then scrolled), and the next panel still auto-scrolls
-  // into view when a video ends.
   const panels = document.querySelectorAll('.panel');
   const obs = new IntersectionObserver((entries) => {
     entries.forEach(e => {
       if (e.isIntersecting) {
         e.target.classList.add('in');
+        const iframe = e.target.querySelector('iframe');
+        if (iframe && players[iframe.id] && players[iframe.id].playVideo) {
+          players[iframe.id].playVideo();
+        }
       } else {
         const iframe = e.target.querySelector('iframe');
         if (iframe && players[iframe.id] && players[iframe.id].pauseVideo) {
