@@ -312,6 +312,95 @@
     line-height: 1.6;
   }
 
+  /* CONTINUE LEARNING — the "go deeper" rack before the end card */
+  #continue-learning {
+    background: var(--paper);
+    padding: 10vh 5vw;
+    border-bottom: 1px solid rgba(201,165,90,0.1);
+  }
+  #continue-learning .cl-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  #continue-learning .cl-header {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+  #continue-learning .cl-eyebrow {
+    font-family: var(--sans);
+    font-size: 0.7rem;
+    letter-spacing: 0.5em;
+    text-transform: uppercase;
+    color: var(--warm);
+    margin-bottom: 1rem;
+  }
+  #continue-learning h2 {
+    font-family: var(--title);
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 400;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+  }
+  #continue-learning h2 em {
+    font-style: italic;
+    color: var(--warm);
+  }
+  .cl-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+  }
+  @media (max-width: 900px) {
+    .cl-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 600px) {
+    .cl-grid { grid-template-columns: 1fr; }
+  }
+  .cl-card {
+    background: rgba(0,0,0,0.3);
+    border: 1px solid rgba(201,165,90,0.2);
+    padding: 2rem 1.5rem;
+  }
+  .cl-card .cl-card-title {
+    font-family: var(--sans);
+    font-size: 0.75rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--warm);
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(201,165,90,0.2);
+  }
+  .cl-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .cl-card li {
+    font-family: var(--serif);
+    font-size: 0.95rem;
+    line-height: 1.55;
+    color: rgba(244,237,224,0.85);
+    margin-bottom: 1rem;
+  }
+  .cl-card li em {
+    color: var(--warm);
+    font-style: italic;
+  }
+  .cl-card li strong {
+    color: var(--ink);
+    font-weight: 500;
+  }
+  .cl-card a {
+    color: var(--ink);
+    text-decoration: underline;
+    text-decoration-color: rgba(201,165,90,0.3);
+  }
+  .cl-card a:hover {
+    color: var(--warm);
+    text-decoration-color: var(--warm);
+  }
+
   /* Scene-setting images. Period feel: sepia, slight contrast, gold border. */
   .scene-image {
     width: 100%;
@@ -662,11 +751,11 @@
       entire world to his nation for the 11th Olympic Games. Germans of all classes
       and over 150,000 foreigners of means were watching in person, another 162,000
       urban Germans in Berlin and Potsdam watched via live broadcast, and people
-      from countless nations were tuned in to their radios. Hitler's book Mein Kampf
+      from countless nations were tuned in to their radios. Hitler's book <em>Mein Kampf</em>
       had called it "a sin against all reason to train a born half-ape." A
       twenty-two-year-old from Oakville, Alabama was set to prove to everyone
       with eyes to see and ears to hear that he was not half-ape, nor three-fifths
-      of a man. He was all man &mdash; and with the Lord's strength he just might
+      of a man. He was all man &mdash; and with the Lord's strength, he just might
       become Superman over the next eight days.
     </p>
 
@@ -710,12 +799,12 @@
         was born in Oakville, Alabama. He picked cotton as a boy. When he was nine,
         his family moved north to Cleveland, Ohio, part of the Great Migration: millions
         of African-Americans leaving the segregated South for the industrial North in
-        search of a future their country wouldn't give them. A Cleveland schoolteacher
+        search of a future their country wouldn't willingly give them. A Cleveland schoolteacher
         misheard his Alabama-accented "J.C." as "Jesse." The name stuck.
       </p>
 
       <p class="panel-prose">
-        His first coach was <strong>Charles Riley</strong>, the white track coach at
+        His first coach was <strong>Charles Riley</strong>, a white track coach at
         Fairmount Junior High in Cleveland. Riley spotted Owens' speed at age twelve
         and noticed he couldn't make team practice &mdash; Owens worked an after-school
         job to help his family. So Riley got up at six in the morning every weekday
@@ -750,8 +839,8 @@
 
       <p class="panel-prose">
         In many parts of his own country, he could not be born in the same hospital,
-        swear on the same Bible, or be buried in the same ground as the neighbors he
-        lived among. <em>He had come to run anyway. He had come to represent his
+        swear on the same Bible, or be buried in the same ground as the white boys he
+        raced. <em>He had come to run anyway. He had come to represent his
         country, no matter how he felt about that country &hellip; and no matter how
         that country felt about him.</em>
       </p>
@@ -765,7 +854,7 @@
 <section class="panel" id="panel-2">
   <div class="panel-inner">
     <div class="panel-eyebrow">Panel II &nbsp;·&nbsp; Commentary</div>
-    <h2 class="panel-title">Back to <em>August 1936</em>.</h2>
+    <h2 class="panel-title">Go back in time and space with <em>Dr. Niia Bishop and Adam Slocum</em>.</h2>
     <p class="panel-lead">
       Dr. Niia Bishop and Adam Slocum take the viewer back in time and space
       &mdash; to the Reichssportfeld stands, to the eight days that broke a
@@ -877,7 +966,7 @@
     <div class="panel-eyebrow">Panel III &nbsp;·&nbsp; Immersive</div>
     <h2 class="panel-title">The <em>hundred metres</em>.</h2>
     <p class="panel-lead">
-      Row eleven, west grandstand. A man two seats down holds a pocket watch
+      Row eleven, west grandstand. A man holds a pocket watch
       open in his palm. He is timing it himself — he does not trust the officials.
       The starter raises the pistol. The stadium folds itself into a single, low hum.
     </p>
@@ -920,8 +1009,8 @@
       </div>
 
       <p class="panel-prose">
-        Four gold medals in eight days. A record that holds for <strong>forty-eight years</strong>,
-        until Carl Lewis matches it in Los Angeles in 1984. The crowd — one hundred
+        Four gold medals in eight days. A record that held for <strong>forty-eight years</strong>,
+        until Carl Lewis matched it in Los Angeles in 1984. The crowd — one hundred
         thousand Germans, told for years what to believe about the people Owens came from —
         chanted his name. <em>"Yes-say O-vens. Yes-say O-vens."</em>
       </p>
@@ -972,7 +1061,7 @@
       <span class="corner bl"></span><span class="corner br"></span>
       <iframe
         id="player-4"
-        src="https://www.youtube.com/embed/zrDoDtyDjBc?enablejsapi=1&rel=0&modestbranding=1&playsinline=1"
+        src="https://www.youtube.com/embed/u-Kof82dmcw?enablejsapi=1&rel=0&modestbranding=1&playsinline=1"
         title="NSM — Berlin 1936 — Panel IV — Modern"
         frameborder="0"
         allow="autoplay; encrypted-media; picture-in-picture"
@@ -987,12 +1076,8 @@
       </div>
 
       <p class="panel-prose">
-        Franklin Roosevelt never called. Never wrote. Never invited Owens to the
-        White House. When Owens returned to a ticker-tape parade in New York,
-        he and his family could not find a hotel in Manhattan that would take them.
-        He entered his own reception at the Waldorf Astoria <strong>through the
-        service entrance</strong> &mdash; because the front door was off-limits to African-American guests.
-        The four-time gold medalist took the freight elevator to his own banquet.
+        After being on top of the world for a week, Owens returned "home" to
+        the racialized reality of America.
       </p>
 
       <div class="scene-image">
@@ -1003,7 +1088,7 @@
       <div class="timeline">
         <div class="timeline-row">
           <span class="timeline-year">1936</span>
-          <span class="timeline-event">Four gold medals in Berlin. No telegram from FDR.</span>
+          <span class="timeline-event">Four gold medals in Berlin. He receives no presidential recognition at home.</span>
         </div>
         <div class="timeline-row">
           <span class="timeline-year">1937</span>
@@ -1011,7 +1096,7 @@
         </div>
         <div class="timeline-row">
           <span class="timeline-year">1943</span>
-          <span class="timeline-event">Luz Long killed in battle, Allied invasion of Sicily. Last letter arrives weeks later.</span>
+          <span class="timeline-event">Luz Long dies in battle.</span>
         </div>
         <div class="timeline-row">
           <span class="timeline-year">1955</span>
@@ -1023,7 +1108,7 @@
         </div>
         <div class="timeline-row">
           <span class="timeline-year">1980</span>
-          <span class="timeline-event">Owens dies of lung cancer, Tucson, Arizona. He was 66.</span>
+          <span class="timeline-event">Owens dies of lung cancer in Tucson, Arizona. He was 66.</span>
         </div>
         <div class="timeline-row">
           <span class="timeline-year">1984</span>
@@ -1039,8 +1124,7 @@
       <p class="panel-prose">
         A sharecropper's son from Oakville, Alabama wins his first gold because
         his German competitor helps him. They embrace in front of Hitler's box.
-        They write each other for seven years, until a war ends it. Owens comes
-        home and cannot enter his own banquet through the front door.
+        Owens comes home and cannot enter his own banquet through the front door.
       </p>
 
       <p class="panel-prose">
@@ -1050,9 +1134,59 @@
       </p>
 
       <p class="panel-prose">
-        Sport doesn't fix the world. <strong>It shows us what is there. And what
-        is there is always more than one thing at once.</strong>
+        Sports don't fix the world. <strong>They show us what is there.
+        Through them, we can see the whole world in one magical moment.</strong>
       </p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CONTINUE LEARNING — the "go deeper" rack ===== -->
+<section id="continue-learning">
+  <div class="cl-inner">
+    <div class="cl-header">
+      <div class="cl-eyebrow">Continue Learning</div>
+      <h2>Go <em>deeper</em>.</h2>
+    </div>
+    <div class="cl-grid">
+      <div class="cl-card">
+        <div class="cl-card-title">☞ Did You Know?</div>
+        <ul>
+          <li>The 1936 Berlin Games were the first Olympics ever televised &mdash; broadcast to 162,000 Germans in public viewing rooms across Berlin and Potsdam.</li>
+          <li>18 African-American athletes competed for the US team in 1936 &mdash; a record that stood for over 50 years.</li>
+          <li>Owens raced horses for money in 1937. He said, <em>"You can't eat four gold medals."</em></li>
+          <li>His daughter Marlene became the first Black homecoming queen at Ohio State in 1960.</li>
+          <li>Berlin renamed the street outside the Olympic Stadium <em>Jesse-Owens-Allee</em> in 1984.</li>
+        </ul>
+      </div>
+      <div class="cl-card">
+        <div class="cl-card-title">☞ Read</div>
+        <ul>
+          <li>William J. Baker, <em>Jesse Owens: An American Life</em> (1986)</li>
+          <li>Jeremy Schaap, <em>Triumph: The Untold Story of Jesse Owens and Hitler's Olympics</em> (2007)</li>
+          <li>Marty Glickman, <em>The Fastest Kid on the Block</em> (1996)</li>
+          <li>Susan Bachrach, <em>The Nazi Olympics: Berlin 1936</em> (USHMM, 2000)</li>
+          <li>Kai Long, <em>Luz Long: Eine Sportlerkarriere im Dritten Reich</em> (2015)</li>
+        </ul>
+      </div>
+      <div class="cl-card">
+        <div class="cl-card-title">☞ Watch</div>
+        <ul>
+          <li><em>Race</em> (2016) &mdash; feature film</li>
+          <li><em>Olympia</em> (1938) &mdash; Leni Riefenstahl's propaganda film, where Owens is featured</li>
+          <li><em>Glickman</em> (HBO, 2013)</li>
+          <li><em>Jesse Owens</em> &mdash; PBS American Experience (2012)</li>
+        </ul>
+      </div>
+      <div class="cl-card">
+        <div class="cl-card-title">☞ Visit</div>
+        <ul>
+          <li><strong>Jesse Owens Memorial Park</strong> &mdash; Oakville, Alabama (his birthplace)</li>
+          <li><strong>Olympiastadion</strong> &mdash; Berlin (still standing; tours available)</li>
+          <li><strong>Jesse-Owens-Allee</strong> &mdash; the street itself, outside the stadium</li>
+          <li><a href="http://www.VNSM.US" target="_blank" rel="noopener"><strong>The Virtual National Sports Museum</strong> &mdash; vnsm.us</a></li>
+        </ul>
+      </div>
     </div>
   </div>
 </section>
