@@ -156,7 +156,7 @@
     max-width: 720px;
     color: rgba(244,237,224,0.88);
     line-height: 1.65;
-    margin-bottom: 3rem;
+    margin-bottom: 1.5rem;
     opacity: 0;
     transition: opacity 1.4s ease 0.4s, transform 1.4s ease 0.4s;
     transform: translateY(20px);
@@ -169,7 +169,7 @@
   /* ===== STATS BAR ===== */
   .stats {
     display: flex;
-    gap: 3rem;
+    gap: 1.5rem;
     justify-content: center;
     flex-wrap: wrap;
     margin: 3rem 0 4rem;
@@ -180,25 +180,28 @@
   .panel.in .stats { opacity: 1; transform: translateY(0); }
   .stat {
     text-align: center;
-    min-width: 180px;
+    min-width: 120px;
+    flex: 1 1 0;
   }
   .stat .num {
     font-family: var(--title);
-    font-size: clamp(3.5rem, 6vw, 5.5rem);
+    font-size: clamp(2.2rem, 4vw, 3.8rem);
     font-weight: 300;
     color: var(--warm);
     letter-spacing: -0.02em;
     line-height: 1;
     display: block;
+    white-space: nowrap;
   }
   .stat .lbl {
     font-family: var(--sans);
-    font-size: 0.85rem;
-    letter-spacing: 0.35em;
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
     text-transform: uppercase;
     color: var(--grey);
-    margin-top: 1rem;
+    margin-top: 0.9rem;
     display: block;
+    white-space: nowrap;
   }
 
   /* ===== VIDEO FRAME ===== */
@@ -302,7 +305,7 @@
     font-size: clamp(1.2rem, 2vw, 1.5rem);
     color: var(--ink);
     line-height: 1.5;
-    margin-bottom: 1.5rem;
+    margin-bottom: 0.5rem;
   }
   .try-this .reveal {
     font-family: var(--serif);
@@ -698,8 +701,8 @@
     .chapters { display: none; }
     .reel-nav { padding: 1rem; }
     .panel { padding: 10vh 4vw 6vh; }
-    .stats { gap: 1.5rem; }
-    .stat { min-width: 130px; }
+    .stats { gap: 1rem; }
+    .stat { min-width: 110px; flex: 1 1 40%; }
   }
 </style>
 </head>
@@ -716,7 +719,7 @@
 
 <!-- ===== TOP NAV ===== -->
 <div class="reel-nav">
-  <a href="http://www.VNSM.US" target="_blank" rel="noopener" class="reel-mark">National Sports Museum</a>
+  <a href="http://www.nationalsportsmuseum.org" target="_blank" rel="noopener" class="reel-mark">National Sports Museum</a>
   <div class="lang-switcher" id="langSwitcher">
     <button class="lang-btn lang-active" onclick="setLang('en',this)" title="English">🇺🇸</button>
     <button class="lang-btn" onclick="setLang('fr',this)" title="Français">🇫🇷</button>
@@ -747,11 +750,7 @@
     <div class="panel-eyebrow">Panel I &nbsp;·&nbsp; Cinematic</div>
     <h2 class="panel-title">Berlin, <em>August 1936</em>.</h2>
     <p class="panel-lead">
-      Adolf Hitler paused his plans to crown himself king to welcome the world for
-      the 11th Olympic Games.
-    </p>
-
-    <p class="panel-lead">
+      Adolf Hitler welcomed the world to his nation for the 11th Olympic Games.
       Germans of all classes and affluent foreigners were watching in person.
       Another 162,000 urban Germans in Berlin and Potsdam watched via live broadcast,
       and people from countless nations were tuned in to their radios.
@@ -761,12 +760,8 @@
       Hitler's book "Mein Kampf" had called it "a sin against all reason to train a
       born half-ape." A twenty-two-year-old from Oakville, Alabama was set to prove
       to everyone with eyes to see and ears to hear that he was not half-ape, nor
-      three-fifths of a man.
-    </p>
-
-    <p class="panel-lead">
-      He was all man &mdash; and with the Lord's strength, over the next eight days,
-      he just might become Superman.
+      three-fifths of a man. He was all man &mdash; and with the Lord's strength,
+      over the next eight days, he just might become Superman.
     </p>
 
     <div class="stats">
@@ -797,11 +792,11 @@
       <p class="panel-prose">
         Hitler spent <strong>$25 million</strong> turning Berlin into a movie set.
         Anti-Semitic posters were taken down. Buildings were whitewashed. The city
-        was rehearsed, polished, masked, and costumed. The Reichssportfeld, the new
-        Olympic stadium complex built into a hillside, was the centerpiece. Granite,
-        limestone, Olympic rings cast in bronze &mdash; the new stadium in Berlin
-        was the perfect backdrop to remind all participating nations of Aryan
-        supremacy &mdash; the Nazi belief in white European racial superiority.
+        was rehearsed, polished, masked, and costumed. At the center stood the
+        Reichssportfeld &mdash; a new Olympic stadium complex carved into a Berlin
+        hillside. Granite, limestone, Olympic rings cast in bronze. The perfect
+        backdrop to remind every nation in attendance of Aryan supremacy &mdash;
+        the Nazi belief in white European racial superiority.
       </p>
 
       <p class="panel-prose">
@@ -827,25 +822,14 @@
       </p>
 
       <p class="panel-prose">
-        He married his junior high school sweetheart, <strong>Minnie Ruth Solomon</strong>,
-        in 1935. They had three daughters.
-      </p>
-
-      <p class="panel-prose">
         In 1933, fewer than <strong>1.3%</strong> of African-Americans aged 25 or
-        older held a college degree.
-      </p>
-
-      <p class="panel-prose">
-        Though they say college opens doors, Owens found many closed in his face at
-        Ohio State University. He was denied an athletic scholarship, couldn't live
-        on campus, and had to eat at segregated restaurants when the team traveled.
-      </p>
-
-      <p class="panel-prose">
-        In college, Owens was breaking assumptions, barriers, and records. He won
-        eight individual NCAA championships &mdash; more than anyone in college
-        track history, before or since.
+        older held a college degree. Though they say college opens doors, Owens
+        found many closed in his face at Ohio State University. He was denied an
+        athletic scholarship, couldn't live on campus, and had to eat at segregated
+        restaurants when the team traveled. In college, Owens was breaking
+        assumptions, barriers, and records. He won eight individual NCAA
+        championships &mdash; more than anyone in college track history, before
+        or since.
       </p>
 
       <p class="panel-prose">
@@ -859,14 +843,11 @@
       <p class="panel-prose">
         He was twenty-two when he boarded the SS <em>Manhattan</em> in New York Harbor, in July 1936.
         <strong>It was the first time he had ever left the United States.</strong>
-      </p>
-
-      <p class="panel-prose">
         In many parts of his own country, he could not be born in the same hospital,
         married with the same Bible, nor buried in the same graveyard as his teammates.
         <em>He was going to run anyway. No matter how he felt about that country
-        &hellip; and no matter how that country felt about him, he was ready to unlock
-        a new level.</em>
+        &hellip; and no matter how that country felt about him, he was ready to prove
+        to himself what he could really do.</em>
       </p>
 
     </div>
@@ -878,10 +859,10 @@
 <section class="panel" id="panel-2">
   <div class="panel-inner">
     <div class="panel-eyebrow">Panel II &nbsp;·&nbsp; Commentary</div>
-    <h2 class="panel-title">Relive the <em>moment</em>.</h2>
+    <h2 class="panel-title">Relive the <em>Moment</em>.</h2>
     <p class="panel-lead">
-      Go back in time with Dr. Niia Bishop and Adam Slocum &mdash; to the
-      Reichssportfeld stands, and the eight days that broke a regime's myth.
+      Go back in time with Dr. Niia Bishop and Adam Slocum &mdash;<br>
+      to the Reichssportfeld stands, and the eight days that broke a regime's myth.
     </p>
 
     <div class="video-frame">
@@ -915,12 +896,7 @@
         Owens not to go, but he never sent it.
       </p>
 
-      <p class="panel-prose">
-        Avery Brundage, head of the American Olympic Committee, called the boycott
-        supporters <em>"un-American agitators."</em>
-      </p>
-
-      <div class="scene-image">
+<div class="scene-image">
         <img src="03-crowd.jpg" alt="Crowd at the Berlin Olympic Stadium, 1936">
         <div class="credit">East gate of the Olympic Stadium, August 1, 1936 &nbsp;·&nbsp; Library of Congress, Prints and Photographs Division &nbsp;·&nbsp; Public domain</div>
       </div>
@@ -928,15 +904,12 @@
       <p class="panel-prose">
         The American team that set sail was diverse &mdash; Owens was one of
         <strong>eighteen African-American athletes</strong>, alongside his college
-        friend, sprinter Ralph Metcalfe.
-      </p>
-
-      <p class="panel-prose">
-        Two American sprinters never got to race. <strong>Marty Glickman</strong> and
-        <strong>Sam Stoller</strong> &mdash; Owens' only Jewish teammates &mdash;
-        were pulled from the 4&times;100 relay and replaced with Owens and Metcalfe.
-        Glickman, who went on to become one of America's most famous sports
-        broadcasters, spent the rest of his life calling it what it was.
+        friend, sprinter Ralph Metcalfe. Two American sprinters never got to race.
+        <strong>Marty Glickman</strong> and <strong>Sam Stoller</strong> &mdash;
+        Owens' only Jewish teammates &mdash; were pulled from the 4&times;100 relay
+        and replaced with Owens and Metcalfe. Glickman, who went on to become one
+        of America's most famous sports broadcasters, spent the rest of his life
+        calling it what it was.
       </p>
 
       <p class="panel-prose">
@@ -948,12 +921,12 @@
       </p>
 
       <p class="panel-prose">
-        Owens secured the first sponsorship of a Black male athlete in history
-        before the races even began. <strong>Adolf "Adi" Dassler</strong>, a Nazi
+        Owens was receiving the first customized sneaker before the races even began. <strong>Adolf "Adi" Dassler</strong>, a Nazi
         Party member and German shoemaker who would later found <strong>Adidas</strong>,
-        walked into the Olympic Village uninvited with a pair of hand-made track
-        spikes. He gave them to Owens. <em>The contradictions literally landed at
-        Owens' feet.</em>
+        walked uninvited into the Olympic Village with a pair of hand-made track
+        spikes. He gave them to Owens, though accounts vary regarding whether or not
+        Owens raced in them. <em>The social, national, and cultural contradictions
+        were literally placed at Owens' feet.</em>
       </p>
 
       <p class="panel-prose">
@@ -965,9 +938,6 @@
       <p class="panel-prose">
         <strong>This story is not true.</strong> Not the way it's been told.
         What actually happened is more complicated, and ultimately more revealing.
-      </p>
-
-      <p class="panel-prose">
         The myth was created by American sportswriters shortly after Owens first
         won the 100m. By the time Owens sailed home, the villain narrative of
         Hitler's snub was already running on three continents. He spent the rest
@@ -982,11 +952,18 @@
 <section class="panel" id="panel-3">
   <div class="panel-inner">
     <div class="panel-eyebrow">Panel III &nbsp;·&nbsp; Immersive</div>
-    <h2 class="panel-title">The <em>hundred metres</em>.</h2>
+    <h2 class="panel-title">The <em>Hundred Metres</em>.</h2>
     <p class="panel-lead">
       Row eleven, west grandstand. A man holds a pocket watch
-      open in his palm. He is timing it himself — he does not trust the officials.
-      The starter raises the pistol. The stadium folds itself into a single, low hum.
+      open in his palm. He is timing it himself because he does not trust the officials.
+    </p>
+
+    <p class="panel-lead">
+      The stadium folds itself into a single, low hum.
+    </p>
+
+    <p class="panel-lead">
+      The starter raises the pistol.
     </p>
 
     <div class="video-frame">
@@ -1030,7 +1007,7 @@
         Four gold medals in eight days. A record that held for <strong>forty-eight years</strong>,
         until Carl Lewis matched it in Los Angeles in 1984. The crowd — one hundred
         thousand Germans, told for years what to believe about the people Owens came from —
-        chanted his name. <em>"Yes-say O-vens. Yes-say O-vens."</em>
+        chanted his name. <em>"Yes-say O-vens! Yes-say O-vens!"</em>
       </p>
 
       <div class="pullquote">
@@ -1047,7 +1024,7 @@
         from six inches behind the board. Owens qualified. Long finished second.
         Owens won gold. Long crossed the field, embraced him in full view of Hitler's
         box, and walked him on a victory lap arm in arm. <em>They wrote to each other
-        for seven years.</em> <strong>Ludwig "Luz" Long &mdash; conscripted into the
+        for seven years.</em> <strong>Ludwig "Luz" Long &mdash; drafted into the
         Wehrmacht, the German army &mdash; was killed in battle on Sicily during the
         Allied invasion on July 14, 1943.</strong> He was thirty.
       </p>
@@ -1067,11 +1044,11 @@
 <section class="panel" id="panel-4">
   <div class="panel-inner">
     <div class="panel-eyebrow">Panel IV &nbsp;·&nbsp; The Real Story</div>
-    <h2 class="panel-title">Ninety years later. <em>A track in Brooklyn.</em></h2>
+    <h2 class="panel-title">Ninety Years Later. <em>A Track in Brooklyn.</em></h2>
     <p class="panel-lead">
       Two young runners &mdash; Darius and Marisol &mdash; carry the version of the
-      story everyone is taught: that Hitler refused to shake Jesse's hand. The version
-      that lets the country off the hook. Dr. Bishop sets the record straight.
+      story everyone is taught: that Hitler refused to shake Jesse's hand. Dr.
+      Bishop sets the record straight.
     </p>
 
     <div class="video-frame">
@@ -1093,12 +1070,7 @@
         <span class="src">— Jesse Owens</span>
       </div>
 
-      <p class="panel-prose">
-        After being on top of the world for a week, Owens returned "home" to
-        the racialized reality of America.
-      </p>
-
-      <div class="scene-image">
+<div class="scene-image">
         <img src="05-waldorf.jpg" alt="A 1930s-era advertisement for the Waldorf Astoria, New York">
         <div class="credit">The Waldorf Astoria, New York &nbsp;·&nbsp; Hotel advertisement, c. 1936 &nbsp;·&nbsp; Public domain (US, pre-1978, no renewed copyright)</div>
       </div>
@@ -1140,7 +1112,9 @@
       </div>
 
       <p class="panel-prose">
-        A sharecropper's son from Oakville, Alabama wins his first gold because
+        After being on top of the world for a week, Owens returned "home" to
+        the racialized reality of America. A sharecropper's son from Oakville,
+        Alabama wins his first gold because
         his German competitor helps him. They embrace in front of Hitler's box.
         Owens comes home and cannot enter his own banquet through the front door.
       </p>
@@ -1164,7 +1138,7 @@
   <div class="cl-inner">
     <div class="cl-header">
       <div class="cl-eyebrow">Continue Learning</div>
-      <h2>Go <em>deeper</em>.</h2>
+      <h2>Go <em>Deeper</em>.</h2>
     </div>
     <div class="cl-grid">
       <div class="cl-card">
@@ -1202,7 +1176,7 @@
           <li><strong>Jesse Owens Memorial Park</strong> &mdash; Oakville, Alabama (his birthplace)</li>
           <li><strong>Olympiastadion</strong> &mdash; Berlin (still standing; tours available)</li>
           <li><strong>Jesse-Owens-Allee</strong> &mdash; the street itself, outside the stadium</li>
-          <li><a href="http://www.VNSM.US" target="_blank" rel="noopener"><strong>The Virtual National Sports Museum</strong> &mdash; vnsm.us</a></li>
+          <li><a href="http://www.nationalsportsmuseum.org" target="_blank" rel="noopener"><strong>The Virtual National Sports Museum</strong> &mdash; nationalsportsmuseum.org</a></li>
         </ul>
       </div>
     </div>
@@ -1217,18 +1191,12 @@
 
     <div class="epitaph">
       <div class="header">Jesse Owens</div>
-      <p>James Cleveland Owens was living his dream</p>
-      <p>Before Martin Luther King, Jr. knew to have one.</p>
-      <p>He wasn't in Germany to show off or show out.</p>
-      <p>He was there to find out for himself what happened when he did the very best he could, for as long as he could. One step at a time. One day at a time. One race at a time. Medal after medal, he found that his true competitor was his former best.</p>
-      <p>In 10.3 seconds, he didn't just break a record. He challenged a worldview that insisted he was inferior.</p>
-      <p>His talent was undeniable. His spirit was indomitable. His courage was fierce.</p>
-      <p>And he was there not only to represent America, nor even "Black America" &mdash; though his one-in-a-million talent echoed the millions of African-Americans yearning for recognition of their humanity.</p>
-      <p>Ultimately, Jesse Owens represents something larger than any nation, race, or era.</p>
-      <p>He is an icon of what is possible if we unwaveringly believe in ourselves, no matter what anyone says or thinks about us.</p>
+      <p>James Cleveland Owens was living his dream before Martin Luther King, Jr. knew to have one. He wasn't in Germany to show off or show out. He was there to find out for himself what happened when he did the very best he could, for as long as he could. One step at a time. One day at a time. One race at a time.</p>
+      <p>Medal after medal, he found that his true competitor was his former best. In 10.3 seconds, he didn't just break a record. He challenged a worldview that insisted he was inferior. His talent was undeniable. His spirit was indomitable. His courage was fierce. And he was there not only to represent America, nor even "Black America" &mdash; though his one-in-a-million talent echoed the millions of African-Americans yearning for recognition of their humanity.</p>
+      <p>Ultimately, Jesse Owens represents something larger than any nation, race, or era. He is an icon of what is possible if we unwaveringly believe in ourselves, no matter what anyone says or thinks about us.</p>
     </div>
 
-<a href="http://www.VNSM.US" target="_blank" rel="noopener" class="nsm-mark">National Sports Museum</a>
+<a href="http://www.nationalsportsmuseum.org" target="_blank" rel="noopener" class="nsm-mark">National Sports Museum</a>
     <div class="nsm-mission">Sports Are for Every BODY.</div>
 
     <div class="hosts-credit">
