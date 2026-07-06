@@ -1,3 +1,33 @@
 .DS_Store
 assets/.DS_Store
 assets/Oldhtml file/
+
+# Raw media — not for GitHub
+*.mp4
+*.mov
+*.MP4
+*.MOV
+*.wav
+*.WAV
+*.mp3
+*.MP3
+*.pdf
+*.PDF
+*.pptx
+*.PPTX
+*.xlsx
+*.XLSX
+*.docx
+
+# Folders of raw assets
+AI VIDEO/
+B.E.T./
+EYES/
+HEADSHOTS/
+LIFT/
+Captions_*
+SURVEY.mov
+export.mp4
+
+# Misc
+.claude/
