@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dr. Niia Bishop, Ph.D. — One woman. Infinite worlds.</title>
+<meta name="description" content="The library of Dr. Niia Bishop — ¡Viva la Revolución!, The African Royal Canon, Seek Within, and more.">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<style>
+  :root{
+    --paper:#f6f1e7; --paper-deep:#efe7d7; --ink:#1c1712; --ink-soft:#4a4238;
+    --line:#c9bda6; --accent:#8a1f1f; --gold:#a8842c;
+    --serif:Georgia,'Times New Roman',serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--paper);color:var(--ink);font-family:var(--serif);line-height:1.5}
+
+  .hero img{display:block;width:100%;height:auto}
+  .hero{border-bottom:1px solid var(--line)}
+  .hero-fallback{max-width:1100px;margin:0 auto;padding:9vh 24px 7vh;text-align:center;display:none}
+  .hero-fallback h1{font-size:clamp(2.4rem,7vw,5rem);font-weight:400}
+  .hero-fallback .rule{width:120px;height:1px;background:var(--ink);margin:26px auto;opacity:.4}
+  .hero-fallback .tagline{font-style:italic;color:var(--ink-soft);font-size:clamp(1rem,2vw,1.2rem)}
+  .hero-fallback .motto{display:inline-block;margin-top:24px;padding:8px 22px;border:1px solid var(--ink);letter-spacing:.06em;font-size:.95rem}
+
+  .case{max-width:1200px;margin:0 auto;padding:52px 0 70px}
+  .case > h2{text-align:center;font-weight:400;letter-spacing:.14em;text-transform:uppercase;font-size:clamp(1.3rem,3vw,1.9rem)}
+  .case > .sub{text-align:center;font-style:italic;color:var(--ink-soft);margin:8px 16px 8px}
+
+  .shelf{margin-top:34px}
+  .shelf-head{display:flex;align-items:baseline;gap:14px;padding:0 26px;margin-bottom:2px}
+  .shelf-head h3{font-weight:400;font-size:clamp(1.1rem,2.4vw,1.5rem)}
+  .shelf-head .tag{font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-soft)}
+
+  .stage-wrap{position:relative}
+  .stage{display:block;width:100%;height:360px;cursor:grab;touch-action:pan-y}
+  .stage:active{cursor:grabbing}
+  .nav{position:absolute;top:42%;width:100%;display:flex;justify-content:space-between;padding:0 10px;pointer-events:none}
+  .nav button{
+    pointer-events:auto;width:40px;height:40px;border-radius:50%;border:1px solid var(--ink);
+    background:rgba(246,241,231,.9);color:var(--ink);font-family:var(--serif);font-size:1.15rem;cursor:pointer
+  }
+  .nav button:hover{background:var(--ink);color:var(--paper)}
+  @media(max-width:640px){.nav{display:none}}
+
+  .info{max-width:620px;margin:2px auto 0;text-align:center;padding:0 20px;min-height:120px}
+  .info .it{font-size:1.05rem}
+  .info .is{font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft);margin-top:3px}
+  .info .id{font-size:.85rem;color:var(--ink-soft);margin-top:8px;font-style:italic}
+  .info .buy{display:inline-block;margin-top:12px;padding:9px 26px;border:1px solid var(--ink);color:var(--ink);
+    text-decoration:none;font-size:.78rem;letter-spacing:.14em}
+  .info .buy.live{background:var(--accent);border-color:var(--accent);color:var(--paper)}
+  .info .buy.live:hover{background:var(--ink);border-color:var(--ink)}
+  .info .buy.dead{opacity:.45;pointer-events:none}
+
+  footer{border-top:1px solid var(--line);margin-top:30px;padding:38px 24px;text-align:center;color:var(--ink-soft);font-size:.85rem}
+  footer .refrain{font-style:italic;margin-bottom:8px}
+</style>
+</head>
+<body>
+
+<!-- HERO — save your banner beside this file as assets/banner.jpg -->
+<header class="hero">
+  <img src="assets/banner.jpg" alt="Dr. Niia Bishop, Ph.D."
+       onerror="this.remove();document.getElementById('hf').style.display='block'">
+  <div class="hero-fallback" id="hf">
+    <h1>Dr. Niia Bishop, Ph.D.</h1>
+    <div class="rule"></div>
+    <p class="tagline">A doctor heals the people who make it into the room.<br>A story can reach the ones who never do.</p>
+    <span class="motto">One woman. Infinite worlds.</span>
+  </div>
+</header>
+
+<main class="case">
+  <h2>The Library</h2>
+  <p class="sub">Scroll a shelf — spines pass, and the book at center opens its cover. Click any spine to bring it forward.</p>
+  <div id="shelves"></div>
+</main>
+
+<footer>
+  <p class="refrain">Acordate de las caras.</p>
+  <p>© 2026 Niia Bishop, Ph.D. · niiabishop.com</p>
+</footer>
+
+<script>
+/* =====================================================================
+   ART CONVENTION — drop real art in an assets/ folder beside this file:
+     assets/<slug>-spine.png   (tall, ~420×2000, reads bottom-to-top)
+     assets/<slug>-cover.jpg   (2:3, ~1000×1500)
+   If a file exists it replaces the drawn placeholder automatically.
+   Example: your Panamá spine → assets/panama-spine.png
+   LS: paste the Lemon Squeezy checkout URL per book ("" = coming soon).
+   ===================================================================== */
+const SHELVES = [
+  { name:"The Ecosystem", tag:"Age of Intellect · the learning platform", books:[
+    {slug:"ecosystem", cta:"ENTER THE ECOSYSTEM", t:"The Ecosystem", sub:"an operating system for a school", q:"A school built on love, not fear.", colors:["#a8842c","#1c1712"], ls:"ecosystem.html", d:"An AI that meets each child exactly where they are — from day one. Right Speech, Jijang Bosal, the Cup, ikigai: the philosophy is the soul, the tool is the body. IEPs, learning styles, and continuity, woven in."}
+  ]},
+  { name:"¡Viva la Revolución!", tag:"Interactive history · 10 books", banner:true, books:[
+    {slug:"nicaragua",  t:"Nicaragua",                sub:"1978 · the suitcase",   q:"What burden will you carry?",               colors:["#1e5bc6","#ffffff"], ls:"", d:"Managua, 1978. “¿Es tu maleta?” You are carrying it before you understand it. A choose-your-own-adventure of the insurrection — every path true, every path partial."},
+    {slug:"guatemala",  t:"Guatemala",                sub:"1982 · the photograph", q:"What memories deserve to survive?",         colors:["#4997d0","#ffffff"], ls:"", d:"“Quemá el resto.” Your father burns the family photographs before sunrise and will not say why."},
+    {slug:"cuba",       t:"Cuba · Apartment 23",      sub:"1980 · the key",        q:"Whose burden will you refuse?",             colors:["#cf142b","#002a8f"], ls:"", d:"“Hay un muerto en el 23. Si preguntan, es tuyo.” Mariel, 1980. A key you never asked for, and a city deciding who gets to leave."},
+    {slug:"bolivia",    t:"Bolivia",                  sub:"1980 · the dynamite",   q:"What is a country worth?",                  colors:["#d52b1e","#f9e300"], ls:"", d:"“Agarrá — y no lo soltés hasta El Alto.” The Cocaine Coup, from the mines to the altiplano."},
+    {slug:"chile",      t:"Chile",                    sub:"1973 · the cassette",   q:"What does loyalty cost?",                   colors:["#0039a6","#d52b1e"], ls:"", d:"The tanks arrive before breakfast. The radio says everything is normal. September 11, 1973, hour by hour."},
+    {slug:"panama",     t:"Panamá · El Chorrillo",    sub:"1989 · the armband",    q:"¿Es tu hijo?",                              colors:["#da121a","#005293"], ls:"", d:"“Póntelo. Esta noche no hay neutral.” The barrio burns, a stranger presses red cloth into your hands, and a boy is suddenly yours to lose."},
+    {slug:"colombia",   t:"Colombia · El Maletín",    sub:"1989 · the files",      q:"How many versions of the truth can coexist?", colors:["#fcd116","#003893"], ls:"", d:"“Usté no sabe bailar. Aprendé.” A taped briefcase left under a bus seat, and every road out costs somebody."},
+    {slug:"elsalvador", t:"El Salvador",              sub:"1980 · the letter",     q:"When does faith become resistance?",        colors:["#0f47af","#ffffff"], ls:"", soon:true, d:"An unfinished mass. A candle still burning after the evacuation. A letter written but never delivered."},
+    {slug:"peru",       t:"Peru",                     sub:"1983 · the drum",       q:"Who are you when your name changes?",       colors:["#d91023","#ffffff"], ls:"", d:"“Amaña puriychu.” The Sendero years in the sierra, where the count is the truth and your name will not stay yours."},
+    {slug:"venezuela",  t:"Venezuela",                sub:"1989 · the map",        q:"When does hope become hunger?",             colors:["#ffcc00","#00247d"], ls:"", d:"“Bájalo tú. Yo ya no llego.” El Caracazo. A hand-drawn map that reads as food stashes — and is really where the trucks take the dead."}
+  ]},
+  { name:"The African Royal Canon", tag:"Epic histories", books:[
+    {slug:"canon1", t:"Volume I",  sub:"[title]", q:"", colors:["#a8842c","#1c1712"], ls:"", soon:true, d:"[Back-cover copy here.]"},
+    {slug:"canon2", t:"Volume II", sub:"[title]", q:"", colors:["#7c5f1e","#1c1712"], ls:"", soon:true, d:"[Back-cover copy here.]"},
+    {slug:"canon3", t:"Volume III",sub:"[title]", q:"", colors:["#5c4715","#1c1712"], ls:"", soon:true, d:"[Back-cover copy here.]"}
+  ]},
+  { name:"Seek Within", tag:"", books:[
+    {slug:"seek", t:"Seek Within", sub:"", q:"", colors:["#3d5a4c","#efe7d7"], ls:"", soon:true, d:"[Back-cover copy here.]"}
+  ]},
+  { name:"Every Other Week", tag:"", books:[
+    {slug:"eow", t:"Every Other Week", sub:"", q:"", colors:["#41506b","#efe7d7"], ls:"", soon:true, d:"[Back-cover copy here.]"}
+  ]},
+  { name:"The Greatest Love Story Ever Told", tag:"", books:[
+    {slug:"glset", t:"The Greatest Love Story Ever Told", sub:"", q:"", colors:["#7a3352","#efe7d7"], ls:"", soon:true, d:"[Back-cover copy here.]"}
+  ]},
+  { name:"Flying Solo", tag:"", books:[
+    {slug:"solo", t:"Flying Solo", sub:"", q:"", colors:["#2f6673","#efe7d7"], ls:"", soon:true, d:"[Back-cover copy here.]"}
+  ]},
+  { name:"Lovemaking, a Chronicle", tag:"", books:[
+    {slug:"lovemaking", t:"Lovemaking, a Chronicle", sub:"", q:"", colors:["#5c4470","#efe7d7"], ls:"", soon:true, d:"[Back-cover copy here.]"}
+  ]}
+];
+
+/* ---------------- procedural textures (placeholders until real art) ---------------- */
+function coverTexture(b, banner){
+  const c=document.createElement("canvas"); c.width=512; c.height=768;
+  const x=c.getContext("2d");
+  x.fillStyle="#efe7d7"; x.fillRect(0,0,512,768);
+  x.strokeStyle="rgba(28,23,18,.5)"; x.lineWidth=3; x.strokeRect(14,14,484,740);
+  x.strokeStyle="rgba(28,23,18,.25)"; x.lineWidth=1; x.strokeRect(26,26,460,716);
+  x.fillStyle=b.colors[0]; x.fillRect(26,120,460,14);
+  x.fillStyle="#1c1712"; x.textAlign="center";
+  if(banner){ x.font="18px Georgia"; x.fillText("— ¡ V I V A   L A   R E V O L U C I Ó N ! —",256,80); }
+  x.font="42px Georgia";
+  wrap(x,b.t,256,300,420,50);
+  if(b.sub){ x.font="italic 22px Georgia"; x.fillStyle="#4a4238"; x.fillText(b.sub,256,420); }
+  if(b.q){ x.font="italic 24px Georgia"; x.fillStyle="#4a4238"; wrap(x,b.q,256,540,400,32); }
+  x.font="20px Georgia"; x.fillStyle="#1c1712"; x.fillText("NIIA BISHOP, PH.D.",256,700);
+  if(b.soon){ ribbon(x); }
+  const t=new THREE.CanvasTexture(c); t.anisotropy=4; return t;
+}
+function spineTexture(b, idx){
+  const c=document.createElement("canvas"); c.width=128; c.height=768;
+  const x=c.getContext("2d");
+  x.fillStyle=b.colors[0]; x.fillRect(0,0,128,768);
+  x.fillStyle=b.colors[1]; x.fillRect(0,0,10,768);
+  x.fillStyle=lum(b.colors[0])>140?"#1c1712":"#f6f1e7";
+  x.textAlign="center"; x.font="22px Georgia";
+  x.fillText(String(idx+1),64,50);
+  x.save(); x.translate(64,400); x.rotate(-Math.PI/2);
+  x.font="28px Georgia"; x.fillText(trunc(x,b.t,600),0,10); x.restore();
+  x.font="20px Georgia"; x.fillText("NB",64,735);
+  const t=new THREE.CanvasTexture(c); t.anisotropy=4; return t;
+}
+function backTexture(b){
+  const c=document.createElement("canvas"); c.width=512; c.height=768;
+  const x=c.getContext("2d");
+  x.fillStyle="#efe7d7"; x.fillRect(0,0,512,768);
+  x.strokeStyle="rgba(28,23,18,.4)"; x.strokeRect(20,20,472,728);
+  x.fillStyle="#1c1712"; x.textAlign="center"; x.font="30px Georgia";
+  x.fillText(b.t,256,90);
+  x.font="italic 21px Georgia"; x.fillStyle="#4a4238";
+  wrap(x,b.d||"",256,180,400,32);
+  const t=new THREE.CanvasTexture(c); t.anisotropy=4; return t;
+}
+function wrap(x,text,cx,y,maxW,lh){
+  const words=(text||"").split(" "); let line="";
+  for(const w of words){
+    const test=line?line+" "+w:w;
+    if(x.measureText(test).width>maxW && line){ x.fillText(line,cx,y); y+=lh; line=w; }
+    else line=test;
+  }
+  if(line) x.fillText(line,cx,y);
+}
+function trunc(x,t,maxW){ let s=t; while(x.measureText(s).width>maxW && s.length>3) s=s.slice(0,-2); return s; }
+function lum(hex){ const n=parseInt(hex.slice(1),16); return ((n>>16&255)*299+(n>>8&255)*587+(n&255)*114)/1000; }
+function ribbon(x){
+  x.save(); x.translate(400,90); x.rotate(Math.PI/5);
+  x.fillStyle="#a8842c"; x.fillRect(-130,-16,260,32);
+  x.fillStyle="#f6f1e7"; x.font="16px Georgia"; x.textAlign="center"; x.fillText("COMING SOON",0,6);
+  x.restore();
+}
+function tryLoadArt(mat, url){
+  new THREE.TextureLoader().load(url, tex=>{ tex.anisotropy=4; mat.map=tex; mat.needsUpdate=true; }, undefined, ()=>{});
+}
+
+/* ---------------- shelf builder ---------------- */
+const W=3, H=4.5, D=0.66, GAP=0.42, SPREAD=2.1;
+
+function buildShelf(container, shelf, si){
+  const stage=document.createElement("canvas"); stage.className="stage";
+  const wrapDiv=document.createElement("div"); wrapDiv.className="stage-wrap";
+  wrapDiv.appendChild(stage);
+  const nav=document.createElement("div"); nav.className="nav";
+  nav.innerHTML=`<button aria-label="left">&#8249;</button><button aria-label="right">&#8250;</button>`;
+  wrapDiv.appendChild(nav);
+  container.appendChild(wrapDiv);
+
+  const info=document.createElement("div"); info.className="info"; container.appendChild(info);
+
+  const renderer=new THREE.WebGLRenderer({canvas:stage,antialias:true});
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+  renderer.setClearColor(0xf6f1e7);
+  const scene=new THREE.Scene();
+  const camera=new THREE.PerspectiveCamera(30,2,0.1,100);
+  camera.position.set(0,0.55,11.5); camera.lookAt(0,-0.1,0);
+
+  scene.add(new THREE.AmbientLight(0xffffff,0.85));
+  const key=new THREE.DirectionalLight(0xfff6e0,0.55); key.position.set(-4,6,8); scene.add(key);
+
+  const boardGeo=new THREE.BoxGeometry(60,0.22,2.4);
+  const board=new THREE.Mesh(boardGeo,new THREE.MeshStandardMaterial({color:0x2e2419,roughness:.8}));
+  board.position.y=-H/2-0.22; scene.add(board);
+
+  const paperMat=()=>new THREE.MeshStandardMaterial({color:0xd9cfba,roughness:.9});
+  const books=shelf.books.map((b,i)=>{
+    const coverMat=new THREE.MeshStandardMaterial({map:coverTexture(b,shelf.banner),roughness:.65});
+    const backMat =new THREE.MeshStandardMaterial({map:backTexture(b),roughness:.65});
+    const spineMat=new THREE.MeshStandardMaterial({map:spineTexture(b,i),roughness:.65});
+    tryLoadArt(coverMat,`assets/${b.slug}-cover.jpg`);
+    tryLoadArt(spineMat,`assets/${b.slug}-spine.png`);
+    tryLoadArt(backMat, `assets/${b.slug}-back.jpg`);
+    const mats=[paperMat(),spineMat,paperMat(),paperMat(),coverMat,backMat]; /* +x, -x(spine), +y, -y, +z(front), -z(back) */
+    const mesh=new THREE.Mesh(new THREE.BoxGeometry(W,H,D),mats);
+    mesh.userData.index=i; scene.add(mesh);
+    return mesh;
+  });
+
+  const state={scroll:0,target:0,showBack:false,current:-1};
+
+  function updateInfo(){
+    const i=Math.max(0,Math.min(shelf.books.length-1,Math.round(state.target)));
+    if(i===state.current) return; state.current=i; state.showBack=false;
+    const b=shelf.books[i];
+    info.innerHTML=`
+      <div class="it">${b.t}</div>
+      <div class="is">${[b.sub, b.soon?"coming soon":(b.ls?"available":"")].filter(Boolean).join(" · ")}</div>
+      <p class="id">${b.d||""}</p>
+      <a class="buy ${b.ls?"live":"dead"}" href="${b.ls||"#"}">${b.ls?(b.cta||"GET THIS BOOK"):"COMING SOON"}</a>`;
+  }
+  updateInfo();
+
+  function resize(){
+    const w=wrapDiv.clientWidth, h=stage.clientHeight;
+    renderer.setSize(w,h,false);
+    camera.aspect=w/h; camera.updateProjectionMatrix();
+  }
+  resize(); window.addEventListener("resize",resize);
+
+  /* input */
+  let dragging=false,lastX=0,moved=0;
+  stage.addEventListener("wheel",e=>{
+    const d=Math.abs(e.deltaX)>Math.abs(e.deltaY)?e.deltaX:e.deltaY;
+    if(Math.abs(d)<2) return;
+    e.preventDefault();
+    state.target=clamp(state.target+d*0.004,0,shelf.books.length-1);
+  },{passive:false});
+  stage.addEventListener("pointerdown",e=>{dragging=true;moved=0;lastX=e.clientX;stage.setPointerCapture(e.pointerId);});
+  stage.addEventListener("pointermove",e=>{
+    if(!dragging) return;
+    const dx=e.clientX-lastX; lastX=e.clientX; moved+=Math.abs(dx);
+    state.target=clamp(state.target-dx*0.012,0,shelf.books.length-1);
+  });
+  stage.addEventListener("pointerup",e=>{
+    dragging=false;
+    state.target=clamp(Math.round(state.target),0,shelf.books.length-1);
+    if(moved<6) click(e);
+  });
+  nav.children[0].onclick=()=>{state.target=clamp(Math.round(state.target)-1,0,shelf.books.length-1);};
+  nav.children[1].onclick=()=>{state.target=clamp(Math.round(state.target)+1,0,shelf.books.length-1);};
+
+  const ray=new THREE.Raycaster(), ptr=new THREE.Vector2();
+  function click(e){
+    const r=stage.getBoundingClientRect();
+    ptr.x=((e.clientX-r.left)/r.width)*2-1;
+    ptr.y=-((e.clientY-r.top)/r.height)*2+1;
+    ray.setFromCamera(ptr,camera);
+    const hit=ray.intersectObjects(books)[0];
+    if(!hit) return;
+    const i=hit.object.userData.index;
+    if(i===Math.round(state.target)) state.showBack=!state.showBack;   /* flip centered book */
+    else { state.target=i; state.showBack=false; }
+  }
+
+  function clamp(v,a,b){return Math.max(a,Math.min(b,v));}
+
+  /* animate */
+  function tick(){
+    state.scroll+=(state.target-state.scroll)*0.11;
+    if(!dragging && Math.abs(state.target-Math.round(state.target))<0.001){
+      state.target=Math.round(state.target);
+    }
+    updateInfo();
+    const center=state.scroll;
+    books.forEach((m,i)=>{
+      const rel=i-center;
+      const a=Math.abs(rel);
+      const openness=Math.max(0,1-Math.min(a,1));            /* 1 at center, 0 away */
+      const side=rel===0?0:Math.sign(rel);
+      const x=rel*(D+GAP)+side*SPREAD*Math.min(a,1)*0.9+side*Math.max(0,Math.min(a,1))*(W/2)*openness;
+      const targetRot=(state.showBack&&a<0.5)?Math.PI:(Math.PI/2)*(1-openness);
+      m.position.x+= (x-m.position.x)*0.14;
+      m.position.z+= ((openness*1.35)-m.position.z)*0.14;
+      m.rotation.y+= (targetRot-m.rotation.y)*0.14;
+      const s=1+openness*0.12;
+      m.scale.set(s,s,s);
+    });
+    renderer.render(scene,camera);
+    requestAnimationFrame(tick);
+  }
+  tick();
+}
+
+/* ---------------- build all shelves ---------------- */
+const root=document.getElementById("shelves");
+if(!window.WebGLRenderingContext){
+  root.innerHTML="<p style='text-align:center'>This library needs a modern browser.</p>";
+}else{
+  SHELVES.forEach((shelf,si)=>{
+    const sec=document.createElement("section"); sec.className="shelf";
+    sec.innerHTML=`<div class="shelf-head"><h3>${shelf.name}</h3><span class="tag">${shelf.tag||""}</span></div>`;
+    root.appendChild(sec);
+    buildShelf(sec,shelf,si);
+  });
+}
+</script>
+</body>
+</html>
