@@ -641,7 +641,38 @@
     { title: 'Finished Videos', status: 'not_started', linkPlaceholder: 'Paste finished video URL here' }
   ];
 
+  const MS_ADAM_EPISODES = [
+    { title: 'Ep 01 — Jesse Owens (Berlin, 1936)' },
+    { title: 'Ep 02 — Jackie Robinson (Ebbets Field, 1947)' },
+    { title: 'Ep 03 — Tommie Smith & John Carlos (Mexico City, 1968)' },
+    { title: 'Ep 04 — Muhammad Ali (Kinshasa, 1974)' },
+    { title: "Ep 05 — US Women's Soccer / Brandi Chastain (Rose Bowl, 1999)", due: '2026-07-14' },
+    { title: 'Ep 06 — Wilma Rudolph (Rome, 1960)' },
+    { title: 'Ep 07 — Kathrine Switzer (Boston Marathon, 1967)' },
+    { title: 'Ep 08 — Billie Jean King vs. Bobby Riggs (Houston, 1973)' },
+    { title: 'Ep 09 — Miracle on Ice (Lake Placid, 1980)' },
+    { title: 'Ep 10 — Simone Biles (Tokyo, 2021)', due: '2026-07-21' }
+  ];
+
   let milestones = msLoad();
+
+  function msSeedAdamEpisodes() {
+    const FLAG = 'rewindRoomAdamListSeeded_v1';
+    if (localStorage.getItem(FLAG)) return false;
+    const existingTitles = new Set(milestones.map(m => m.title));
+    let added = false;
+    MS_ADAM_EPISODES.forEach(ep => {
+      if (!existingTitles.has(ep.title)) {
+        const item = msSeedItem({ title: ep.title, status: 'not_started' });
+        if (ep.due) item.due = ep.due;
+        milestones.push(item);
+        added = true;
+      }
+    });
+    localStorage.setItem(FLAG, '1');
+    return added;
+  }
+  if (msSeedAdamEpisodes()) msSave();
 
   function msLoad() {
     const raw = localStorage.getItem(MS_STORAGE_KEY);
