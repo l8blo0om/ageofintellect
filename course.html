@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Best Practices & Applications of AI in Education — Age of Intellect</title>
+<meta name="description" content="A five-module professional development course for educators ready to stop teaching around AI and start teaching with clarity about what education is actually for.">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+:root {
+  --cream: #EAE0C8;
+  --black: #0a0a0a;
+  --white: #ffffff;
+  --gold: #C9A84C;
+  --gold-dim: #8a6e2f;
+  --slate: #1a2535;
+  --ink: #1c1c1c;
+  --muted: #5a5a5a;
+  --border: rgba(201,168,76,0.2);
+  --section-gap: 120px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--white);
+  color: var(--ink);
+  overflow-x: hidden;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 48px;
+  background: rgba(255,255,255,0.96);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.05rem;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.nav-logo em { font-style: italic; color: var(--gold); }
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+  list-style: none;
+}
+
+.nav-links a {
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.nav-links a:hover { color: var(--ink); }
+
+.nav-cta {
+  background: var(--black);
+  color: var(--gold) !important;
+  padding: 10px 22px;
+  border-radius: 2px;
+  font-size: 0.75rem !important;
+  letter-spacing: 0.12em !important;
+}
+
+.nav-cta:hover { background: var(--slate) !important; color: var(--gold) !important; }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  background: var(--black);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0 48px 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-eyebrow {
+  position: absolute;
+  top: 120px;
+  left: 48px;
+  right: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.eyebrow-tag {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.eyebrow-divider {
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+  margin: 0 24px;
+}
+
+.hero-bg-text {
+  position: absolute;
+  bottom: -20px;
+  right: -20px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(120px, 18vw, 260px);
+  font-weight: 300;
+  color: rgba(201,168,76,0.04);
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+  letter-spacing: -0.02em;
+}
+
+.hero-content { position: relative; z-index: 2; max-width: 900px; }
+
+.hero-label {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 28px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.hero-label::before {
+  content: '';
+  display: inline-block;
+  width: 32px;
+  height: 1px;
+  background: var(--gold);
+}
+
+h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(48px, 7vw, 96px);
+  font-weight: 300;
+  line-height: 1.05;
+  color: var(--white);
+  margin-bottom: 32px;
+  letter-spacing: -0.02em;
+}
+
+h1 em {
+  font-style: italic;
+  color: var(--gold);
+}
+
+.hero-sub {
+  font-size: 1.05rem;
+  font-weight: 300;
+  line-height: 1.7;
+  color: rgba(255,255,255,0.6);
+  max-width: 560px;
+  margin-bottom: 48px;
+}
+
+.hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.btn-primary {
+  background: var(--gold);
+  color: var(--black);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 16px 36px;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.btn-primary:hover { background: #d4a832; transform: translateY(-1px); }
+
+.btn-ghost {
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: color 0.2s;
+}
+
+.btn-ghost:hover { color: var(--white); }
+
+.hero-stats {
+  position: absolute;
+  bottom: 80px;
+  right: 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  text-align: right;
+}
+
+.stat-item { }
+
+.stat-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2rem;
+  font-weight: 300;
+  color: var(--gold);
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 0.68rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+  margin-top: 4px;
+}
+
+/* ── SECTION SHARED ── */
+section { padding: var(--section-gap) 48px; }
+
+.section-label {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.section-label span {
+  color: rgba(0,0,0,0.2);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.9rem;
+  font-style: italic;
+}
+
+h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(36px, 5vw, 60px);
+  font-weight: 300;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+h2 em { font-style: italic; color: var(--gold); }
+
+/* ── THE QUESTION ── */
+.question-section {
+  background: var(--cream);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+
+.question-left { }
+
+.question-right { }
+
+.pull-quote {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(24px, 3.5vw, 42px);
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.4;
+  color: var(--ink);
+  border-left: 3px solid var(--gold);
+  padding-left: 32px;
+  margin-bottom: 32px;
+}
+
+.body-text {
+  font-size: 1rem;
+  font-weight: 300;
+  line-height: 1.8;
+  color: var(--muted);
+}
+
+.body-text + .body-text { margin-top: 16px; }
+
+/* ── COURSE INTRO ── */
+.course-intro {
+  background: var(--white);
+  text-align: center;
+  padding: var(--section-gap) 48px;
+}
+
+.course-intro h2 { margin-bottom: 20px; }
+
+.course-intro .body-text {
+  max-width: 640px;
+  margin: 0 auto 60px;
+}
+
+.course-meta-row {
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+  flex-wrap: wrap;
+}
+
+.meta-item {
+  text-align: center;
+}
+
+.meta-val {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.2rem;
+  font-weight: 300;
+  color: var(--ink);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.meta-val em { font-style: italic; color: var(--gold); }
+
+.meta-key {
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ── MODULES ── */
+.modules-section {
+  background: var(--black);
+  padding: var(--section-gap) 48px;
+}
+
+.modules-section .section-label { color: var(--gold); }
+.modules-section .section-label span { color: rgba(255,255,255,0.15); }
+.modules-section h2 { color: var(--white); margin-bottom: 64px; }
+
+.modules-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+}
+
+.module-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  padding: 40px;
+  transition: background 0.3s, border-color 0.3s;
+  cursor: default;
+}
+
+.module-card:hover {
+  background: rgba(201,168,76,0.05);
+  border-color: rgba(201,168,76,0.2);
+}
+
+.module-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.9rem;
+  font-style: italic;
+  color: var(--gold);
+  margin-bottom: 16px;
+  display: block;
+}
+
+.module-card h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.6rem;
+  font-weight: 300;
+  color: var(--white);
+  line-height: 1.2;
+  margin-bottom: 12px;
+}
+
+.module-card h3 em { font-style: italic; color: var(--gold); }
+
+.module-exercise {
+  font-size: 0.72rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 16px;
+}
+
+.module-desc {
+  font-size: 0.88rem;
+  font-weight: 300;
+  line-height: 1.7;
+  color: rgba(255,255,255,0.45);
+}
+
+.module-deliverable {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.3);
+  letter-spacing: 0.05em;
+}
+
+.module-deliverable strong {
+  color: rgba(201,168,76,0.7);
+  font-weight: 500;
+}
+
+.module-card.full-width {
+  grid-column: 1 / -1;
+}
+
+/* ── METHOD ── */
+.method-section {
+  background: var(--white);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;
+}
+
+.method-left { }
+.method-left h2 { margin-bottom: 24px; }
+.method-left .body-text { margin-bottom: 16px; }
+
+.method-right { padding-top: 12px; }
+
+.method-steps { display: flex; flex-direction: column; gap: 0; }
+
+.method-step {
+  display: flex;
+  gap: 24px;
+  padding: 28px 0;
+  border-bottom: 1px solid rgba(0,0,0,0.07);
+}
+
+.step-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.1rem;
+  font-style: italic;
+  color: var(--gold);
+  flex-shrink: 0;
+  width: 32px;
+  padding-top: 2px;
+}
+
+.step-content h4 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.25rem;
+  font-weight: 400;
+  margin-bottom: 6px;
+}
+
+.step-content p {
+  font-size: 0.85rem;
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--muted);
+}
+
+/* ── WHO IS THIS FOR ── */
+.audience-section {
+  background: var(--cream);
+  text-align: center;
+}
+
+.audience-section h2 { margin-bottom: 16px; }
+.audience-section .body-text { max-width: 560px; margin: 0 auto 60px; }
+
+.audience-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.audience-card {
+  background: var(--white);
+  padding: 40px 32px;
+  text-align: left;
+}
+
+.audience-icon {
+  font-size: 1.5rem;
+  margin-bottom: 16px;
+  display: block;
+}
+
+.audience-card h4 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.3rem;
+  font-weight: 400;
+  margin-bottom: 10px;
+}
+
+.audience-card p {
+  font-size: 0.85rem;
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--muted);
+}
+
+/* ── PRICING ── */
+.pricing-section {
+  background: var(--white);
+  text-align: center;
+}
+
+.pricing-section h2 { margin-bottom: 16px; }
+.pricing-section .body-text { max-width: 520px; margin: 0 auto 64px; }
+
+.pricing-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  max-width: 1000px;
+  margin: 0 auto 48px;
+}
+
+.pricing-card {
+  border: 1px solid rgba(0,0,0,0.08);
+  padding: 44px 36px;
+  text-align: left;
+  position: relative;
+  transition: border-color 0.2s;
+}
+
+.pricing-card:hover { border-color: var(--gold); }
+
+.pricing-card.featured {
+  background: var(--black);
+  border-color: var(--gold);
+}
+
+.pricing-badge {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--gold);
+  color: var(--black);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 5px 14px;
+  border-radius: 2px;
+  white-space: nowrap;
+}
+
+.pricing-tier {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 16px;
+}
+
+.pricing-price {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 3rem;
+  font-weight: 300;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.pricing-card.featured .pricing-price { color: var(--white); }
+
+.pricing-cadence {
+  font-size: 0.78rem;
+  color: var(--muted);
+  margin-bottom: 28px;
+}
+
+.pricing-card.featured .pricing-cadence { color: rgba(255,255,255,0.4); }
+
+.pricing-features {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 36px;
+}
+
+.pricing-features li {
+  font-size: 0.85rem;
+  font-weight: 300;
+  line-height: 1.5;
+  color: var(--muted);
+  padding-left: 16px;
+  position: relative;
+}
+
+.pricing-card.featured .pricing-features li { color: rgba(255,255,255,0.55); }
+
+.pricing-features li::before {
+  content: '—';
+  position: absolute;
+  left: 0;
+  color: var(--gold);
+  font-size: 0.7rem;
+}
+
+.btn-pricing {
+  display: block;
+  width: 100%;
+  text-align: center;
+  padding: 14px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 2px;
+  transition: all 0.2s;
+}
+
+.btn-pricing-outline {
+  border: 1px solid rgba(0,0,0,0.15);
+  color: var(--ink);
+}
+
+.btn-pricing-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+.btn-pricing-filled {
+  background: var(--gold);
+  color: var(--black);
+  border: 1px solid var(--gold);
+}
+
+.btn-pricing-filled:hover { background: #d4a832; }
+
+.pricing-note {
+  font-size: 0.8rem;
+  color: var(--muted);
+  font-style: italic;
+}
+
+/* ── ABOUT ── */
+.about-section {
+  background: var(--black);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+
+.about-left .section-label { color: var(--gold); }
+.about-left .section-label span { color: rgba(255,255,255,0.15); }
+
+.about-left h2 { color: var(--white); margin-bottom: 24px; }
+
+.about-left .body-text { color: rgba(255,255,255,0.5); margin-bottom: 16px; }
+
+.credential-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 32px;
+}
+
+.credential-list li {
+  font-size: 0.83rem;
+  font-weight: 300;
+  color: rgba(255,255,255,0.4);
+  padding-left: 20px;
+  position: relative;
+  line-height: 1.5;
+}
+
+.credential-list li::before {
+  content: '✦';
+  position: absolute;
+  left: 0;
+  color: var(--gold);
+  font-size: 0.55rem;
+  top: 5px;
+}
+
+.about-right {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(201,168,76,0.15);
+  padding: 48px;
+}
+
+blockquote {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.5rem;
+  font-weight: 300;
+  font-style: italic;
+  line-height: 1.55;
+  color: var(--white);
+  margin-bottom: 28px;
+}
+
+.quote-attr {
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+/* ── CTA ── */
+.cta-section {
+  background: var(--gold);
+  text-align: center;
+  padding: 100px 48px;
+}
+
+.cta-section h2 {
+  color: var(--black);
+  margin-bottom: 16px;
+}
+
+.cta-section h2 em { color: var(--black); opacity: 0.6; }
+
+.cta-section .body-text {
+  color: rgba(0,0,0,0.6);
+  max-width: 520px;
+  margin: 0 auto 40px;
+}
+
+.btn-cta-dark {
+  background: var(--black);
+  color: var(--gold);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 18px 44px;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  transition: transform 0.2s;
+}
+
+.btn-cta-dark:hover { transform: translateY(-2px); }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--black);
+  padding: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+.footer-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.95rem;
+  color: rgba(255,255,255,0.4);
+  text-decoration: none;
+}
+
+.footer-logo em { font-style: italic; color: var(--gold); }
+
+.footer-copy {
+  font-size: 0.72rem;
+  color: rgba(255,255,255,0.2);
+  letter-spacing: 0.08em;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  nav { padding: 16px 24px; }
+  .nav-links { display: none; }
+  section { padding: 80px 24px; }
+  .hero { padding: 0 24px 60px; }
+  .hero-eyebrow { left: 24px; right: 24px; }
+  .hero-stats { right: 24px; bottom: 60px; }
+  .question-section,
+  .method-section,
+  .about-section { grid-template-columns: 1fr; gap: 48px; }
+  .modules-grid { grid-template-columns: 1fr; }
+  .module-card.full-width { grid-column: 1; }
+  .audience-cards { grid-template-columns: 1fr; }
+  .pricing-cards { grid-template-columns: 1fr; }
+  footer { flex-direction: column; gap: 16px; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="https://ageofintellect.com" class="nav-logo">Age <em>of</em> Intellect</a>
+  <ul class="nav-links">
+    <li><a href="#modules">Modules</a></li>
+    <li><a href="#method">Method</a></li>
+    <li><a href="#about">Instructor</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#enroll" class="nav-cta">Enroll Now</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="hero-eyebrow">
+    <span class="eyebrow-tag">Professional Development · Self-Paced</span>
+    <div class="eyebrow-divider"></div>
+    <span class="eyebrow-tag">Age of Intellect · 2026</span>
+  </div>
+
+  <div class="hero-bg-text">AI</div>
+
+  <div class="hero-content">
+    <div class="hero-label">A Course for Educators</div>
+    <h1>Best Practices &amp; Applications<br>of AI in <em>Education.</em></h1>
+    <p class="hero-sub">Before you learn how to use AI in the classroom, there's a harder question to answer: what are you actually teaching — and does any of it still need to be taught by a human?</p>
+    <div class="hero-actions">
+      <a href="#enroll" class="btn-primary">Enroll Now</a>
+      <a href="#modules" class="btn-ghost">See the curriculum →</a>
+    </div>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat-item">
+      <div class="stat-num">5</div>
+      <div class="stat-label">Modules</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">5</div>
+      <div class="stat-label">AI Companions</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">1</div>
+      <div class="stat-label">Deliverable per module</div>
+    </div>
+  </div>
+</section>
+
+<!-- THE QUESTION -->
+<section class="question-section">
+  <div class="question-left">
+    <div class="section-label">Why This Course <span>— 001</span></div>
+    <h2>The question nobody<br>is <em>asking.</em></h2>
+  </div>
+  <div class="question-right">
+    <div class="pull-quote">"If a student can get a better answer from their phone in ten seconds — what exactly are you teaching them?"</div>
+    <p class="body-text">Most AI-in-education content is a list of tools. Plug this into your lesson plan. Use this to grade essays faster. Save time here.</p>
+    <p class="body-text">This course starts somewhere else entirely. It starts with the Obsolescence Audit — a structured exercise that asks educators to look at what they're teaching and reckon, honestly, with what AI has already made redundant. And then it asks: what's the actual human skill underneath that? Is that what you're assessing? Is that what you're developing?</p>
+    <p class="body-text">Everything else in the course follows from that first uncomfortable answer.</p>
+  </div>
+</section>
+
+<!-- COURSE INTRO -->
+<section class="course-intro" id="curriculum">
+  <div class="section-label" style="justify-content:center;">The Course <span>— 002</span></div>
+  <h2>Five modules. Five <em>deliverables.</em><br>One transformed practice.</h2>
+  <p class="body-text">You don't just watch videos. Every module has an AI companion built specifically for it — a learning tool that works differently for every educator, regardless of grade level or subject area. And every module ends with something real you built yourself.</p>
+
+  <div class="course-meta-row">
+    <div class="meta-item">
+      <div class="meta-val">Self-<em>paced</em></div>
+      <div class="meta-key">Format</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-val">All <em>educators</em></div>
+      <div class="meta-key">Audience</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-val">5 <em>hours</em></div>
+      <div class="meta-key">Est. time</div>
+    </div>
+    <div class="meta-item">
+      <div class="meta-val">Instant <em>access</em></div>
+      <div class="meta-key">On purchase</div>
+    </div>
+  </div>
+</section>
+
+<!-- MODULES -->
+<section class="modules-section" id="modules">
+  <div class="section-label">The Curriculum <span>— 003</span></div>
+  <h2>What you'll actually <em>do.</em></h2>
+
+  <div class="modules-grid">
+
+    <div class="module-card">
+      <span class="module-num">Module 01</span>
+      <h3>What Are We Actually <em>Teaching?</em></h3>
+      <div class="module-exercise">Core Exercise: The Obsolescence Audit</div>
+      <p class="module-desc">You identify one thing you currently teach that AI can now do faster and better. Then you excavate what's actually underneath it — the human skill you were trying to develop all along. Then you ask whether your assessment even measures that.</p>
+      <div class="module-deliverable"><strong>Deliverable:</strong> Your completed Obsolescence Audit — a personal reckoning with your own curriculum.</div>
+    </div>
+
+    <div class="module-card">
+      <span class="module-num">Module 02</span>
+      <h3>AI as a Differentiation <em>Engine</em></h3>
+      <div class="module-exercise">Core Exercise: Build Your First Companion Prompt</div>
+      <p class="module-desc">You learn to design AI companion prompts for your own students — different entry points, same destination. The AI handles the scaffolding loop. You direct the learning. This module is also a live demonstration of exactly what it's teaching.</p>
+      <div class="module-deliverable"><strong>Deliverable:</strong> One working AI companion prompt for a concept you actually teach.</div>
+    </div>
+
+    <div class="module-card">
+      <span class="module-num">Module 03</span>
+      <h3>Curriculum Design in the Age <em>of AI</em></h3>
+      <div class="module-exercise">Core Exercise: Unit Redesign</div>
+      <p class="module-desc">What does assessment look like when you stop measuring the outsourceable thing? You take a unit from your Obsolescence Audit and rebuild one assessment around the real skill. What rigor looks like now — and why it's harder, not easier.</p>
+      <div class="module-deliverable"><strong>Deliverable:</strong> One redesigned assessment built around a real human skill.</div>
+    </div>
+
+    <div class="module-card">
+      <span class="module-num">Module 04</span>
+      <h3>Ethics &amp; Policy <em>Literacy</em></h3>
+      <div class="module-exercise">Core Exercise: Draft Your Classroom AI Policy</div>
+      <p class="module-desc">Not a plagiarism policy in disguise. A real framework for how AI is used, disclosed, and discussed in your classroom — and how to talk to students, parents, and administrators about it without catastrophizing or cheerleading.</p>
+      <div class="module-deliverable"><strong>Deliverable:</strong> A one-page classroom AI policy in your own words.</div>
+    </div>
+
+    <div class="module-card full-width">
+      <span class="module-num">Module 05</span>
+      <h3>Building Your AI-Integrated <em>Practice</em></h3>
+      <div class="module-exercise">Core Exercise: The Integration Sprint</div>
+      <p class="module-desc">You pull everything together. The audit, the prompt, the redesigned assessment, the policy — they become a coherent practice document you can show to administrators, share with colleagues, or use as the foundation for ongoing professional development. This module ends with a 30-day integration plan that's actually achievable.</p>
+      <div class="module-deliverable"><strong>Deliverable:</strong> Your personal AI Integration Dossier — five artifacts, one practice.</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- METHOD -->
+<section class="method-section" id="method">
+  <div class="method-left">
+    <div class="section-label">The Method <span>— 004</span></div>
+    <h2>You learn by <em>doing</em> the thing the course is teaching.</h2>
+    <p class="body-text">Every module includes a custom AI learning companion — a tool built specifically for that module's content. The companion doesn't lecture. It asks you questions until you arrive somewhere real.</p>
+    <p class="body-text">A K-12 science teacher and a university literature professor enter the same environment and have completely different conversations. That's not an accident. That's differentiation — which happens to be exactly what Module 2 teaches.</p>
+    <p class="body-text">The meta-layer is the lesson.</p>
+  </div>
+  <div class="method-right">
+    <div class="method-steps">
+      <div class="method-step">
+        <span class="step-num">01</span>
+        <div class="step-content">
+          <h4>Watch the module video</h4>
+          <p>Short, direct, no filler. Dr. B teaches the concept and frames the exercise.</p>
+        </div>
+      </div>
+      <div class="method-step">
+        <span class="step-num">02</span>
+        <div class="step-content">
+          <h4>Enter the AI companion</h4>
+          <p>A Socratic learning tool tuned to that module. It meets you where you are and won't let you off easy.</p>
+        </div>
+      </div>
+      <div class="method-step">
+        <span class="step-num">03</span>
+        <div class="step-content">
+          <h4>Build your deliverable</h4>
+          <p>Every module ends with something you made — not a quiz, not a certificate prompt. Something real.</p>
+        </div>
+      </div>
+      <div class="method-step">
+        <span class="step-num">04</span>
+        <div class="step-content">
+          <h4>Carry it forward</h4>
+          <p>Each module builds on the last. By Module 5, the pieces are already there — you're assembling, not starting over.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AUDIENCE -->
+<section class="audience-section">
+  <div class="section-label" style="justify-content:center;">Who This Is For <span>— 005</span></div>
+  <h2>Built for educators who take<br>their practice <em>seriously.</em></h2>
+  <p class="body-text">If you're looking for a list of ChatGPT prompts to paste into your lesson plan, this is the wrong course. If you're ready to ask harder questions — this is exactly where to start.</p>
+
+  <div class="audience-cards">
+    <div class="audience-card">
+      <span class="audience-icon">🏫</span>
+      <h4>K–12 Teachers</h4>
+      <p>Navigating district pressure, parent anxiety, and students who are already using AI for everything. This course gives you a framework — not just talking points.</p>
+    </div>
+    <div class="audience-card">
+      <span class="audience-icon">🎓</span>
+      <h4>Higher Ed Faculty</h4>
+      <p>Rethinking academic integrity, redesigning assessments, and figuring out what a syllabus even means now. We go deep on what rigor looks like when AI writes the first draft.</p>
+    </div>
+    <div class="audience-card">
+      <span class="audience-icon">🛠️</span>
+      <h4>Instructional Designers</h4>
+      <p>Building curriculum and learning experiences in an environment that's shifting under your feet. This course gives you frameworks and tools you can actually deploy.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing-section" id="pricing">
+  <div class="section-label" style="justify-content:center;">Enrollment <span>— 006</span></div>
+  <h2>Choose how you want to <em>learn.</em></h2>
+  <p class="body-text">All tiers include the full course. The difference is in how much live access and institutional support you need.</p>
+
+  <div class="pricing-cards">
+
+    <div class="pricing-card">
+      <div class="pricing-tier">Self-Paced</div>
+      <div class="pricing-price">$97</div>
+      <div class="pricing-cadence">one-time · lifetime access</div>
+      <ul class="pricing-features">
+        <li>All 5 video modules</li>
+        <li>All 5 AI learning companions</li>
+        <li>Downloadable deliverable templates</li>
+        <li>Completion certificate</li>
+        <li>Access to all future updates</li>
+      </ul>
+      <a href="#enroll" class="btn-pricing btn-pricing-outline">Enroll — $97</a>
+    </div>
+
+    <div class="pricing-card featured">
+      <div class="pricing-badge">Most Popular</div>
+      <div class="pricing-tier">Self-Paced + Community</div>
+      <div class="pricing-price" style="color:var(--gold);">$147</div>
+      <div class="pricing-cadence">one-time · lifetime access</div>
+      <ul class="pricing-features">
+        <li>Everything in Self-Paced</li>
+        <li>Access to private educator community</li>
+        <li>Monthly live Q&amp;A with Dr. B</li>
+        <li>Peer feedback on your deliverables</li>
+        <li>Priority email support</li>
+      </ul>
+      <a href="#enroll" class="btn-pricing btn-pricing-filled">Enroll — $147</a>
+    </div>
+
+    <div class="pricing-card">
+      <div class="pricing-tier">School / District License</div>
+      <div class="pricing-price">$497+</div>
+      <div class="pricing-cadence">cohort of 10–25 educators</div>
+      <ul class="pricing-features">
+        <li>Everything in Community tier</li>
+        <li>Facilitated cohort experience</li>
+        <li>Custom companion prompt for your institution</li>
+        <li>Dr. B as live guide across 5 weeks</li>
+        <li>Group certificates + PD documentation</li>
+      </ul>
+      <a href="mailto:ageofintellect@gmail.com?subject=School License Inquiry" class="btn-pricing btn-pricing-outline">Inquire →</a>
+    </div>
+
+  </div>
+
+  <p class="pricing-note">Not sure which tier is right for you? Email <a href="mailto:ageofintellect@gmail.com" style="color:var(--gold);">ageofintellect@gmail.com</a> — we'll figure it out.</p>
+</section>
+
+<!-- ABOUT -->
+<section class="about-section" id="about">
+  <div class="about-left">
+    <div class="section-label">The Instructor <span>— 007</span></div>
+    <h2 style="color:var(--white);">Dr. Nicole <em>"Niia"</em> Bishop</h2>
+    <p class="body-text">Dr. Bishop is a PhD in Comparative Literature (University of Michigan), a certified Pilates and movement practitioner, a multilingual artist and educator, and the founder of Age of Intellect — an AI-powered multimedia studio built on the premise that the tools matter less than the hand that uses them.</p>
+    <p class="body-text">She has taught at the college level across multiple institutions and disciplines. This course was built from the inside — by someone who has stood in the room and asked the same hard questions she's asking you to ask now.</p>
+    <ul class="credential-list">
+      <li>PhD, Comparative Literature — University of Michigan</li>
+      <li>Adjunct English instructor, multi-institutional</li>
+      <li>Founder, Age of Intellect AI Studio</li>
+      <li>Fluent in five languages</li>
+      <li>300+ song catalog; performer, Carnegie Hall</li>
+      <li>Certified Pilates instructor (mat + comprehensive, 2007–2017)</li>
+    </ul>
+  </div>
+  <div class="about-right">
+    <blockquote>"Education hasn't caught up. We are still teaching things people no longer need to know — because they can just ask. What we need to figure out is what's actually worth teaching now. That's the only question that matters."</blockquote>
+    <div class="quote-attr">— Dr. Nicole Bishop, PhD · Founder, Age of Intellect</div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="enroll">
+  <div class="section-label" style="justify-content:center; color:var(--black);">Enroll <span style="color:rgba(0,0,0,0.25);">— 008</span></div>
+  <h2>Ready to ask the <em>harder</em> question?</h2>
+  <p class="body-text">Enrollment is open. Access is instant. The first module is waiting.</p>
+  <a href="#pricing" class="btn-cta-dark">Choose Your Tier →</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a href="https://ageofintellect.com" class="footer-logo">Age <em>of</em> Intellect</a>
+  <span class="footer-copy">© 2026 — Precision on High Demand · Tega Cay, SC</span>
+</footer>
+
+</body>
+</html>
