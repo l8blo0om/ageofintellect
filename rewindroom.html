@@ -188,7 +188,7 @@
   .empty-state { text-align: center; padding: 50px 20px; color: var(--gray); font-size: 14px; }
 
   /* ── PROGRESS REPORT ── */
-  .add-form.milestone-form { grid-template-columns: 1fr 150px 150px auto; }
+  .add-form.milestone-form { grid-template-columns: 1fr 130px 150px 150px auto; }
   @media (max-width: 760px) { .add-form.milestone-form { grid-template-columns: 1fr 1fr; } }
 
   .milestone-card {
@@ -205,7 +205,7 @@
   }
   .milestone-title-input:hover, .milestone-title-input:focus { border-color: var(--line); background: var(--offwhite); outline: none; }
   .status-complete { background: var(--green); }
-  .milestone-bottom { display: grid; grid-template-columns: 160px 1fr; gap: 10px; }
+  .milestone-bottom { display: grid; grid-template-columns: 160px 140px 1fr; gap: 10px; }
   @media (max-width: 700px) { .milestone-bottom { grid-template-columns: 1fr; } }
   .milestone-bottom input {
     border: 1px solid var(--line); border-radius: 6px; padding: 7px 10px;
@@ -388,6 +388,7 @@
 
     <div class="add-form milestone-form">
       <div><label>Milestone</label><input type="text" id="new-milestone-title" placeholder="e.g. Vid 5"></div>
+      <div><label>Assigned to</label><input type="text" id="new-milestone-assignee" placeholder="Moisés"></div>
       <div><label>Due Date</label><input type="date" id="new-milestone-due"></div>
       <div>
         <label>Status</label>
@@ -685,7 +686,7 @@
     return {
       id: 'ms_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7),
       title: m.title, status: m.status || 'not_started',
-      due: '', link: '', linkPlaceholder: m.linkPlaceholder || 'Link (optional)',
+      due: '', assignee: m.assignee || '', link: '', linkPlaceholder: m.linkPlaceholder || 'Link (optional)',
       updated: Date.now()
     };
   }
@@ -730,6 +731,7 @@
         </div>
         <div class="milestone-bottom">
           <input type="date" class="due-input" value="${escapeAttr(m.due || '')}">
+          <input type="text" class="assignee-input" value="${escapeAttr(m.assignee || '')}" placeholder="Assigned to">
           <input type="text" class="link-input" value="${escapeAttr(m.link || '')}" placeholder="${escapeAttr(m.linkPlaceholder || 'Link (optional)')}">
         </div>
       </div>
@@ -744,6 +746,7 @@
         msUpdate(id, { status: e.target.value });
       });
       card.querySelector('.due-input').addEventListener('change', e => msUpdate(id, { due: e.target.value }));
+      card.querySelector('.assignee-input').addEventListener('change', e => msUpdate(id, { assignee: e.target.value }));
       card.querySelector('.link-input').addEventListener('change', e => msUpdate(id, { link: e.target.value }));
       card.querySelector('.del-btn').addEventListener('click', () => {
         milestones = milestones.filter(m => m.id !== id);
@@ -768,15 +771,17 @@
 
   document.getElementById('add-milestone-btn').addEventListener('click', () => {
     const title = document.getElementById('new-milestone-title').value.trim();
+    const assignee = document.getElementById('new-milestone-assignee').value.trim();
     const due = document.getElementById('new-milestone-due').value;
     const status = document.getElementById('new-milestone-status').value;
     if (!title) {
       alert('Milestone name is required.');
       return;
     }
-    milestones.push(Object.assign(msSeedItem({ title, status }), { due }));
+    milestones.push(Object.assign(msSeedItem({ title, status, assignee }), { due }));
     msSave();
     document.getElementById('new-milestone-title').value = '';
+    document.getElementById('new-milestone-assignee').value = '';
     document.getElementById('new-milestone-due').value = '';
     document.getElementById('new-milestone-status').value = 'not_started';
     msRenderAll();
