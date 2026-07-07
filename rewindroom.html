@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Rewind Room — Production Manual &amp; Tracker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0a2240;
+    --navy-deep: #061629;
+    --navy-light: #143264;
+    --red: #c8102e;
+    --red-bright: #ee2a3c;
+    --gold: #f4b942;
+    --white: #ffffff;
+    --offwhite: #f7f8fb;
+    --gray: #5a6b80;
+    --line: #e5e9f0;
+    --green: #1a8a4a;
+    --amber: #c8860a;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: var(--navy);
+    background: var(--offwhite);
+    line-height: 1.5;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: linear-gradient(135deg, var(--navy-deep), var(--navy));
+    color: var(--white);
+    padding: 40px 32px 32px;
+  }
+  .header-inner { max-width: 1100px; margin: 0 auto; }
+  .eyebrow {
+    font-size: 12px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--gold); font-weight: 700; margin-bottom: 10px;
+  }
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 900;
+    margin-bottom: 8px;
+  }
+  .subhead { color: #b9c6dc; font-size: 15px; max-width: 640px; }
+
+  nav.tabs {
+    max-width: 1100px; margin: 28px auto 0; display: flex; gap: 8px;
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+  }
+  nav.tabs button {
+    background: none; border: none; color: #9fb0c8;
+    font-family: inherit; font-size: 14px; font-weight: 600;
+    padding: 12px 18px; cursor: pointer; border-bottom: 3px solid transparent;
+    transition: all .15s ease;
+  }
+  nav.tabs button:hover { color: var(--white); }
+  nav.tabs button.active { color: var(--white); border-bottom-color: var(--gold); }
+
+  main { max-width: 1100px; margin: 0 auto; padding: 36px 32px 80px; }
+  .view { display: none; }
+  .view.active { display: block; }
+
+  /* ── MANUAL ── */
+  .manual-section {
+    background: var(--white); border: 1px solid var(--line); border-radius: 12px;
+    padding: 28px 30px; margin-bottom: 22px;
+  }
+  .manual-section h2 {
+    font-family: 'Playfair Display', serif; font-size: 22px; color: var(--navy);
+    margin-bottom: 4px;
+  }
+  .manual-section .tag {
+    display: inline-block; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--red); font-weight: 700; margin-bottom: 14px;
+  }
+  .manual-section p { color: #3a4a5f; font-size: 15px; margin-bottom: 12px; }
+  .manual-section ul, .manual-section ol { margin: 0 0 12px 20px; color: #3a4a5f; font-size: 15px; }
+  .manual-section li { margin-bottom: 6px; }
+  .callout {
+    background: var(--offwhite); border-left: 3px solid var(--gold);
+    padding: 12px 16px; margin: 14px 0; font-size: 14px; color: var(--navy-light);
+  }
+  code.ex {
+    background: var(--navy-deep); color: var(--gold); font-family: 'SF Mono', Menlo, monospace;
+    padding: 2px 7px; border-radius: 4px; font-size: 13px;
+  }
+  .before-after { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0; }
+  @media (max-width: 640px) { .before-after { grid-template-columns: 1fr; } }
+  .ba-box { padding: 14px 16px; border-radius: 8px; font-size: 14px; }
+  .ba-box.bad { background: #fdeeee; border: 1px solid #f3c6c6; color: #8a2a2a; }
+  .ba-box.good { background: #eaf7ee; border: 1px solid #bfe6cc; color: #1a5c33; }
+  .ba-box .label { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; margin-bottom: 6px; display: block; }
+
+  /* ── TRACKER ── */
+  .stat-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 24px; }
+  @media (max-width: 760px) { .stat-row { grid-template-columns: repeat(2, 1fr); } }
+  .stat {
+    background: var(--white); border: 1px solid var(--line); border-radius: 10px;
+    padding: 16px; text-align: center;
+  }
+  .stat .num { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 900; color: var(--navy); }
+  .stat .lbl { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--gray); margin-top: 2px; }
+
+  .tracker-toolbar {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 16px; gap: 12px; flex-wrap: wrap;
+  }
+  .filters { display: flex; gap: 6px; flex-wrap: wrap; }
+  .filters button {
+    background: var(--white); border: 1px solid var(--line); border-radius: 20px;
+    padding: 6px 14px; font-size: 12.5px; font-weight: 600; color: var(--gray);
+    cursor: pointer; font-family: inherit;
+  }
+  .filters button.active { background: var(--navy); color: var(--white); border-color: var(--navy); }
+
+  .btn {
+    background: var(--red); color: var(--white); border: none; border-radius: 8px;
+    padding: 10px 18px; font-size: 14px; font-weight: 700; cursor: pointer; font-family: inherit;
+  }
+  .btn:hover { background: var(--red-bright); }
+  .btn.secondary { background: var(--navy); }
+  .btn.ghost { background: none; color: var(--gray); border: 1px solid var(--line); }
+
+  .shot-card {
+    background: var(--white); border: 1px solid var(--line); border-radius: 10px;
+    padding: 16px 18px; margin-bottom: 12px; display: grid;
+    grid-template-columns: 90px 1fr 150px 40px; gap: 16px; align-items: start;
+  }
+  @media (max-width: 700px) { .shot-card { grid-template-columns: 1fr; } }
+  .shot-id {
+    font-family: 'Playfair Display', serif; font-weight: 900; font-size: 20px; color: var(--navy);
+  }
+  .shot-id .v { display: block; font-family: 'Inter'; font-weight: 700; font-size: 11px; color: var(--gray); margin-top: 2px; }
+  .shot-body input[type=text], .shot-body textarea {
+    width: 100%; border: 1px solid var(--line); border-radius: 6px; padding: 7px 10px;
+    font-family: inherit; font-size: 13.5px; margin-bottom: 6px; color: var(--navy);
+  }
+  .shot-body textarea { resize: vertical; min-height: 40px; }
+  .shot-meta { font-size: 12px; color: var(--gray); display: flex; gap: 10px; flex-wrap: wrap; margin-top: 4px; }
+  .shot-assign { display: grid; grid-template-columns: 1fr 150px; gap: 8px; margin-top: 8px; }
+  @media (max-width: 700px) { .shot-assign { grid-template-columns: 1fr; } }
+  .shot-assign input {
+    border: 1px solid var(--line); border-radius: 6px; padding: 6px 9px;
+    font-family: inherit; font-size: 12.5px; color: var(--navy); width: 100%;
+  }
+  .shot-assign input[type=date] { color: var(--gray); }
+
+  select.status-select {
+    width: 100%; border: none; border-radius: 6px; padding: 8px 10px;
+    font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer;
+    color: var(--white); appearance: none; text-align: center;
+  }
+  .status-not_started { background: var(--gray); }
+  .status-in_progress { background: var(--amber); }
+  .status-delivered { background: var(--navy-light); }
+  .status-needs_revision { background: var(--red); }
+  .status-approved { background: var(--green); }
+
+  .del-btn {
+    background: none; border: none; color: var(--gray); font-size: 18px; cursor: pointer;
+    line-height: 1; padding: 4px;
+  }
+  .del-btn:hover { color: var(--red); }
+
+  .add-form {
+    background: var(--white); border: 1px dashed var(--line); border-radius: 10px;
+    padding: 18px; margin-bottom: 20px; display: grid;
+    grid-template-columns: 70px 70px 90px 1fr auto; gap: 10px; align-items: center;
+  }
+  @media (max-width: 760px) { .add-form { grid-template-columns: 1fr 1fr; } }
+  .add-form input {
+    border: 1px solid var(--line); border-radius: 6px; padding: 8px 10px;
+    font-family: inherit; font-size: 13.5px;
+  }
+  .add-form label { font-size: 10px; text-transform: uppercase; color: var(--gray); display: block; margin-bottom: 3px; }
+  .add-form.shot-form { grid-template-columns: 60px 60px 80px 1fr 130px 150px auto; }
+  @media (max-width: 900px) { .add-form.shot-form { grid-template-columns: 1fr 1fr; } }
+
+  .empty-state { text-align: center; padding: 50px 20px; color: var(--gray); font-size: 14px; }
+
+  /* ── PROGRESS REPORT ── */
+  .add-form.milestone-form { grid-template-columns: 1fr 150px 150px auto; }
+  @media (max-width: 760px) { .add-form.milestone-form { grid-template-columns: 1fr 1fr; } }
+
+  .milestone-card {
+    background: var(--white); border: 1px solid var(--line); border-radius: 10px;
+    padding: 16px 18px; margin-bottom: 12px;
+  }
+  .milestone-top {
+    display: grid; grid-template-columns: 1fr 150px 40px; gap: 16px; align-items: center; margin-bottom: 10px;
+  }
+  @media (max-width: 700px) { .milestone-top { grid-template-columns: 1fr; } }
+  .milestone-title-input {
+    font-family: 'Playfair Display', serif; font-weight: 700; font-size: 17px; color: var(--navy);
+    border: 1px solid transparent; border-radius: 6px; padding: 6px 8px; width: 100%; background: transparent;
+  }
+  .milestone-title-input:hover, .milestone-title-input:focus { border-color: var(--line); background: var(--offwhite); outline: none; }
+  .status-complete { background: var(--green); }
+  .milestone-bottom { display: grid; grid-template-columns: 160px 1fr; gap: 10px; }
+  @media (max-width: 700px) { .milestone-bottom { grid-template-columns: 1fr; } }
+  .milestone-bottom input {
+    border: 1px solid var(--line); border-radius: 6px; padding: 7px 10px;
+    font-family: inherit; font-size: 13.5px; color: var(--navy); width: 100%;
+  }
+  .milestone-bottom input[type=date] { color: var(--gray); }
+
+  /* ── TEAM NOTES ── */
+  .subsection-title {
+    font-family: 'Playfair Display', serif; font-size: 19px; color: var(--navy);
+    margin: 8px 0 14px;
+  }
+  .add-form.music-form { grid-template-columns: 1fr 1.4fr auto; }
+  @media (max-width: 760px) { .add-form.music-form { grid-template-columns: 1fr; } }
+
+  .music-card {
+    background: var(--white); border: 1px solid var(--line); border-radius: 10px;
+    padding: 14px 18px; margin-bottom: 10px; display: flex; align-items: center;
+    justify-content: space-between; gap: 14px; flex-wrap: wrap;
+  }
+  .music-card .info { flex: 1; min-width: 200px; }
+  .music-card .track-title { font-weight: 700; font-size: 14.5px; color: var(--navy); }
+  .music-card a.suno-link {
+    color: var(--red); font-size: 13px; font-weight: 600; text-decoration: none; word-break: break-all;
+  }
+  .music-card a.suno-link:hover { text-decoration: underline; }
+
+  .add-form.notes-form { grid-template-columns: 200px 1fr auto; align-items: start; }
+  @media (max-width: 760px) { .add-form.notes-form { grid-template-columns: 1fr; } }
+  .add-form.notes-form textarea {
+    border: 1px solid var(--line); border-radius: 6px; padding: 8px 10px;
+    font-family: inherit; font-size: 13.5px; resize: vertical; min-height: 44px; width: 100%;
+  }
+
+  .note-card {
+    background: var(--white); border: 1px solid var(--line); border-radius: 10px;
+    padding: 14px 18px; margin-bottom: 10px;
+  }
+  .note-card .note-head {
+    display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px; gap: 10px;
+  }
+  .note-card .note-author { font-weight: 700; color: var(--navy); font-size: 14px; }
+  .note-card .note-time { color: var(--gray); font-size: 11.5px; white-space: nowrap; }
+  .note-card .note-body { color: #3a4a5f; font-size: 14px; white-space: pre-wrap; }
+
+  footer { text-align: center; padding: 30px; color: var(--gray); font-size: 12px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="eyebrow">Age of Intellect · Client: National Sports Museum</div>
+    <h1>The Rewind Room</h1>
+    <div class="subhead">Production manual and production tracker for the AI-assisted video pipeline. Everything Moisés delivers gets logged here — labeled by shot, not by content, so nothing gets lost in translation.</div>
+  </div>
+  <nav class="tabs">
+    <button class="active" data-view="manual">Production Manual</button>
+    <button data-view="tracker">Production Tracker</button>
+    <button data-view="progress">Progress Report</button>
+    <button data-view="notes">Team Notes</button>
+  </nav>
+</header>
+
+<main>
+
+  <!-- ================= MANUAL ================= -->
+  <section id="view-manual" class="view active">
+
+    <div class="manual-section">
+      <span class="tag">01 — Naming Convention</span>
+      <h2>Label the shot. Not what's in it.</h2>
+      <p>Every deliverable gets an ID in the form <code class="ex">Section.Shot</code> — nothing else. The section is the story beat; the shot is its position inside that beat.</p>
+      <div class="before-after">
+        <div class="ba-box bad"><span class="label">Don't</span>"Final 10 seconds — arena wide shot, crowd roar, slow push in on scoreboard"</div>
+        <div class="ba-box good"><span class="label">Do</span><code class="ex">3.15</code></div>
+      </div>
+      <p>The description lives in the notes field, not the filename or the ID. If you need to know what's <em>in</em> the shot, look it up — the ID's only job is to tell you where it goes.</p>
+      <div class="callout">Rule of thumb: if the label answers "what does this look like," it's wrong. It should only answer "where does this go."</div>
+    </div>
+
+    <div class="manual-section">
+      <span class="tag">02 — Handoff Protocol</span>
+      <h2>IKEA, not improvisation.</h2>
+      <p>Raw generations come in unordered and unlabeled. The job of production is to take whatever was generated, pop it into the numbered slot it belongs in, and hand back an ordered set — not to rename, re-describe, or reinterpret it.</p>
+      <ol>
+        <li>Every asset gets a shot ID and a version tag on delivery: <code class="ex">3.15 v1</code>, <code class="ex">3.15 v2</code>.</li>
+        <li>Multiple takes of the same shot stay grouped under the same ID, differentiated only by version.</li>
+        <li>No editorializing in the label. "This is the one where she's angry" is a note, not a name.</li>
+      </ol>
+      <p>When labels are inconsistent, review becomes guesswork. When they're consistent, review is just: does 3.15 look right — yes or no.</p>
+    </div>
+
+    <div class="manual-section">
+      <span class="tag">03 — Version Control &amp; Keepers</span>
+      <h2>Consistency beats quantity.</h2>
+      <p>Because prompts vary slightly across generations, wardrobe, framing, and continuity will drift between versions of the same shot. The keeper is the version that matches its neighbors — not necessarily the "best" single image in isolation.</p>
+      <div class="callout">Example from production: three takes shared the same maroon blouse and consistent framing — those became the keepers. Everything that broke continuity got tossed, even if individually well-generated.</div>
+      <p>Toss aggressively. A shot that's technically good but breaks continuity with the shots around it costs more than it saves.</p>
+    </div>
+
+    <div class="manual-section">
+      <span class="tag">04 — Workflow &amp; Throughput</span>
+      <h2>Design your workflow, not just your prompts.</h2>
+      <p>AI render/export time is not your time. Whenever a model is generating, upscaling, or exporting, keep the rest of the pipeline moving instead of waiting on one screen.</p>
+      <ul>
+        <li><strong>Desktop browser</strong> — deep research, long-form writing, document assembly.</li>
+        <li><strong>Desktop app</strong> — production chat, prompt refinement, reference management.</li>
+        <li><strong>Phone</strong> — voice capture, quick notes, reviewing renders on the go.</li>
+        <li><strong>Generators</strong> — rendering, upscaling, exporting run in the background while the above continues.</li>
+      </ul>
+      <p>Match the tool to the task, not the task to whatever's already open. Switching because a process is rendering and another task is ready is orchestration; switching every thirty seconds because of a notification is just distraction. Keep the difference in mind.</p>
+    </div>
+
+    <div class="manual-section">
+      <span class="tag">05 — Definition of Done</span>
+      <h2>Status pipeline, in order.</h2>
+      <ul>
+        <li><strong>Not Started</strong> — on the shot list, nothing generated yet.</li>
+        <li><strong>In Progress</strong> — actively being generated or assembled.</li>
+        <li><strong>Delivered</strong> — Moisés has handed it off for review.</li>
+        <li><strong>Needs Revision</strong> — reviewed, continuity or quality issue flagged, sent back with notes.</li>
+        <li><strong>Approved</strong> — locked. Goes into the final cut.</li>
+      </ul>
+      <p>Nothing skips a stage. "Delivered" is not "Approved" — a shot only leaves the pipeline once it's explicitly marked approved in the tracker.</p>
+    </div>
+
+    <div class="manual-section">
+      <span class="tag">06 — Work Hacks</span>
+      <h2>Session hygiene keeps the pipeline sane.</h2>
+      <ul>
+        <li><strong>Rename sessions and chats.</strong> The moment a session's purpose is clear, rename it — "Miracle on Ice — Shot 3.15 revisions" beats "New chat" every time. You and Moisés both need to find the right thread in a list of fifty later.</li>
+        <li><strong>Pin what's active.</strong> Pin any session you'll return to today or this week. Unpin it once that thread is closed out — pins are for live work, not an archive.</li>
+        <li><strong>If a session is working poorly, don't fight it.</strong> Select all, copy the whole project/context, and start a new session with it — or take that same copied context to a different AI entirely. A session that's lost the thread rarely recovers; restarting clean is faster than coaxing it back.</li>
+        <li><strong>Always version as v1, v2, v3.</strong> Every file, every render, every export gets a version number — never overwrite, never reuse one. This is the same rule as Section 03, restated here because it's a habit, not just a filing rule.</li>
+        <li><strong>Copy and paste across Apple devices.</strong> With Handoff on (same Apple ID, Wi-Fi + Bluetooth on, on all devices), copy on one device and paste on another — copy a prompt on iPhone, paste it into the desktop app; copy a link on Mac, paste it into Notes on iPad. No emailing or messaging yourself text just to move it one device over.</li>
+        <li><strong>Suffix the session name with what's blocking it.</strong> Beyond a descriptive name, tack on the stopping point — <code class="ex">Shot 3.15 — needs vid URLs</code>. The second you reopen the list you know exactly where you paused and what the next action is, without rereading the whole thread.</li>
+      </ul>
+      <div class="callout">When output degrades, the fix usually isn't a better prompt — it's a fresh session with the same context carried over by hand.</div>
+    </div>
+
+    <div class="manual-section">
+      <span class="tag">07 — Caption Style Lock</span>
+      <h2>One caption style. Every video.</h2>
+      <p>Captions run in <strong>ALL CAPS</strong>, in a yellow retro caption treatment — the same look on every video in the series, no exceptions.</p>
+      <div class="callout">State the caption style explicitly at the top of every new session or handoff, even though it feels repetitive. Style drift between separately-generated shots is the easiest continuity break to introduce, and the hardest to notice until the videos sit side by side.</div>
+    </div>
+
+  </section>
+
+  <!-- ================= TRACKER ================= -->
+  <section id="view-tracker" class="view">
+
+    <div class="stat-row" id="stat-row"></div>
+
+    <div class="add-form shot-form">
+      <div><label>Section</label><input type="text" id="new-section" placeholder="3" inputmode="numeric"></div>
+      <div><label>Shot</label><input type="text" id="new-shot" placeholder="15" inputmode="numeric"></div>
+      <div><label>Version</label><input type="text" id="new-version" placeholder="v1"></div>
+      <div><label>Description / notes</label><input type="text" id="new-desc" placeholder="e.g. wide shot, arena, crowd roar"></div>
+      <div><label>Assigned to</label><input type="text" id="new-assignee" placeholder="Moisés"></div>
+      <div><label>Due Date</label><input type="date" id="new-due"></div>
+      <button class="btn" id="add-shot-btn" style="margin-top:14px;">+ Add Shot</button>
+    </div>
+
+    <div class="tracker-toolbar">
+      <div class="filters" id="filters"></div>
+      <button class="btn ghost" id="clear-all-btn">Clear all</button>
+    </div>
+
+    <div id="shot-list"></div>
+    <div class="empty-state" id="empty-state" style="display:none;">No shots yet. Add the first one above.</div>
+
+  </section>
+
+  <!-- ================= PROGRESS REPORT ================= -->
+  <section id="view-progress" class="view">
+
+    <div class="stat-row" id="milestone-stat-row"></div>
+
+    <div class="add-form milestone-form">
+      <div><label>Milestone</label><input type="text" id="new-milestone-title" placeholder="e.g. Vid 5"></div>
+      <div><label>Due Date</label><input type="date" id="new-milestone-due"></div>
+      <div>
+        <label>Status</label>
+        <select id="new-milestone-status" style="width:100%; border:1px solid var(--line); border-radius:6px; padding:8px 10px; font-family:inherit; font-size:13.5px;">
+          <option value="not_started">Not Started</option>
+          <option value="in_progress">In Progress</option>
+          <option value="complete">Complete</option>
+        </select>
+      </div>
+      <button class="btn" id="add-milestone-btn" style="margin-top:14px;">+ Add Milestone</button>
+    </div>
+
+    <div id="milestone-list"></div>
+    <div class="empty-state" id="milestone-empty-state" style="display:none;">No milestones yet. Add the first one above.</div>
+
+  </section>
+
+  <!-- ================= TEAM NOTES ================= -->
+  <section id="view-notes" class="view">
+
+    <div class="subsection-title">Music — Suno Links</div>
+    <div class="add-form music-form">
+      <div><label>Track name</label><input type="text" id="new-music-title" placeholder="e.g. Arena Theme v2"></div>
+      <div><label>Suno URL</label><input type="text" id="new-music-url" placeholder="https://suno.com/song/..."></div>
+      <button class="btn" id="add-music-btn" style="margin-top:14px;">+ Add Track</button>
+    </div>
+    <div id="music-list"></div>
+    <div class="empty-state" id="music-empty-state" style="display:none;">No tracks shared yet. Drop a Suno link above.</div>
+
+    <div class="subsection-title" style="margin-top:36px;">Questions, Opinions &amp; Thoughts</div>
+    <div class="add-form notes-form">
+      <div><label>Name</label><input type="text" id="new-note-author" placeholder="Your name"></div>
+      <div><label>Message</label><textarea id="new-note-body" placeholder="Ask a question, leave an opinion, share a thought..."></textarea></div>
+      <button class="btn" id="add-note-btn" style="margin-top:14px;">Post</button>
+    </div>
+    <div id="note-list"></div>
+    <div class="empty-state" id="note-empty-state" style="display:none;">Nothing posted yet. Start the conversation above.</div>
+
+  </section>
+
+</main>
+
+<footer>The Rewind Room · Production Manual &amp; Tracker · Age of Intellect for National Sports Museum</footer>
+
+<script>
+(function () {
+  const STORAGE_KEY = 'rewindRoomShots_v1';
+  const STATUS_LABELS = {
+    not_started: 'Not Started',
+    in_progress: 'In Progress',
+    delivered: 'Delivered',
+    needs_revision: 'Needs Revision',
+    approved: 'Approved'
+  };
+  const STATUS_ORDER = ['not_started', 'in_progress', 'delivered', 'needs_revision', 'approved'];
+
+  let shots = load();
+  let activeFilter = 'all';
+
+  function load() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      return raw ? JSON.parse(raw) : [];
+    } catch (e) { return []; }
+  }
+  function save() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(shots));
+  }
+
+  function sortShots(list) {
+    return [...list].sort((a, b) => {
+      const sa = parseFloat(a.section) || 0, sb = parseFloat(b.section) || 0;
+      if (sa !== sb) return sa - sb;
+      const ha = parseFloat(a.shot) || 0, hb = parseFloat(b.shot) || 0;
+      return ha - hb;
+    });
+  }
+
+  function renderStats() {
+    const row = document.getElementById('stat-row');
+    const total = shots.length;
+    const counts = { not_started: 0, in_progress: 0, delivered: 0, needs_revision: 0, approved: 0 };
+    shots.forEach(s => { counts[s.status] = (counts[s.status] || 0) + 1; });
+    const cells = [
+      ['Total Shots', total],
+      ['In Progress', counts.in_progress],
+      ['Delivered', counts.delivered],
+      ['Needs Revision', counts.needs_revision],
+      ['Approved', counts.approved]
+    ];
+    row.innerHTML = cells.map(([lbl, num]) =>
+      `<div class="stat"><div class="num">${num}</div><div class="lbl">${lbl}</div></div>`
+    ).join('');
+  }
+
+  function renderFilters() {
+    const el = document.getElementById('filters');
+    const opts = [['all', 'All']].concat(STATUS_ORDER.map(s => [s, STATUS_LABELS[s]]));
+    el.innerHTML = opts.map(([key, label]) =>
+      `<button data-filter="${key}" class="${activeFilter === key ? 'active' : ''}">${label}</button>`
+    ).join('');
+    el.querySelectorAll('button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        activeFilter = btn.dataset.filter;
+        renderAll();
+      });
+    });
+  }
+
+  function renderList() {
+    const listEl = document.getElementById('shot-list');
+    const emptyEl = document.getElementById('empty-state');
+    const visible = sortShots(shots).filter(s => activeFilter === 'all' || s.status === activeFilter);
+
+    if (shots.length === 0) {
+      listEl.innerHTML = '';
+      emptyEl.style.display = 'block';
+      emptyEl.textContent = 'No shots yet. Add the first one above.';
+      return;
+    }
+    if (visible.length === 0) {
+      listEl.innerHTML = '';
+      emptyEl.style.display = 'block';
+      emptyEl.textContent = 'No shots match this filter.';
+      return;
+    }
+    emptyEl.style.display = 'none';
+
+    listEl.innerHTML = visible.map(s => `
+      <div class="shot-card" data-id="${s.id}">
+        <div class="shot-id">${s.section}.${s.shot}<span class="v">${escapeHtml(s.version || '')}</span></div>
+        <div class="shot-body">
+          <input type="text" class="desc-input" value="${escapeAttr(s.desc || '')}" placeholder="Description / notes">
+          <div class="shot-assign">
+            <input type="text" class="assignee-input" value="${escapeAttr(s.assignee || '')}" placeholder="Assigned to">
+            <input type="date" class="due-input" value="${escapeAttr(s.due || '')}">
+          </div>
+          <div class="shot-meta">Last updated ${new Date(s.updated).toLocaleDateString()}</div>
+        </div>
+        <select class="status-select status-${s.status}">
+          ${STATUS_ORDER.map(st => `<option value="${st}" ${st === s.status ? 'selected' : ''}>${STATUS_LABELS[st]}</option>`).join('')}
+        </select>
+        <button class="del-btn" title="Delete shot">&times;</button>
+      </div>
+    `).join('');
+
+    listEl.querySelectorAll('.shot-card').forEach(card => {
+      const id = card.dataset.id;
+      card.querySelector('.desc-input').addEventListener('change', e => {
+        updateShot(id, { desc: e.target.value });
+      });
+      card.querySelector('.assignee-input').addEventListener('change', e => {
+        updateShot(id, { assignee: e.target.value });
+      });
+      card.querySelector('.due-input').addEventListener('change', e => {
+        updateShot(id, { due: e.target.value });
+      });
+      const sel = card.querySelector('.status-select');
+      sel.addEventListener('change', e => {
+        sel.className = 'status-select status-' + e.target.value;
+        updateShot(id, { status: e.target.value });
+      });
+      card.querySelector('.del-btn').addEventListener('click', () => {
+        shots = shots.filter(s => s.id !== id);
+        save();
+        renderAll();
+      });
+    });
+  }
+
+  function updateShot(id, patch) {
+    const s = shots.find(s => s.id === id);
+    if (!s) return;
+    Object.assign(s, patch, { updated: Date.now() });
+    save();
+    renderStats();
+  }
+
+  function escapeHtml(str) {
+    return String(str).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+  function escapeAttr(str) { return escapeHtml(str); }
+
+  function renderAll() {
+    renderStats();
+    renderFilters();
+    renderList();
+  }
+
+  document.getElementById('add-shot-btn').addEventListener('click', () => {
+    const section = document.getElementById('new-section').value.trim();
+    const shot = document.getElementById('new-shot').value.trim();
+    const version = document.getElementById('new-version').value.trim() || 'v1';
+    const desc = document.getElementById('new-desc').value.trim();
+    const assignee = document.getElementById('new-assignee').value.trim();
+    const due = document.getElementById('new-due').value;
+    if (!section || !shot) {
+      alert('Section and shot number are required.');
+      return;
+    }
+    shots.push({
+      id: 'shot_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7),
+      section, shot, version, desc, assignee, due,
+      status: 'not_started',
+      updated: Date.now()
+    });
+    save();
+    document.getElementById('new-section').value = '';
+    document.getElementById('new-shot').value = '';
+    document.getElementById('new-version').value = '';
+    document.getElementById('new-desc').value = '';
+    document.getElementById('new-assignee').value = '';
+    document.getElementById('new-due').value = '';
+    renderAll();
+  });
+
+  document.getElementById('clear-all-btn').addEventListener('click', () => {
+    if (shots.length === 0) return;
+    if (confirm('Clear all shots? This cannot be undone.')) {
+      shots = [];
+      save();
+      renderAll();
+    }
+  });
+
+  document.querySelectorAll('nav.tabs button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('nav.tabs button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+      document.getElementById('view-' + btn.dataset.view).classList.add('active');
+    });
+  });
+
+  renderAll();
+
+  /* ── PROGRESS REPORT ── */
+  const MS_STORAGE_KEY = 'rewindRoomMilestones_v1';
+  const MS_STATUS_LABELS = { not_started: 'Not Started', in_progress: 'In Progress', complete: 'Complete' };
+  const MS_STATUS_ORDER = ['not_started', 'in_progress', 'complete'];
+  const MS_DEFAULTS = [
+    { title: 'Research', status: 'complete' },
+    { title: 'HTML (Production Site)', status: 'complete' },
+    { title: 'Free-Use Image Grab', status: 'complete' },
+    { title: 'Narrative Creation — Series Arc', status: 'complete' },
+    { title: 'Video 1', status: 'complete' },
+    { title: 'Video 2', status: 'complete' },
+    { title: 'Video 3', status: 'complete' },
+    { title: 'Video 4', status: 'complete' },
+    { title: 'Music', status: 'not_started', linkPlaceholder: 'Suno link (see Team Notes for all tracks)' },
+    { title: 'Finished Videos', status: 'not_started', linkPlaceholder: 'Paste finished video URL here' }
+  ];
+
+  let milestones = msLoad();
+
+  function msLoad() {
+    const raw = localStorage.getItem(MS_STORAGE_KEY);
+    if (raw === null) {
+      return MS_DEFAULTS.map(m => msSeedItem(m));
+    }
+    try { return JSON.parse(raw); } catch (e) { return []; }
+  }
+  function msSeedItem(m) {
+    return {
+      id: 'ms_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7),
+      title: m.title, status: m.status || 'not_started',
+      due: '', link: '', linkPlaceholder: m.linkPlaceholder || 'Link (optional)',
+      updated: Date.now()
+    };
+  }
+  function msSave() {
+    localStorage.setItem(MS_STORAGE_KEY, JSON.stringify(milestones));
+  }
+
+  function msRenderStats() {
+    const row = document.getElementById('milestone-stat-row');
+    const counts = { not_started: 0, in_progress: 0, complete: 0 };
+    milestones.forEach(m => { counts[m.status] = (counts[m.status] || 0) + 1; });
+    const cells = [
+      ['Total Milestones', milestones.length],
+      ['Not Started', counts.not_started],
+      ['In Progress', counts.in_progress],
+      ['Complete', counts.complete]
+    ];
+    row.style.gridTemplateColumns = 'repeat(4, 1fr)';
+    row.innerHTML = cells.map(([lbl, num]) =>
+      `<div class="stat"><div class="num">${num}</div><div class="lbl">${lbl}</div></div>`
+    ).join('');
+  }
+
+  function msRenderList() {
+    const listEl = document.getElementById('milestone-list');
+    const emptyEl = document.getElementById('milestone-empty-state');
+    if (milestones.length === 0) {
+      listEl.innerHTML = '';
+      emptyEl.style.display = 'block';
+      return;
+    }
+    emptyEl.style.display = 'none';
+
+    listEl.innerHTML = milestones.map(m => `
+      <div class="milestone-card" data-id="${m.id}">
+        <div class="milestone-top">
+          <input type="text" class="milestone-title-input" value="${escapeAttr(m.title)}">
+          <select class="status-select status-${m.status}">
+            ${MS_STATUS_ORDER.map(st => `<option value="${st}" ${st === m.status ? 'selected' : ''}>${MS_STATUS_LABELS[st]}</option>`).join('')}
+          </select>
+          <button class="del-btn" title="Delete milestone">&times;</button>
+        </div>
+        <div class="milestone-bottom">
+          <input type="date" class="due-input" value="${escapeAttr(m.due || '')}">
+          <input type="text" class="link-input" value="${escapeAttr(m.link || '')}" placeholder="${escapeAttr(m.linkPlaceholder || 'Link (optional)')}">
+        </div>
+      </div>
+    `).join('');
+
+    listEl.querySelectorAll('.milestone-card').forEach(card => {
+      const id = card.dataset.id;
+      card.querySelector('.milestone-title-input').addEventListener('change', e => msUpdate(id, { title: e.target.value }));
+      const sel = card.querySelector('.status-select');
+      sel.addEventListener('change', e => {
+        sel.className = 'status-select status-' + e.target.value;
+        msUpdate(id, { status: e.target.value });
+      });
+      card.querySelector('.due-input').addEventListener('change', e => msUpdate(id, { due: e.target.value }));
+      card.querySelector('.link-input').addEventListener('change', e => msUpdate(id, { link: e.target.value }));
+      card.querySelector('.del-btn').addEventListener('click', () => {
+        milestones = milestones.filter(m => m.id !== id);
+        msSave();
+        msRenderAll();
+      });
+    });
+  }
+
+  function msUpdate(id, patch) {
+    const m = milestones.find(m => m.id === id);
+    if (!m) return;
+    Object.assign(m, patch, { updated: Date.now() });
+    msSave();
+    msRenderStats();
+  }
+
+  function msRenderAll() {
+    msRenderStats();
+    msRenderList();
+  }
+
+  document.getElementById('add-milestone-btn').addEventListener('click', () => {
+    const title = document.getElementById('new-milestone-title').value.trim();
+    const due = document.getElementById('new-milestone-due').value;
+    const status = document.getElementById('new-milestone-status').value;
+    if (!title) {
+      alert('Milestone name is required.');
+      return;
+    }
+    milestones.push(Object.assign(msSeedItem({ title, status }), { due }));
+    msSave();
+    document.getElementById('new-milestone-title').value = '';
+    document.getElementById('new-milestone-due').value = '';
+    document.getElementById('new-milestone-status').value = 'not_started';
+    msRenderAll();
+  });
+
+  msSave();
+  msRenderAll();
+
+  /* ── MUSIC BOARD ── */
+  const MUSIC_STORAGE_KEY = 'rewindRoomMusic_v1';
+  let tracks = musicLoad();
+
+  function musicLoad() {
+    try {
+      const raw = localStorage.getItem(MUSIC_STORAGE_KEY);
+      return raw ? JSON.parse(raw) : [];
+    } catch (e) { return []; }
+  }
+  function musicSave() { localStorage.setItem(MUSIC_STORAGE_KEY, JSON.stringify(tracks)); }
+
+  function musicRender() {
+    const listEl = document.getElementById('music-list');
+    const emptyEl = document.getElementById('music-empty-state');
+    if (tracks.length === 0) {
+      listEl.innerHTML = '';
+      emptyEl.style.display = 'block';
+      return;
+    }
+    emptyEl.style.display = 'none';
+    const sorted = [...tracks].sort((a, b) => b.added - a.added);
+    listEl.innerHTML = sorted.map(t => `
+      <div class="music-card" data-id="${t.id}">
+        <div class="info">
+          <div class="track-title">${escapeHtml(t.title)}</div>
+          <a class="suno-link" href="${escapeAttr(t.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(t.url)}</a>
+        </div>
+        <button class="del-btn" title="Remove track">&times;</button>
+      </div>
+    `).join('');
+    listEl.querySelectorAll('.music-card').forEach(card => {
+      card.querySelector('.del-btn').addEventListener('click', () => {
+        tracks = tracks.filter(t => t.id !== card.dataset.id);
+        musicSave();
+        musicRender();
+      });
+    });
+  }
+
+  document.getElementById('add-music-btn').addEventListener('click', () => {
+    const title = document.getElementById('new-music-title').value.trim();
+    const url = document.getElementById('new-music-url').value.trim();
+    if (!title || !url) {
+      alert('Track name and Suno URL are both required.');
+      return;
+    }
+    tracks.push({ id: 'track_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7), title, url, added: Date.now() });
+    musicSave();
+    document.getElementById('new-music-title').value = '';
+    document.getElementById('new-music-url').value = '';
+    musicRender();
+  });
+
+  musicRender();
+
+  /* ── QUESTIONS / OPINIONS / THOUGHTS ── */
+  const NOTES_STORAGE_KEY = 'rewindRoomNotes_v1';
+  let notes = notesLoad();
+
+  function notesLoad() {
+    try {
+      const raw = localStorage.getItem(NOTES_STORAGE_KEY);
+      return raw ? JSON.parse(raw) : [];
+    } catch (e) { return []; }
+  }
+  function notesSave() { localStorage.setItem(NOTES_STORAGE_KEY, JSON.stringify(notes)); }
+
+  function notesRender() {
+    const listEl = document.getElementById('note-list');
+    const emptyEl = document.getElementById('note-empty-state');
+    if (notes.length === 0) {
+      listEl.innerHTML = '';
+      emptyEl.style.display = 'block';
+      return;
+    }
+    emptyEl.style.display = 'none';
+    const sorted = [...notes].sort((a, b) => b.posted - a.posted);
+    listEl.innerHTML = sorted.map(n => `
+      <div class="note-card" data-id="${n.id}">
+        <div class="note-head">
+          <span class="note-author">${escapeHtml(n.author)}</span>
+          <span class="note-time">${new Date(n.posted).toLocaleString()}</span>
+        </div>
+        <div class="note-body">${escapeHtml(n.body)}</div>
+      </div>
+    `).join('');
+  }
+
+  document.getElementById('add-note-btn').addEventListener('click', () => {
+    const author = document.getElementById('new-note-author').value.trim() || 'Anonymous';
+    const body = document.getElementById('new-note-body').value.trim();
+    if (!body) {
+      alert('Write something before posting.');
+      return;
+    }
+    notes.push({ id: 'note_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7), author, body, posted: Date.now() });
+    notesSave();
+    document.getElementById('new-note-body').value = '';
+    notesRender();
+  });
+
+  notesRender();
+})();
+</script>
+
+</body>
+</html>
