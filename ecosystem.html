@@ -199,6 +199,37 @@
   .threads{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:38px;}
   .thread{background:var(--paper);border:1px solid var(--rule);border-radius:8px;padding:28px 26px;}
   .thread h3{font-size:20px;margin-bottom:8px;}
+
+  /* device mockup — proof of mechanism */
+  .flow{display:flex;justify-content:center;gap:0;margin:36px 0 44px;flex-wrap:wrap;}
+  .flow-step{flex:1 1 160px;max-width:200px;text-align:center;padding:0 14px;position:relative;}
+  .flow-step .n{width:34px;height:34px;border-radius:50%;background:var(--gold);color:#fff;
+    display:flex;align-items:center;justify-content:center;margin:0 auto 12px;
+    font-family:'JetBrains Mono',monospace;font-size:13px;}
+  .flow-step h4{font-family:'Fraunces',serif;font-weight:500;font-size:16px;color:var(--ink);margin-bottom:5px;}
+  .flow-step p{font-size:13px;color:var(--ink-mute);margin:0;}
+  .flow-arrow{align-self:center;color:var(--gold);font-size:20px;padding-top:2px;}
+  @media(max-width:700px){.flow-arrow{display:none;}}
+
+  .screen-mock{max-width:520px;margin:0 auto 20px;border-radius:20px;overflow:hidden;
+    background:#fff;border:8px solid var(--ink);box-shadow:0 24px 60px rgba(27,23,18,0.22);}
+  .screen-bar{background:var(--ink);padding:9px 16px;display:flex;align-items:center;gap:6px;}
+  .screen-bar span{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.25);}
+  .screen-body{padding:26px 24px 22px;background:linear-gradient(180deg,#fff,var(--paper-2));}
+  .screen-caption{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.08em;
+    text-transform:uppercase;color:var(--ink-mute);margin-bottom:14px;}
+  .msg{border-radius:14px;padding:14px 18px;font-size:15px;line-height:1.5;max-width:88%;margin-bottom:12px;}
+  .msg.student{background:#EDE7DA;color:var(--ink-soft);margin-left:auto;border-bottom-right-radius:4px;}
+  .msg.ai{background:var(--gold-b);color:#fff;border-bottom-left-radius:4px;}
+  .msg.ai .tag{display:block;font-family:'JetBrains Mono',monospace;font-size:9px;
+    letter-spacing:0.12em;text-transform:uppercase;opacity:0.85;margin-bottom:4px;}
+  .msg-actions{display:flex;gap:8px;margin:6px 0 4px;}
+  .msg-actions button{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.06em;
+    padding:7px 13px;border-radius:16px;border:1px solid var(--gold);background:transparent;
+    color:var(--gold-d);}
+  .msg-actions button.primary{background:var(--gold);color:#fff;border-color:var(--gold);}
+  .screen-note{font-size:12px;color:var(--ink-mute);font-style:italic;text-align:center;
+    max-width:460px;margin:14px auto 0;font-family:'Fraunces',serif;}
   .thread p{font-size:15px;margin-bottom:0;}
 
   /* FOUNDATIONS */
@@ -324,6 +355,27 @@
   <p class="lead">The philosophy is the soul. This is the body — a learning companion that
   knows every child from day one and grows <em>with</em> them, not against them. The tech
   isn't the problem. It's the solution.</p>
+
+  <div class="flow">
+    <div class="flow-step"><div class="n">1</div><h4>Notice</h4><p>A message, a choice, a pause — the interface reads the moment before it's acted on.</p></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step"><div class="n">2</div><h4>Reflect</h4><p>It asks, gently, in the child's own words — never a rule enforced from above.</p></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step"><div class="n">3</div><h4>Never score it</h4><p>The child chooses. Nothing is graded. The choice itself is the lesson.</p></div>
+  </div>
+
+  <div class="screen-mock">
+    <div class="screen-bar"><span></span><span></span><span></span></div>
+    <div class="screen-body">
+      <div class="screen-caption">Right Speech · live, on the child's screen</div>
+      <div class="msg student">"delete ur account nobody wants u in the group chat"</div>
+      <div class="msg ai"><span class="tag">The Interface</span>Before you send that — is it true? Is it kind? Is it necessary right now?</div>
+      <div class="msg-actions"><button>Send anyway</button><button class="primary">Let me rewrite it</button></div>
+    </div>
+  </div>
+  <p class="screen-note">No rule fired. No point deducted. A ten-year-old was asked a question
+  they could actually answer — and, this time, they rewrote it.</p>
+
   <div class="threads">
     <div class="thread"><h3>Meets them where they are</h3><p>From the first day it calibrates to the child in front of it — reading level, pace, language, learning style. No one is left behind the class; no one is held back by it.</p></div>
     <div class="thread"><h3>It notices — it doesn't grade</h3><p>Not "72% on the quiz." Instead: <em>"You kept choosing to protect people over winning. You negotiated before you fought."</em> Reflections, not verdicts.</p></div>
