@@ -191,6 +191,18 @@
 
   /* THREADS */
   .threads{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:38px;}
+  .grade-bands{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:38px;}
+  .grade-band{background:var(--paper);border:1px solid var(--rule);border-radius:8px;
+    padding:24px 20px;}
+  .grade-band .g-label{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.12em;
+    color:var(--gold-d);text-transform:uppercase;margin-bottom:4px;display:block;}
+  .grade-band h4{font-family:'Fraunces',serif;font-weight:500;font-size:17px;color:var(--ink);
+    margin-bottom:10px;}
+  .grade-band ul{list-style:none;font-size:13.5px;color:var(--ink-soft);line-height:1.6;}
+  .grade-band li{padding:5px 0;border-bottom:1px solid var(--rule);}
+  .grade-band li:last-child{border-bottom:none;}
+  @media(max-width:760px){.grade-bands{grid-template-columns:1fr 1fr;}}
+  @media(max-width:480px){.grade-bands{grid-template-columns:1fr;}}
   .thread{background:var(--paper);border:1px solid var(--rule);border-radius:8px;padding:28px 26px;}
   .thread h3{font-size:20px;margin-bottom:8px;}
   .thread p{font-size:15px;margin-bottom:0;}
@@ -285,6 +297,65 @@
     <div class="thread"><h3>It sees the whole child</h3><p>Learning style, real deficiencies, real gifts — met quietly, an IEP with no label, curiosity with no cap.</p></div>
     <div class="thread"><h3>It's a complementary compounder</h3><p>No two children take the identical path, so the classroom accumulates instead of repeating — every kid comes back with a different piece of the same world.</p></div>
   </div>
+  <p style="margin-top:30px;">And to the person whose job is watching whether any of this actually
+  works: this isn't one more initiative stacked on the ones you're already running. It's not
+  asking a school to add anything. It's a layer underneath what's already there — something you
+  can look at <em>today</em>, not a test score you wait a year for. The measure was never whether
+  the adults finished the rollout. It's what the child is experiencing because of it.</p>
+</section>
+
+<!-- WHAT GETS BUILT, BY AGE -->
+<section class="fade">
+  <div class="label">The Concrete Question</div>
+  <div class="rule" style="margin-left:0"></div>
+  <h2>What does a child actually<br><em>build</em>, and when?</h2>
+  <p class="lead">Not a curriculum scope-and-sequence. The habits and capacities that compound
+  year over year, so a graduating senior isn't starting from nothing.</p>
+  <div class="grade-bands">
+    <div class="grade-band">
+      <span class="g-label">Kindergarten</span>
+      <h4>Noticing</h4>
+      <ul>
+        <li>Naming a feeling before reacting to it</li>
+        <li>Waiting a turn, asking instead of grabbing</li>
+        <li>Curiosity as the normal state, not the exception</li>
+        <li>Knowing there's a Buddy Bench and a Solo Space, and when to use each</li>
+      </ul>
+    </div>
+    <div class="grade-band">
+      <span class="g-label">5th Grade</span>
+      <h4>Choosing</h4>
+      <ul>
+        <li>The five-gate pause before speaking, becoming automatic</li>
+        <li>Asking a real question and researching the real answer</li>
+        <li>Working in a pod where every kid took a different path</li>
+        <li>Naming what they're drawn to — the first ikigai thread</li>
+      </ul>
+    </div>
+    <div class="grade-band">
+      <span class="g-label">8th Grade</span>
+      <h4>Reasoning</h4>
+      <ul>
+        <li>Weighing multiple sources and points of view, not one</li>
+        <li>Explaining <em>why</em> they chose something, not just what they chose</li>
+        <li>Serving without needing credit — Jijang Bosal as habit, not novelty</li>
+        <li>Using the interface to create, not just to consume</li>
+      </ul>
+    </div>
+    <div class="grade-band">
+      <span class="g-label">11th Grade</span>
+      <h4>Leading</h4>
+      <ul>
+        <li>Independent research synthesized into a real artifact — a film, a podcast, a paper</li>
+        <li>Ethical reasoning under ambiguity, not a rubric with one right answer</li>
+        <li>Mentoring the younger kids who are just learning the five gates</li>
+        <li>Fluent and critical with the tool — building with it, questioning it, not just using it</li>
+      </ul>
+    </div>
+  </div>
+  <p style="margin-top:30px;">Every stage compounds into the next. A senior who's been noticing
+  their own reactions since kindergarten doesn't need a unit on emotional regulation — they've
+  been practicing it for twelve years.</p>
 </section>
 
 <!-- THE PROBLEM -->
