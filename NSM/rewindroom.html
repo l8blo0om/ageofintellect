@@ -642,36 +642,88 @@
     { title: 'Finished Videos', status: 'not_started', linkPlaceholder: 'Paste finished video URL here' }
   ];
 
+  // Superseded 2026-07-07: this was the wrong source (the Style Lock episode
+  // arc, not Adam's actual list). Kept only so the v2 migration below can
+  // find and remove any copies it already seeded, carrying over user edits.
+  const MS_ADAM_EPISODES_V1 = [
+    { title: 'Ep 01 — Jesse Owens (Berlin, 1936)', key: 'owens' },
+    { title: 'Ep 02 — Jackie Robinson (Ebbets Field, 1947)', key: 'robinson' },
+    { title: 'Ep 03 — Tommie Smith & John Carlos (Mexico City, 1968)', key: 'smith' },
+    { title: 'Ep 04 — Muhammad Ali (Kinshasa, 1974)', key: 'ali' },
+    { title: "Ep 05 — US Women's Soccer / Brandi Chastain (Rose Bowl, 1999)", key: 'chastain' },
+    { title: 'Ep 06 — Wilma Rudolph (Rome, 1960)', key: 'rudolph' },
+    { title: 'Ep 07 — Kathrine Switzer (Boston Marathon, 1967)', key: 'switzer' },
+    { title: 'Ep 08 — Billie Jean King vs. Bobby Riggs (Houston, 1973)', key: 'king' },
+    { title: 'Ep 09 — Miracle on Ice (Lake Placid, 1980)', key: 'miracle' },
+    { title: 'Ep 10 — Simone Biles (Tokyo, 2021)', key: 'biles' }
+  ];
+
+  // Correct source per Niia 2026-07-07: historic_us_sports_moments-2.xlsx
+  // ("Top 28 Historic US Sports Moments with Social Impact"), Moments sheet,
+  // in sheet order (chronological).
   const MS_ADAM_EPISODES = [
-    { title: 'Ep 01 — Jesse Owens (Berlin, 1936)' },
-    { title: 'Ep 02 — Jackie Robinson (Ebbets Field, 1947)' },
-    { title: 'Ep 03 — Tommie Smith & John Carlos (Mexico City, 1968)' },
-    { title: 'Ep 04 — Muhammad Ali (Kinshasa, 1974)' },
-    { title: "Ep 05 — US Women's Soccer / Brandi Chastain (Rose Bowl, 1999)", due: '2026-07-14' },
-    { title: 'Ep 06 — Wilma Rudolph (Rome, 1960)' },
-    { title: 'Ep 07 — Kathrine Switzer (Boston Marathon, 1967)' },
-    { title: 'Ep 08 — Billie Jean King vs. Bobby Riggs (Houston, 1973)' },
-    { title: 'Ep 09 — Miracle on Ice (Lake Placid, 1980)' },
-    { title: 'Ep 10 — Simone Biles (Tokyo, 2021)', due: '2026-07-21' }
+    { title: "Jim Thorpe's 1912 Olympic Pentathlon and Decathlon Sweep", key: 'thorpe' },
+    { title: 'Babe Didrikson 1932 Los Angeles Olympics', key: 'didrikson' },
+    { title: 'Jesse Owens 1936 Berlin Olympics Four Gold Medals', key: 'owens' },
+    { title: 'Jackie Robinson Breaks MLB Color Barrier', key: 'robinson' },
+    { title: "John Wooden's Integrity and UCLA Dynasty", key: 'wooden' },
+    { title: "Arnold Palmer's 1960 US Open Comeback", key: 'palmer' },
+    { title: "Wilma Rudolph's Three Gold Medals at 1960 Rome Olympics", key: 'rudolph' },
+    { title: 'Kathrine Switzer 1967 Boston Marathon', key: 'switzer' },
+    { title: 'Muhammad Ali Refuses Vietnam Draft', key: 'ali' },
+    { title: 'Tommie Smith and John Carlos Black Power Salute', key: 'smith' },
+    { title: "Roberto Clemente's Plane Crash", key: 'clemente' },
+    { title: 'Title IX Signed into Law', key: 'title ix' },
+    { title: 'Billie Jean King Battle of the Sexes', key: 'king' },
+    { title: "Hank Aaron's 715th Home Run", key: 'aaron' },
+    { title: 'Miracle on Ice 1980', key: 'miracle' },
+    { title: 'Kareem Abdul-Jabbar Breaks NBA All-Time Scoring Record', key: 'abdul-jabbar' },
+    { title: 'Magic Johnson 1991 HIV Announcement', key: 'magic' },
+    { title: "Jim Abbott's No-Hitter", key: 'abbott' },
+    { title: "Tiger Woods' 12-Stroke 1997 Masters Victory", key: 'woods' },
+    { title: "Michael Jordan's The Last Shot", key: 'jordan' },
+    { title: "Brandi Chastain's Winning Penalty in 1999 Women's World Cup Final", key: 'chastain', due: '2026-07-14' },
+    { title: "George W. Bush's First Pitch, 2001 World Series Game 3", key: 'bush' },
+    { title: 'Michael Phelps 2008 Beijing Olympics Eight Gold Medals', key: 'phelps' },
+    { title: "Pat Summitt's 1,000th Win", key: 'summitt' },
+    { title: "Simone Biles' 2016 Rio Four Golds and 2021 Tokyo Mental Health Stand", key: 'biles', due: '2026-07-21' },
+    { title: "Super Bowl LI: Patriots' 28-3 Comeback", key: 'patriots' },
+    { title: 'LeBron James Breaks NBA All-Time Scoring Record', key: 'lebron' },
+    { title: 'Oksana Masters Wins 20th Paralympic Medal', key: 'masters' }
   ];
 
   let milestones = msLoad();
 
   function msSeedAdamEpisodes() {
-    const FLAG = 'rewindRoomAdamListSeeded_v1';
+    const FLAG = 'rewindRoomAdamListSeeded_v2';
     if (localStorage.getItem(FLAG)) return false;
+
+    // Carry over any edits (assignee/status/link) from the old wrong list
+    // onto the matching new entry, then drop the old ones.
+    const carryOver = {};
+    MS_ADAM_EPISODES_V1.forEach(old => {
+      const existing = milestones.find(m => m.title === old.title);
+      if (existing) carryOver[old.key] = existing;
+    });
+    milestones = milestones.filter(m => !MS_ADAM_EPISODES_V1.some(old => old.title === m.title));
+
     const existingTitles = new Set(milestones.map(m => m.title));
     let added = false;
     MS_ADAM_EPISODES.forEach(ep => {
-      if (!existingTitles.has(ep.title)) {
-        const item = msSeedItem({ title: ep.title, status: 'not_started' });
-        if (ep.due) item.due = ep.due;
-        milestones.push(item);
-        added = true;
-      }
+      if (existingTitles.has(ep.title)) return;
+      const prior = carryOver[ep.key];
+      const item = msSeedItem({
+        title: ep.title,
+        status: prior ? prior.status : 'not_started',
+        assignee: prior ? prior.assignee : ''
+      });
+      item.due = ep.due || (prior ? prior.due : '') || '';
+      item.link = prior ? prior.link : '';
+      milestones.push(item);
+      added = true;
     });
     localStorage.setItem(FLAG, '1');
-    return added;
+    return true;
   }
   if (msSeedAdamEpisodes()) msSave();
 
