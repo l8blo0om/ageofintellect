@@ -8,6 +8,12 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
 <style>
+  @property --hue {
+    syntax: '<number>';
+    inherits: true;
+    initial-value: 0;
+  }
+
   :root {
     --navy: #0a2240;
     --navy-deep: #061629;
@@ -21,10 +27,26 @@
     --line: #e5e9f0;
     --green: #1a8a4a;
     --amber: #c8860a;
+    /* Traffic-light status colors — red / yellow / green */
+    --rag-red: #c8102e;
+    --rag-yellow: #e6b800;
+    --rag-green: #1a8a4a;
+    --hue: 0;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
+  html {
+    scroll-behavior: smooth;
+    animation: huecycle 22s ease-in-out infinite alternate;
+  }
+  /* Red (0°) → Yellow (60°) → Green (120°), ping-ponging back — not a full rainbow */
+  @keyframes huecycle {
+    to { --hue: 120; }
+  }
+  .accent-bar {
+    height: 4px;
+    background: hsl(var(--hue), 75%, 48%);
+  }
 
   body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -159,11 +181,11 @@
     font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer;
     color: var(--white); appearance: none; text-align: center;
   }
-  .status-not_started { background: var(--gray); }
-  .status-in_progress { background: var(--amber); }
-  .status-delivered { background: var(--navy-light); }
-  .status-needs_revision { background: var(--red); }
-  .status-approved { background: var(--green); }
+  .status-not_started { background: var(--rag-red); }
+  select.status-in_progress { background: var(--rag-yellow); color: var(--navy); }
+  select.status-delivered { background: var(--rag-yellow); color: var(--navy); }
+  .status-needs_revision { background: var(--rag-red); }
+  .status-approved { background: var(--rag-green); }
 
   .del-btn {
     background: none; border: none; color: var(--gray); font-size: 18px; cursor: pointer;
@@ -204,7 +226,7 @@
     border: 1px solid transparent; border-radius: 6px; padding: 6px 8px; width: 100%; background: transparent;
   }
   .milestone-title-input:hover, .milestone-title-input:focus { border-color: var(--line); background: var(--offwhite); outline: none; }
-  .status-complete { background: var(--green); }
+  .status-complete { background: var(--rag-green); }
   .milestone-bottom { display: grid; grid-template-columns: 160px 140px 1fr; gap: 10px; }
   @media (max-width: 700px) { .milestone-bottom { grid-template-columns: 1fr; } }
   .milestone-bottom input {
@@ -256,6 +278,7 @@
 </head>
 <body>
 
+<div class="accent-bar"></div>
 <header>
   <div class="header-inner">
     <div class="eyebrow">Age of Intellect · Client: National Sports Museum</div>
