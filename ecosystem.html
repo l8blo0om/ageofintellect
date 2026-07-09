@@ -8,7 +8,9 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Manrope:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Caveat:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
+  @property --hue{syntax:'<number>';inherits:true;initial-value:0}
   :root{
+    --hue:0;
     --paper:#FCF8EF;      /* warm white */
     --paper-2:#F5EDDC;    /* deeper cream for alt sections */
     --ink:#1B1712;        /* near-black, headings */
@@ -111,6 +113,29 @@
     transition:all .3s var(--ease);}
   .resources-link:hover{background:var(--gold);color:#fff;}
   @media(max-width:600px){.resources-link{top:10px;left:10px;padding:8px 13px;font-size:9px;}}
+
+  /* SPLASH — music choice */
+  .splash{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;
+    transition:opacity .8s var(--ease);}
+  .splash.hidden{opacity:0;pointer-events:none;}
+  .splash-bg{position:absolute;inset:0;background:url('children.png') center/cover;
+    filter:brightness(0.5) saturate(0.85);}
+  .splash-overlay{position:absolute;inset:0;
+    background:radial-gradient(ellipse at 50% 38%,rgba(27,23,18,0.35) 0%,rgba(20,16,12,0.82) 100%);}
+  .splash-content{position:relative;z-index:1;text-align:center;padding:8vw;max-width:560px;}
+  .splash-logo{width:min(72vw,320px);margin:0 auto 22px;display:block;
+    filter:drop-shadow(0 10px 30px rgba(0,0,0,0.55));}
+  .splash-tag{font-family:'Fraunces',serif;font-style:italic;color:var(--paper);
+    font-size:clamp(15px,2vw,19px);margin-bottom:34px;}
+  .splash-choices{display:flex;flex-direction:column;gap:13px;align-items:center;}
+  .splash-btn{font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:0.1em;
+    text-transform:uppercase;padding:14px 28px;border-radius:40px;border:1.5px solid var(--gold-b);
+    background:rgba(252,248,239,0.06);color:var(--paper);cursor:pointer;
+    transition:all .3s var(--ease);width:min(100%,360px);}
+  .splash-btn:hover{background:var(--gold-b);color:var(--ink);border-color:var(--gold-b);}
+  .splash-btn.quiet{border-color:rgba(252,248,239,0.32);color:rgba(252,248,239,0.65);background:transparent;}
+  .splash-btn.quiet:hover{border-color:var(--paper);color:var(--paper);background:rgba(252,248,239,0.08);}
+
   /* native anthem player above lyrics */
   .anthem-player{display:block;width:100%;max-width:420px;margin:2px auto 32px;}
   /* muted-rainbow list bullets */
@@ -122,7 +147,10 @@
   .binary ul li:nth-child(5){background:rgba(138,90,120,0.18);}
   .ecosystem-logo{display:block;width:100%;max-width:640px;margin:16px auto 18px;
     filter:drop-shadow(0 12px 32px rgba(60,40,10,0.30)) saturate(1.1) contrast(1.06);}
-  .doll-border{display:block;width:100%;margin:0;}
+  .doll-border{display:block;width:100%;margin:0;
+    filter:hue-rotate(calc(var(--hue) * 1deg)) saturate(1.15);
+    animation:huecycle 22s linear infinite;}
+  @keyframes huecycle{to{--hue:360;}}
   .eco-note{margin-top:22px;padding:15px 20px;border-left:3px solid var(--gold);
     background:rgba(182,126,30,0.07);border-radius:0 8px 8px 0;font-size:15px;
     color:var(--ink-soft);max-width:660px;}
@@ -271,6 +299,22 @@
 </style>
 </head>
 <body>
+
+<!-- SPLASH -->
+<div class="splash" id="splash">
+  <div class="splash-bg"></div>
+  <div class="splash-overlay"></div>
+  <div class="splash-content">
+    <img class="splash-logo" src="ecosystem-logo.png" alt="The Ecosystem">
+    <p class="splash-tag">Before you begin — choose the sound in the room.</p>
+    <div class="splash-choices">
+      <button class="splash-btn" onclick="enterWith('anthem')">▶ This Year's Gonna Be Different</button>
+      <button class="splash-btn" onclick="enterWith('cup')">▶ The Cup, Spoken</button>
+      <button class="splash-btn quiet" onclick="enterWith(null)">Enter in silence</button>
+    </div>
+  </div>
+</div>
+
 <a class="resources-link" href="resources.html">☰&nbsp; Resources</a>
 <button class="music-toggle" id="musicToggle" onclick="toggleAnthem()" aria-label="Play or pause music">♪&nbsp; Play music</button>
 
@@ -824,28 +868,31 @@
     }
     g.innerHTML=html;
   });
-  // anthem — starts on open; always-visible toggle up top + button below stay in sync
+  // music — chosen at the splash; top toggle + button below stay in sync with whichever track is playing
+  var TRACKS = { anthem: document.getElementById('anthem'), cup: document.getElementById('cupSong') };
+  var currentTrack = null;
   function setAnthemUI(playing){
     var pill=document.getElementById('musicToggle'), b=document.getElementById('playBtn');
     if(playing){ if(pill){pill.innerHTML='♪&nbsp; Pause music';pill.classList.add('on');} if(b)b.innerHTML='❚❚&nbsp;&nbsp;Pause'; }
     else { if(pill){pill.innerHTML='♪&nbsp; Play music';pill.classList.remove('on');} if(b)b.innerHTML='▶&nbsp;&nbsp;Play the anthem'; }
   }
+  Object.keys(TRACKS).forEach(function(k){
+    var a=TRACKS[k];
+    a.addEventListener('play',function(){ if(currentTrack && currentTrack!==a){ currentTrack.pause(); } currentTrack=a; setAnthemUI(true); });
+    a.addEventListener('pause',function(){ if(currentTrack===a) setAnthemUI(false); });
+    a.addEventListener('ended',function(){ if(currentTrack===a) setAnthemUI(false); });
+  });
   function toggleAnthem(){
-    var a=document.getElementById('anthem');
-    if(a.paused){ a.play(); setAnthemUI(true); } else { a.pause(); setAnthemUI(false); }
+    if(!currentTrack) currentTrack = TRACKS.anthem;
+    if(currentTrack.paused){ currentTrack.play().catch(function(){}); } else { currentTrack.pause(); }
   }
   window.toggleAnthem=toggleAnthem;
-  (function(){
-    var a=document.getElementById('anthem');
-    a.addEventListener('ended',function(){ setAnthemUI(false); });
-    a.addEventListener('play',function(){ setAnthemUI(true); });
-    a.addEventListener('pause',function(){ setAnthemUI(false); });
-    a.play().then(function(){ setAnthemUI(true); }).catch(function(){
-      setAnthemUI(false);
-      var start=function(){ a.play().then(function(){setAnthemUI(true);}); ['scroll','keydown','touchstart'].forEach(function(ev){document.removeEventListener(ev,start);}); };
-      ['scroll','keydown','touchstart'].forEach(function(ev){ document.addEventListener(ev,start,{passive:true}); });
-    });
-  })();
+  function enterWith(which){
+    var splash=document.getElementById('splash');
+    if(splash){ splash.classList.add('hidden'); setTimeout(function(){ splash.style.display='none'; },850); }
+    if(which && TRACKS[which]){ currentTrack=TRACKS[which]; currentTrack.play().catch(function(){}); }
+  }
+  window.enterWith=enterWith;
   // scroll reveal + cup fill
   var io=new IntersectionObserver(function(es){
     es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in');
