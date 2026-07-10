@@ -75,11 +75,17 @@
   --text:        #1A1714;
   --text-soft:   #524830;
   --text-mute:   #7A6E54;
+  --text-black:  #000000;
 
   /* Rules — hairlines, not boxes */
   --rule:        rgba(26, 23, 20, 0.14);
   --rule-soft:   rgba(26, 23, 20, 0.07);
   --rule-gold:   rgba(168, 120, 42, 0.30);
+
+  /* Shadow — depth for cards, tiles & buttons lifting off the paper */
+  --shadow-sm:   0 2px 10px -2px rgba(26, 23, 20, 0.14);
+  --shadow-md:   0 16px 36px -12px rgba(26, 23, 20, 0.28);
+  --shadow-lg:   0 30px 80px -20px rgba(26, 23, 20, 0.45);
 
   /* Easing — one curve, used everywhere */
   --ease:        cubic-bezier(0.2, 0.8, 0.2, 1);
@@ -133,7 +139,7 @@ body {
   font-variation-settings: "opsz" 144;
   letter-spacing: -0.018em;
   line-height: 1.02;
-  color: var(--text);
+  color: var(--text-black);
 }
 .display em, h1 em, h2 em, h3 em {
   font-style: italic;
@@ -195,9 +201,10 @@ body {
   border: 1px solid var(--ink);
   background: var(--ink);
   color: var(--paper);
-  transition: background 240ms var(--ease), color 240ms var(--ease), transform 240ms var(--ease);
+  box-shadow: var(--shadow-sm);
+  transition: background 240ms var(--ease), color 240ms var(--ease), transform 240ms var(--ease), box-shadow 240ms var(--ease);
 }
-.btn:hover { background: var(--gold); border-color: var(--gold); transform: translateY(-1px); }
+.btn:hover { background: var(--gold); border-color: var(--gold); transform: translateY(-2px); box-shadow: var(--shadow-md); }
 .btn-ghost { background: transparent; color: var(--ink); }
 .btn-ghost:hover { background: var(--ink); color: var(--paper); }
 .btn-gold { background: var(--gold); border-color: var(--gold); }
@@ -238,6 +245,7 @@ body {
   padding-block: 14px;
   background: rgba(246, 241, 231, 0.92);
   border-bottom-color: var(--rule);
+  box-shadow: var(--shadow-sm);
 }
 
 .nav-mark {
@@ -585,24 +593,57 @@ body { top: 0 !important; }
 .chip:hover { color: var(--ink); border-color: var(--ink); }
 .chip.active { background: var(--ink); color: var(--paper); border-color: var(--ink); }
 
-.work-grid {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
+/* ---- Work carousel ----
+   Drag / wheel / arrow-keys to browse, click a side card to bring
+   it to center, click the centered card to open its video.
+   Same interaction model as CAROUSEL/carousel.html, adapted from
+   book spines to flat video cards (no 3D flip needed here). */
+.work-carousel {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.wc-stage {
+  flex: 1;
+  overflow: hidden;
+  cursor: grab;
+}
+.wc-stage.dragging { cursor: grabbing; }
+.wc-track {
+  display: flex;
   gap: 18px;
+  transition: transform 550ms var(--ease);
+  will-change: transform;
 }
-.tile-hero { grid-column: span 6; aspect-ratio: 21 / 9; }
-.tile-half { grid-column: span 3; aspect-ratio: 4 / 3; }
-.tile-third { grid-column: span 2; aspect-ratio: 4 / 5; }
+.wc-track.no-anim { transition: none; }
+.wc-card {
+  flex: 0 0 clamp(220px, 28vw, 340px);
+  aspect-ratio: 4 / 5;
+  transform: scale(0.88);
+  opacity: 0.5;
+  transition: transform 480ms var(--ease), opacity 480ms var(--ease), border-color 320ms;
+}
+.wc-card.wc-center { transform: scale(1); opacity: 1; border-color: var(--ink); z-index: 2; box-shadow: var(--shadow-lg); }
+.wc-card.is-hidden { display: none; }
 
-@media (max-width: 980px) {
-  .work-grid { grid-template-columns: repeat(2, 1fr); }
-  .tile-hero { grid-column: span 2; aspect-ratio: 16 / 10; }
-  .tile-half { grid-column: span 1; aspect-ratio: 4 / 3; }
-  .tile-third { grid-column: span 1; aspect-ratio: 4 / 5; }
+.wc-arrow {
+  flex: 0 0 auto;
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--rule);
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  transition: all 200ms var(--ease);
 }
+.wc-arrow:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.wc-arrow:disabled { opacity: 0.3; pointer-events: none; }
+
 @media (max-width: 560px) {
-  .work-grid { grid-template-columns: 1fr; }
-  .tile-hero, .tile-half, .tile-third { grid-column: span 1; }
+  .work-carousel { gap: 8px; }
+  .wc-arrow { width: 36px; height: 36px; font-size: 16px; }
 }
 
 .tile {
@@ -611,7 +652,8 @@ body { top: 0 !important; }
   background: var(--paper-deep);
   cursor: pointer;
   border: 1px solid var(--rule);
-  transition: transform 480ms var(--ease), opacity 320ms var(--ease);
+  box-shadow: var(--shadow-sm);
+  transition: transform 480ms var(--ease), opacity 320ms var(--ease), box-shadow 480ms var(--ease);
 }
 .tile.is-hidden {
   /* When filter chips hide a tile, fade & collapse instead of pop */
@@ -713,6 +755,10 @@ body { top: 0 !important; }
 /* ===== CAPABILITIES ========================================  */
 /* Four disciplines, two-column grid with a hairline divider.   */
 /* ============================================================ */
+/* Section sits a shade deeper than the surrounding paper, so the
+   individual cap cards (background: var(--paper)) read as raised
+   panels rather than blending into one flat field. */
+#capabilities { background: var(--paper-alt); }
 .caps {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -724,10 +770,15 @@ body { top: 0 !important; }
   border-right: 1px solid var(--rule);
   border-bottom: 1px solid var(--rule);
   position: relative;
-  background: transparent;
-  transition: background 320ms var(--ease);
+  background: var(--paper);
+  transition: background 320ms var(--ease), box-shadow 320ms var(--ease), transform 320ms var(--ease);
 }
-.cap:hover { background: rgba(184, 149, 74, 0.04); }
+.cap:hover {
+  background: rgba(184, 149, 74, 0.05);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-3px);
+  z-index: 2;
+}
 .cap-num {
   font-family: 'JetBrains Mono', monospace;
   font-size: 11px;
@@ -956,10 +1007,13 @@ body { top: 0 !important; }
 /* Single horizontal table. Every original tier preserved. The   */
 /* discipline cell is rowspan'd so each category labels its rows.*/
 /* ============================================================ */
+#pricing { background: var(--paper-alt); }
 .pricing-table {
   border-top: 1px solid var(--ink);
   width: 100%;
   border-collapse: collapse;
+  background: var(--paper);
+  box-shadow: var(--shadow-md);
 }
 .pricing-table tr {
   border-bottom: 1px solid var(--rule);
@@ -1468,7 +1522,30 @@ body { top: 0 !important; }
   visibility: hidden;
   pointer-events: none;
 }
+.music-splash-video-wrap {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+.music-splash-video-wrap video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  opacity: 0.55;
+}
+.music-splash-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at center, rgba(10,8,6,0.55) 0%, rgba(10,8,6,0.88) 68%, rgba(10,8,6,0.97) 100%);
+}
 .music-splash-inner {
+  position: relative;
+  z-index: 2;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1498,10 +1575,11 @@ body { top: 0 !important; }
 }
 .music-splash-title {
   font-family: 'Fraunces', serif;
-  font-size: clamp(42px, 8vw, 64px);
+  font-size: clamp(52px, 11vw, 92px);
   font-weight: 300;
   font-style: italic;
-  color: #F0E8D8;
+  color: #F8F2E4;
+  text-shadow: 0 0 40px rgba(200, 160, 90, 0.35), 0 2px 24px rgba(0,0,0,0.6);
   letter-spacing: -0.02em;
   line-height: 1;
   margin: -4px 0;
@@ -1535,6 +1613,38 @@ body { top: 0 !important; }
   transition: background 200ms, transform 150ms;
 }
 .music-splash-yes:hover { background: var(--gold-bright); transform: translateY(-1px); }
+.music-splash-btns-row {
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.music-splash-play {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 14px 28px;
+  background: transparent;
+  color: #F0E8D8;
+  border: 1px solid rgba(240,232,216,0.35);
+  cursor: pointer;
+  border-radius: 2px;
+  transition: border-color 200ms, color 200ms, transform 150ms;
+}
+.music-splash-play:hover { border-color: var(--gold-bright); color: var(--gold-bright); transform: translateY(-1px); }
+.music-splash-play.playing { border-color: var(--gold-bright); color: var(--gold-bright); pointer-events: none; }
+.music-splash-player {
+  width: min(320px, 88vw);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-top: 4px;
+}
+.music-splash-player iframe {
+  display: block;
+  border: 0;
+  width: 100%;
+}
 .music-splash-now-playing {
   display: flex;
   align-items: center;
@@ -1571,6 +1681,7 @@ body { top: 0 !important; }
   pointer-events: none;
 }
 .music-pill.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
+.music-pill { text-decoration: none; }
 .music-pill-dot {
   width: 7px; height: 7px;
   border-radius: 50%;
@@ -1619,11 +1730,11 @@ body { top: 0 !important; }
   <a href="dashboard.html" class="nav-client-btn">Client Login</a>
   <a href="#contact" class="btn nav-cta btn-arrow">Start a project</a>
 </nav>
-<!-- Floating music pill -->
-<div class="music-pill" id="musicPill" title="Now playing: Touché Pussycat, Vol. 1">
+<!-- Floating music pill — links out to the same Spotify album playing in the splash -->
+<a class="music-pill" id="musicPill" href="https://open.spotify.com/album/3CGev6tR6bTQakJfLLsTHV" target="_blank" rel="noopener" title="Listen: Touché Pussycat, Vol. 1">
   <div class="music-pill-dot"></div>
   <span class="music-pill-text">Touché Pussycat, Vol. 1</span>
-</div>
+</a>
 
 <!-- Google Translate (hidden — driven by flag buttons above) -->
 <div id="google_translate_element" style="display:none;"></div>
@@ -1857,41 +1968,115 @@ body { top: 0 !important; }
       <button class="chip" data-filter="campaign">Campaign</button>
     </div>
 
-    <div class="work-grid reveal">
+    <div class="work-carousel reveal">
+      <button class="wc-arrow wc-prev" id="wcPrev" aria-label="Previous work" onclick="wcNav(-1)">&#8249;</button>
 
-      <article class="tile tile-hero" data-cat="film campaign" data-youtube="CaA9Z7lekp0">
-        <div class="tile-media">
-          <img src="https://img.youtube.com/vi/CaA9Z7lekp0/maxresdefault.jpg" alt="Parton Sheds — She Shed Trend">
-        </div>
-        <div class="tile-play" aria-hidden="true"></div>
-        <div class="tile-overlay">
-          <div class="tile-cat">Film · UGC Campaign</div>
-          <div class="tile-name">Parton Sheds — She Shed Trend</div>
-        </div>
-      </article>
+      <div class="wc-stage" id="wcStage">
+        <div class="wc-track" id="wcTrack">
 
-      <article class="tile tile-half" data-cat="campaign" data-youtube="nTEJmpq9xQg">
-        <div class="tile-media">
-          <img src="https://img.youtube.com/vi/nTEJmpq9xQg/maxresdefault.jpg" alt="Personalized Birthday Card">
-        </div>
-        <div class="tile-play" aria-hidden="true"></div>
-        <div class="tile-overlay">
-          <div class="tile-cat">Personalized Card</div>
-          <div class="tile-name">Birthday Card</div>
-        </div>
-      </article>
+          <article class="tile wc-card" data-cat="film campaign" data-youtube="CaA9Z7lekp0">
+            <div class="tile-media">
+              <img src="https://img.youtube.com/vi/CaA9Z7lekp0/maxresdefault.jpg" alt="Parton Sheds — She Shed Trend">
+            </div>
+            <div class="tile-play" aria-hidden="true"></div>
+            <div class="tile-overlay">
+              <div class="tile-cat">Film · UGC Campaign</div>
+              <div class="tile-name">Parton Sheds — She Shed Trend</div>
+            </div>
+          </article>
 
-      <article class="tile tile-third" data-cat="campaign" data-youtube="NNfFHxe2YEE">
-        <div class="tile-media">
-          <img src="https://img.youtube.com/vi/NNfFHxe2YEE/maxresdefault.jpg" alt="Personalized Birthday Card">
-        </div>
-        <div class="tile-play" aria-hidden="true"></div>
-        <div class="tile-overlay">
-          <div class="tile-cat">Personalized Card</div>
-          <div class="tile-name">Birthday Card</div>
-        </div>
-      </article>
+          <article class="tile wc-card" data-cat="campaign" data-youtube="nTEJmpq9xQg">
+            <div class="tile-media">
+              <img src="https://img.youtube.com/vi/nTEJmpq9xQg/maxresdefault.jpg" alt="Personalized Birthday Card">
+            </div>
+            <div class="tile-play" aria-hidden="true"></div>
+            <div class="tile-overlay">
+              <div class="tile-cat">Personalized Card</div>
+              <div class="tile-name">Birthday Card</div>
+            </div>
+          </article>
 
+          <article class="tile wc-card" data-cat="campaign" data-youtube="NNfFHxe2YEE">
+            <div class="tile-media">
+              <img src="https://img.youtube.com/vi/NNfFHxe2YEE/maxresdefault.jpg" alt="Personalized Birthday Card">
+            </div>
+            <div class="tile-play" aria-hidden="true"></div>
+            <div class="tile-overlay">
+              <div class="tile-cat">Personalized Card</div>
+              <div class="tile-name">Birthday Card</div>
+            </div>
+          </article>
+
+          <article class="tile wc-card" data-cat="sound" data-youtube="aHqUD17vV7w">
+            <div class="tile-media">
+              <img src="https://img.youtube.com/vi/aHqUD17vV7w/hqdefault.jpg" alt="Ramadan Love — Maqam Soul">
+            </div>
+            <div class="tile-play" aria-hidden="true"></div>
+            <div class="tile-overlay">
+              <div class="tile-cat">Sound · L8 Blo0om</div>
+              <div class="tile-name">Ramadan Love — Maqam Soul</div>
+            </div>
+          </article>
+
+          <article class="tile wc-card" data-cat="sound" data-youtube="ywGUFFbpm_Q">
+            <div class="tile-media">
+              <img src="https://img.youtube.com/vi/ywGUFFbpm_Q/hqdefault.jpg" alt="Ramadan Love — Bhangra Banger">
+            </div>
+            <div class="tile-play" aria-hidden="true"></div>
+            <div class="tile-overlay">
+              <div class="tile-cat">Sound · L8 Blo0om</div>
+              <div class="tile-name">Ramadan Love — Bhangra Banger</div>
+            </div>
+          </article>
+
+          <article class="tile wc-card" data-cat="sound" data-youtube="nCpBdVygCiw">
+            <div class="tile-media">
+              <img src="https://img.youtube.com/vi/nCpBdVygCiw/hqdefault.jpg" alt="Ramadan Love — Afrobeat">
+            </div>
+            <div class="tile-play" aria-hidden="true"></div>
+            <div class="tile-overlay">
+              <div class="tile-cat">Sound · L8 Blo0om</div>
+              <div class="tile-name">Ramadan Love — Afrobeat</div>
+            </div>
+          </article>
+
+          <article class="tile wc-card" data-cat="sound" data-youtube="16vIXhMTLzk">
+            <div class="tile-media">
+              <img src="https://img.youtube.com/vi/16vIXhMTLzk/hqdefault.jpg" alt="Ramadan Love — Reggae Mix">
+            </div>
+            <div class="tile-play" aria-hidden="true"></div>
+            <div class="tile-overlay">
+              <div class="tile-cat">Sound · L8 Blo0om</div>
+              <div class="tile-name">Ramadan Love — Reggae Mix</div>
+            </div>
+          </article>
+
+          <article class="tile wc-card" data-cat="sound" data-youtube="ZAa6zynl3oQ">
+            <div class="tile-media">
+              <img src="https://img.youtube.com/vi/ZAa6zynl3oQ/maxresdefault.jpg" alt="LIFT — Steady Hands">
+            </div>
+            <div class="tile-play" aria-hidden="true"></div>
+            <div class="tile-overlay">
+              <div class="tile-cat">Sound · L8 Blo0om</div>
+              <div class="tile-name">LIFT — Steady Hands (Mid-Series Sample)</div>
+            </div>
+          </article>
+
+          <article class="tile wc-card" data-cat="sound" data-youtube="SsA6kfoBCAU">
+            <div class="tile-media">
+              <img src="https://img.youtube.com/vi/SsA6kfoBCAU/maxresdefault.jpg" alt="Measured">
+            </div>
+            <div class="tile-play" aria-hidden="true"></div>
+            <div class="tile-overlay">
+              <div class="tile-cat">Sound · L8 Blo0om</div>
+              <div class="tile-name">Measured</div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+
+      <button class="wc-arrow wc-next" id="wcNext" aria-label="Next work" onclick="wcNav(1)">&#8250;</button>
     </div>
   </div>
 </section>
@@ -2377,9 +2562,10 @@ body { top: 0 !important; }
 
     <div class="sec-head reveal">
       <p class="eyebrow">— Start a Project — 007</p>
-      <h2 class="display">Tell us what you're <em>making.</em></h2>
-      <p>The more you share up-front, the sharper the first reply.
-         We respond within one business day.</p>
+      <h2 class="display">Let's give your dream <em>superpowers.</em></h2>
+      <p>You already know what you want to build. Tell us about it — the more
+         you share up-front, the sharper the first reply. We respond within
+         one business day.</p>
     </div>
 
     <div class="contact-grid">
@@ -2505,6 +2691,14 @@ body { top: 0 !important; }
 <!-- ===== MUSIC SPLASH SCREEN ========================================== -->
 <!-- ==================================================================== -->
 <div class="music-splash" id="musicSplash" role="dialog" aria-modal="true" aria-label="Enter site">
+
+  <div class="music-splash-video-wrap" aria-hidden="true">
+    <video autoplay muted loop playsinline preload="metadata" disablepictureinpicture>
+      <source src="assets/Headervideo/HERO.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="music-splash-scrim" aria-hidden="true"></div>
+
   <div class="music-splash-inner">
 
     <img src="assets/logoblack.jpg" alt="Age of Intellect" class="music-splash-logo">
@@ -2513,15 +2707,26 @@ body { top: 0 !important; }
     <p class="music-splash-title">Welcome.</p>
     <p class="music-splash-sub">The studio is open.</p>
 
-    <div class="music-splash-btns">
+    <div class="music-splash-btns music-splash-btns-row">
       <button class="music-splash-yes" onclick="dismissSplash()">Enter &nbsp;→</button>
+      <button class="music-splash-play" id="splashPlayBtn" onclick="startSplashMusic()">&#9658;&nbsp; Play music</button>
+    </div>
+
+    <div class="music-splash-player">
+      <iframe
+        id="splashSpotifyFrame"
+        src="https://open.spotify.com/embed/album/3CGev6tR6bTQakJfLLsTHV?utm_source=generator&theme=0"
+        width="100%" height="152" frameborder="0"
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+        loading="lazy"
+        title="Touché Pussycat, Vol. 1 — Spotify player"></iframe>
     </div>
 
     <a class="music-splash-now-playing"
        href="https://open.spotify.com/album/3CGev6tR6bTQakJfLLsTHV"
        target="_blank" rel="noopener">
       <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
-      Now streaming — Touché Pussycat, Vol. 1
+      Open in Spotify ↗
     </a>
 
   </div>
@@ -2597,6 +2802,7 @@ body { top: 0 !important; }
         const show = f === 'all' || cats.includes(f);
         t.classList.toggle('is-hidden', !show);
       });
+      if (typeof wcRefresh === 'function') wcRefresh(true);
     });
   });
 
@@ -2608,14 +2814,17 @@ body { top: 0 !important; }
   const modal = document.getElementById('videoModal');
   const frame = document.getElementById('videoFrame');
 
+  function openWorkVideo(tile) {
+    const id = (tile.getAttribute('data-youtube') || '').trim();
+    if (!id || id.startsWith('YOUR_VIDEO_ID')) return; // graceful no-op
+    frame.src = `https://www.youtube.com/embed/${encodeURIComponent(id)}?autoplay=1&rel=0&modestbranding=1`;
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
   document.querySelectorAll('.tile[data-youtube]').forEach(tile => {
-    tile.addEventListener('click', () => {
-      const id = (tile.getAttribute('data-youtube') || '').trim();
-      if (!id || id.startsWith('YOUR_VIDEO_ID')) return; // graceful no-op
-      frame.src = `https://www.youtube.com/embed/${encodeURIComponent(id)}?autoplay=1&rel=0&modestbranding=1`;
-      modal.classList.add('open');
-      document.body.style.overflow = 'hidden';
-    });
+    if (tile.classList.contains('wc-card')) return; // carousel cards are wired below
+    tile.addEventListener('click', () => openWorkVideo(tile));
   });
 
   const closeModal = () => {
@@ -2742,6 +2951,107 @@ body { top: 0 !important; }
     });
   })();
 
+  /* =====================================================
+     WORK CAROUSEL
+     Same interaction model as CAROUSEL/carousel.html —
+     drag / wheel / arrow-keys to browse. Click a side card
+     to bring it to center; click the centered card to play it.
+     ===================================================== */
+  (function() {
+    const stage   = document.getElementById('wcStage');
+    const track   = document.getElementById('wcTrack');
+    const prevBtn = document.getElementById('wcPrev');
+    const nextBtn = document.getElementById('wcNext');
+    if (!stage || !track) return;
+
+    let center = 0;
+    let down = false, moved = false, startX = 0, startCenter = 0;
+
+    const visibleCards = () =>
+      Array.from(track.querySelectorAll('.wc-card')).filter(c => !c.classList.contains('is-hidden'));
+
+    function step() {
+      const cards = visibleCards();
+      if (!cards.length) return 0;
+      const gap = parseFloat(getComputedStyle(track).columnGap) || 18;
+      return cards[0].getBoundingClientRect().width + gap;
+    }
+
+    function layout(animate) {
+      const cards = visibleCards();
+      if (!cards.length) return;
+      center = Math.max(0, Math.min(center, cards.length - 1));
+      track.classList.toggle('no-anim', !animate);
+      const s = step();
+      const cardW = cards[0].getBoundingClientRect().width;
+      const stageW = stage.getBoundingClientRect().width;
+      const shift = stageW / 2 - center * s - cardW / 2;
+      track.style.transform = `translateX(${shift}px)`;
+      cards.forEach((c, i) => c.classList.toggle('wc-center', i === center));
+      if (prevBtn) prevBtn.disabled = center <= 0;
+      if (nextBtn) nextBtn.disabled = center >= cards.length - 1;
+    }
+
+    function goTo(idx, animate) { center = idx; layout(animate !== false); }
+    window.wcNav = (dir) => goTo(center + dir);
+    window.wcRefresh = (resetCenter) => { if (resetCenter) center = 0; layout(true); };
+
+    // Click a side card to center it; click the centered card to play.
+    Array.from(track.querySelectorAll('.wc-card')).forEach(card => {
+      card.addEventListener('click', (e) => {
+        if (moved) return; // suppress the click that follows a drag
+        const cards = visibleCards();
+        const idx = cards.indexOf(card);
+        if (idx === -1) return; // hidden by the active filter
+        if (idx === center) {
+          openWorkVideo(card);
+        } else {
+          e.stopPropagation();
+          goTo(idx);
+        }
+      });
+    });
+
+    // Drag to scrub
+    stage.addEventListener('pointerdown', (e) => {
+      down = true; moved = false; startX = e.clientX; startCenter = center;
+      stage.classList.add('dragging');
+    });
+    window.addEventListener('pointermove', (e) => {
+      if (!down) return;
+      const dx = e.clientX - startX;
+      if (Math.abs(dx) > 6) moved = true;
+      const s = step() || 1;
+      goTo(startCenter - Math.round(dx / s), false);
+    });
+    window.addEventListener('pointerup', () => {
+      if (!down) return;
+      down = false;
+      stage.classList.remove('dragging');
+      layout(true); // snap smoothly to the nearest card
+    });
+
+    // Wheel to browse
+    let wlock = false;
+    stage.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      if (wlock) return;
+      wlock = true; setTimeout(() => wlock = false, 220);
+      const d = (e.deltaX || e.deltaY) > 0 ? 1 : -1;
+      wcNav(d);
+    }, { passive: false });
+
+    // Arrow keys, scoped to the carousel itself
+    stage.setAttribute('tabindex', '0');
+    stage.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') { wcNav(1); e.preventDefault(); }
+      else if (e.key === 'ArrowLeft') { wcNav(-1); e.preventDefault(); }
+    });
+
+    window.addEventListener('resize', () => layout(false));
+    layout(false);
+  })();
+
 })();
 
 /* ============================================================ */
@@ -2752,6 +3062,24 @@ function dismissSplash() {
   if (splash) {
     splash.classList.add('hidden');
     setTimeout(function() { splash.style.display = 'none'; }, 650);
+  }
+  var pill = document.getElementById('musicPill');
+  if (pill) { pill.classList.add('visible'); }
+}
+
+/* Splash — explicit "start the music" option.
+   The Spotify embed's own play button is easy to miss, so this
+   gives the choice real visual weight. Re-requesting the iframe
+   with autoplay=1 works because it's fired from a real click. */
+function startSplashMusic() {
+  var frame = document.getElementById('splashSpotifyFrame');
+  var btn = document.getElementById('splashPlayBtn');
+  if (frame && frame.src.indexOf('autoplay=1') === -1) {
+    frame.src = frame.src + '&autoplay=1';
+  }
+  if (btn) {
+    btn.textContent = '♫ Playing…';
+    btn.classList.add('playing');
   }
 }
 
