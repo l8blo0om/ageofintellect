@@ -34,11 +34,28 @@
 
 <style>
 /* ============================================================ */
+/* ===== LIVING GOLD =========================================== */
+/* A slow animated custom property, restrained to a warm amber →  */
+/* gold → honey swing (see the hsl() calc below) instead of a     */
+/* full 0-360 rainbow. A literal hue-rotate(--hue) filter on the   */
+/* whole page would also cycle the photos, video and body text —  */
+/* reads as broken on a paid client site, not "cute." Scoped to    */
+/* the gold italic emphasis words + the music-pill dot instead.   */
+/* ============================================================ */
+@property --hue {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 0;
+}
+@keyframes huecycle { to { --hue: 360; } }
+
+/* ============================================================ */
 /* ===== TOKENS ===============================================  */
 /* All color & spacing is centralized here. Editing one variable */
 /* updates the whole site — paint by numbers, on purpose.        */
 /* ============================================================ */
 :root {
+  --hue: 0;
   /* Paper backgrounds — true parchment, amber-warm, no pink cast */
   --paper:       #EAE0C8;
   --paper-alt:   #E0D4B0;
@@ -120,7 +137,8 @@ body {
 }
 .display em, h1 em, h2 em, h3 em {
   font-style: italic;
-  color: var(--gold);
+  color: hsl(calc(34 + (var(--hue) * 0.06)) 62% 46%);
+  animation: huecycle 22s linear infinite;
   font-weight: 400;
 }
 
@@ -430,7 +448,10 @@ body { top: 0 !important; }
   margin-top: 10px;
 }
 .hero-eyebrow { color: var(--gold-bright); }
-.hero-title em { color: var(--gold-bright); }
+.hero-title em {
+  color: hsl(calc(34 + (var(--hue) * 0.06)) 68% 56%);
+  animation: huecycle 22s linear infinite;
+}
 
 /* CTAs over dark video: primary gold, secondary outlined cream */
 .hero .btn {
@@ -1553,8 +1574,8 @@ body { top: 0 !important; }
 .music-pill-dot {
   width: 7px; height: 7px;
   border-radius: 50%;
-  background: var(--gold);
-  animation: pulse 1.8s ease-in-out infinite;
+  background: hsl(calc(34 + (var(--hue) * 0.06)) 62% 46%);
+  animation: pulse 1.8s ease-in-out infinite, huecycle 22s linear infinite;
 }
 @keyframes pulse {
   0%,100% { opacity: 1; transform: scale(1); }
