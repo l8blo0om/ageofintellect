@@ -6,21 +6,68 @@
 <meta name="theme-color" content="#EAE0C8">
 
 <title>The Age of Intellect — Precision on High Demand</title>
+<link rel="canonical" href="https://ageofintellect.com/">
 <meta name="description" content="An AI-powered multimedia studio in Tega Cay, SC. Music, film, brand identity, and campaign work for artists and businesses who know what they want.">
 
 <!-- ============================================================ -->
 <!-- OPEN GRAPH / SOCIAL CARDS                                    -->
-<!-- Drop a 1200×630 cover image into assets/logoblack.jpg and the -->
-<!-- preview will populate automatically when the link is shared. -->
+<!-- og:image must be an ABSOLUTE url — crawlers resolve relative  -->
+<!-- paths inconsistently and previews silently break.            -->
 <!-- ============================================================ -->
 <meta property="og:type" content="website">
+<meta property="og:url" content="https://ageofintellect.com/">
+<meta property="og:site_name" content="Age of Intellect">
 <meta property="og:title" content="The Age of Intellect — Precision on High Demand">
 <meta property="og:description" content="An AI-powered multimedia studio. Film, sound, visual identity, and campaigns built with intent.">
-<meta property="og:image" content="assets/logoblack.jpg">
+<meta property="og:image" content="https://ageofintellect.com/assets/logoblack.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="The Age of Intellect">
 <meta name="twitter:description" content="AI-powered multimedia studio. Tega Cay, SC.">
-<meta name="twitter:image" content="assets/logoblack.jpg">
+<meta name="twitter:image" content="https://ageofintellect.com/assets/logoblack.jpg">
+
+<!-- ============================================================ -->
+<!-- STRUCTURED DATA — tells Google this is a creative studio     -->
+<!-- with a founder, not a random webpage. Organization is the    -->
+<!-- canonical node; every other page's schema points back here.  -->
+<!-- ============================================================ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://ageofintellect.com/#org",
+      "name": "Age of Intellect",
+      "url": "https://ageofintellect.com/",
+      "logo": "https://ageofintellect.com/assets/logoblack.jpg",
+      "description": "An AI-powered multimedia studio. Music, film, visual identity, campaigns, and web work for artists and businesses.",
+      "email": "ageofintellect@gmail.com",
+      "foundingDate": "2024",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Tega Cay",
+        "addressRegion": "SC",
+        "addressCountry": "US"
+      },
+      "founder": {
+        "@type": "Person",
+        "@id": "https://ageofintellect.com/#founder",
+        "name": "Niia Bishop",
+        "honorificSuffix": "Ph.D.",
+        "jobTitle": "Founder & Creative Director",
+        "url": "https://niiabishop.com/"
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://ageofintellect.com/#website",
+      "url": "https://ageofintellect.com/",
+      "name": "Age of Intellect",
+      "publisher": { "@id": "https://ageofintellect.com/#org" }
+    }
+  ]
+}
+</script>
 
 <!-- ============================================================ -->
 <!-- FONTS                                                        -->
@@ -263,7 +310,7 @@ body {
 .nav-mark::before {
   /* ====================================================
      LOGO SLOT — drop in your final SVG/PNG here
-     Replace this ::before with: <img src="assets/logo.svg" />
+     Replace this ::before with: <img src="assets/logo.svg" alt="The Age of Intellect logo" />
      placed before the wordmark text. The text remains as a
      graceful fallback if the image fails to load.
      ==================================================== */
@@ -1214,6 +1261,13 @@ body { top: 0 !important; }
   color: var(--text-mute);
 }
 .footer .nav-mark { font-family: 'Fraunces', serif; }
+.footer-links {
+  display: flex;
+  gap: 22px;
+  flex-wrap: wrap;
+}
+.footer-links a { transition: color 200ms var(--ease); }
+.footer-links a:hover { color: var(--ink); }
 
 /* ============================================================ */
 /* ===== VIDEO MODAL =========================================  */
@@ -1634,31 +1688,13 @@ body { top: 0 !important; }
 }
 .music-splash-play:hover { border-color: var(--gold-bright); color: var(--gold-bright); transform: translateY(-1px); }
 .music-splash-play.playing { border-color: var(--gold-bright); color: var(--gold-bright); pointer-events: none; }
-.music-splash-player {
-  width: min(320px, 88vw);
-  border-radius: 12px;
-  overflow: hidden;
-  margin-top: 4px;
-}
-.music-splash-player iframe {
-  display: block;
+.music-splash-audio {
+  position: absolute;
+  width: 1px; height: 1px;
   border: 0;
-  width: 100%;
+  opacity: 0;
+  pointer-events: none;
 }
-.music-splash-now-playing {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  color: rgba(240,232,216,0.3);
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  text-decoration: none;
-  transition: color 250ms;
-  margin-top: 8px;
-}
-.music-splash-now-playing:hover { color: rgba(240,232,216,0.7); }
 
 /* Floating music pill — shows after splash dismissed with sound */
 .music-pill {
@@ -1976,7 +2012,7 @@ body { top: 0 !important; }
 
           <article class="tile wc-card" data-cat="film campaign" data-youtube="CaA9Z7lekp0">
             <div class="tile-media">
-              <img src="https://img.youtube.com/vi/CaA9Z7lekp0/maxresdefault.jpg" alt="Parton Sheds — She Shed Trend">
+              <img src="https://img.youtube.com/vi/CaA9Z7lekp0/maxresdefault.jpg" loading="lazy" decoding="async" alt="Parton Sheds — She Shed Trend">
             </div>
             <div class="tile-play" aria-hidden="true"></div>
             <div class="tile-overlay">
@@ -1987,7 +2023,7 @@ body { top: 0 !important; }
 
           <article class="tile wc-card" data-cat="campaign" data-youtube="nTEJmpq9xQg">
             <div class="tile-media">
-              <img src="https://img.youtube.com/vi/nTEJmpq9xQg/maxresdefault.jpg" alt="Personalized Birthday Card">
+              <img src="https://img.youtube.com/vi/nTEJmpq9xQg/maxresdefault.jpg" loading="lazy" decoding="async" alt="Personalized Birthday Card">
             </div>
             <div class="tile-play" aria-hidden="true"></div>
             <div class="tile-overlay">
@@ -1998,7 +2034,7 @@ body { top: 0 !important; }
 
           <article class="tile wc-card" data-cat="campaign" data-youtube="NNfFHxe2YEE">
             <div class="tile-media">
-              <img src="https://img.youtube.com/vi/NNfFHxe2YEE/maxresdefault.jpg" alt="Personalized Birthday Card">
+              <img src="https://img.youtube.com/vi/NNfFHxe2YEE/maxresdefault.jpg" loading="lazy" decoding="async" alt="Personalized Birthday Card">
             </div>
             <div class="tile-play" aria-hidden="true"></div>
             <div class="tile-overlay">
@@ -2009,7 +2045,7 @@ body { top: 0 !important; }
 
           <article class="tile wc-card" data-cat="sound" data-youtube="aHqUD17vV7w">
             <div class="tile-media">
-              <img src="https://img.youtube.com/vi/aHqUD17vV7w/hqdefault.jpg" alt="Ramadan Love — Maqam Soul">
+              <img src="https://img.youtube.com/vi/aHqUD17vV7w/hqdefault.jpg" loading="lazy" decoding="async" alt="Ramadan Love — Maqam Soul">
             </div>
             <div class="tile-play" aria-hidden="true"></div>
             <div class="tile-overlay">
@@ -2020,7 +2056,7 @@ body { top: 0 !important; }
 
           <article class="tile wc-card" data-cat="sound" data-youtube="ywGUFFbpm_Q">
             <div class="tile-media">
-              <img src="https://img.youtube.com/vi/ywGUFFbpm_Q/hqdefault.jpg" alt="Ramadan Love — Bhangra Banger">
+              <img src="https://img.youtube.com/vi/ywGUFFbpm_Q/hqdefault.jpg" loading="lazy" decoding="async" alt="Ramadan Love — Bhangra Banger">
             </div>
             <div class="tile-play" aria-hidden="true"></div>
             <div class="tile-overlay">
@@ -2031,7 +2067,7 @@ body { top: 0 !important; }
 
           <article class="tile wc-card" data-cat="sound" data-youtube="nCpBdVygCiw">
             <div class="tile-media">
-              <img src="https://img.youtube.com/vi/nCpBdVygCiw/hqdefault.jpg" alt="Ramadan Love — Afrobeat">
+              <img src="https://img.youtube.com/vi/nCpBdVygCiw/hqdefault.jpg" loading="lazy" decoding="async" alt="Ramadan Love — Afrobeat">
             </div>
             <div class="tile-play" aria-hidden="true"></div>
             <div class="tile-overlay">
@@ -2042,7 +2078,7 @@ body { top: 0 !important; }
 
           <article class="tile wc-card" data-cat="sound" data-youtube="16vIXhMTLzk">
             <div class="tile-media">
-              <img src="https://img.youtube.com/vi/16vIXhMTLzk/hqdefault.jpg" alt="Ramadan Love — Reggae Mix">
+              <img src="https://img.youtube.com/vi/16vIXhMTLzk/hqdefault.jpg" loading="lazy" decoding="async" alt="Ramadan Love — Reggae Mix">
             </div>
             <div class="tile-play" aria-hidden="true"></div>
             <div class="tile-overlay">
@@ -2053,7 +2089,7 @@ body { top: 0 !important; }
 
           <article class="tile wc-card" data-cat="sound" data-youtube="ZAa6zynl3oQ">
             <div class="tile-media">
-              <img src="https://img.youtube.com/vi/ZAa6zynl3oQ/maxresdefault.jpg" alt="LIFT — Steady Hands">
+              <img src="https://img.youtube.com/vi/ZAa6zynl3oQ/maxresdefault.jpg" loading="lazy" decoding="async" alt="LIFT — Steady Hands">
             </div>
             <div class="tile-play" aria-hidden="true"></div>
             <div class="tile-overlay">
@@ -2064,7 +2100,7 @@ body { top: 0 !important; }
 
           <article class="tile wc-card" data-cat="sound" data-youtube="SsA6kfoBCAU">
             <div class="tile-media">
-              <img src="https://img.youtube.com/vi/SsA6kfoBCAU/maxresdefault.jpg" alt="Measured">
+              <img src="https://img.youtube.com/vi/SsA6kfoBCAU/maxresdefault.jpg" loading="lazy" decoding="async" alt="Measured">
             </div>
             <div class="tile-play" aria-hidden="true"></div>
             <div class="tile-overlay">
@@ -2102,7 +2138,7 @@ body { top: 0 !important; }
       <div class="spotlight-track" id="spotlightTrack">
 
         <div class="spotlight-card">
-          <img class="spotlight-card-img" src="assets/HEADSHOTS/IMG_3819.PNG" alt="Chase Steele Greye">
+          <img class="spotlight-card-img" loading="lazy" decoding="async" src="assets/HEADSHOTS/IMG_3819.PNG" alt="Chase Steele Greye">
           <div class="spotlight-card-info">
             <div class="spotlight-card-cat">Brand Headshots</div>
             <div class="spotlight-card-name">Chase Steele Greye</div>
@@ -2111,7 +2147,7 @@ body { top: 0 !important; }
         </div>
 
         <div class="spotlight-card">
-          <img class="spotlight-card-img" src="assets/HEADSHOTS/IMG_3821.JPG" alt="Chase Steele Greye">
+          <img class="spotlight-card-img" loading="lazy" decoding="async" src="assets/HEADSHOTS/IMG_3821.JPG" alt="Chase Steele Greye">
           <div class="spotlight-card-info">
             <div class="spotlight-card-cat">Studio Portrait</div>
             <div class="spotlight-card-name">Chase Steele Greye</div>
@@ -2120,7 +2156,7 @@ body { top: 0 !important; }
         </div>
 
         <div class="spotlight-card">
-          <img class="spotlight-card-img" src="assets/HEADSHOTS/IMG_3824.PNG" alt="Chase Steele Greye">
+          <img class="spotlight-card-img" loading="lazy" decoding="async" src="assets/HEADSHOTS/IMG_3824.PNG" alt="Chase Steele Greye">
           <div class="spotlight-card-info">
             <div class="spotlight-card-cat">Editorial</div>
             <div class="spotlight-card-name">Chase Steele Greye</div>
@@ -2129,7 +2165,7 @@ body { top: 0 !important; }
         </div>
 
         <div class="spotlight-card">
-          <img class="spotlight-card-img" src="assets/HEADSHOTS/IMG_3818.PNG" alt="Chase Steele Greye">
+          <img class="spotlight-card-img" loading="lazy" decoding="async" src="assets/HEADSHOTS/IMG_3818.PNG" alt="Chase Steele Greye">
           <div class="spotlight-card-info">
             <div class="spotlight-card-cat">Color Portrait</div>
             <div class="spotlight-card-name">Chase Steele Greye</div>
@@ -2138,7 +2174,7 @@ body { top: 0 !important; }
         </div>
 
         <div class="spotlight-card">
-          <img class="spotlight-card-img" src="assets/HEADSHOTS/IMG_3823.PNG" alt="Chase Steele Greye">
+          <img class="spotlight-card-img" loading="lazy" decoding="async" src="assets/HEADSHOTS/IMG_3823.PNG" alt="Chase Steele Greye">
           <div class="spotlight-card-info">
             <div class="spotlight-card-cat">Close Portrait</div>
             <div class="spotlight-card-name">Chase Steele Greye</div>
@@ -2274,7 +2310,7 @@ body { top: 0 !important; }
 
     <div class="about">
 
-      <!-- Portrait — replace placeholder with <img src="assets/founder.jpg"> -->
+      <!-- Portrait — replace placeholder with <img src="assets/founder.jpg" alt="Dr. Niia Bishop, founder of The Age of Intellect"> -->
       <div class="portrait reveal" aria-hidden="true">
         <!-- <img src="assets/founder.jpg" alt="Bishop Niia, founder"> -->
         <span class="portrait-placeholder">— founder portrait —</span>
@@ -2684,6 +2720,12 @@ body { top: 0 !important; }
   <a href="#top" class="nav-mark" aria-label="Age of Intellect — back to top">
     Age <em>of</em> Intellect
   </a>
+  <nav class="footer-links" aria-label="More from Age of Intellect">
+    <a href="ecosystem.html">The Ecosystem</a>
+    <a href="course.html">AI in Education — the course</a>
+    <a href="resources.html">Resources</a>
+    <a href="dashboard.html">Client Login</a>
+  </nav>
   <div>© 2026 — Precision on High Demand · Tega Cay, SC</div>
 </footer>
 
@@ -2712,22 +2754,16 @@ body { top: 0 !important; }
       <button class="music-splash-play" id="splashPlayBtn" onclick="startSplashMusic()">&#9658;&nbsp; Play music</button>
     </div>
 
-    <div class="music-splash-player">
-      <iframe
-        id="splashSpotifyFrame"
-        src="https://open.spotify.com/embed/album/3CGev6tR6bTQakJfLLsTHV?utm_source=generator&theme=0"
-        width="100%" height="152" frameborder="0"
-        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-        loading="lazy"
-        title="Touché Pussycat, Vol. 1 — Spotify player"></iframe>
-    </div>
-
-    <a class="music-splash-now-playing"
-       href="https://open.spotify.com/album/3CGev6tR6bTQakJfLLsTHV"
-       target="_blank" rel="noopener">
-      <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
-      Open in Spotify ↗
-    </a>
+    <!-- Audio only, no visible player chrome — the cover/tracklist/controls
+         card read as clutter. The iframe stays in the DOM (0-size) purely
+         so startSplashMusic() has something to point at; the floating
+         pill (shown after Enter) is the only visible "now playing" cue. -->
+    <iframe
+      id="splashSpotifyFrame"
+      class="music-splash-audio"
+      src="https://open.spotify.com/embed/album/3CGev6tR6bTQakJfLLsTHV?utm_source=generator&theme=0"
+      allow="autoplay; encrypted-media"
+      title="Touché Pussycat, Vol. 1"></iframe>
 
   </div>
 </div>
@@ -3118,5 +3154,6 @@ function setLang(lang, btn) {
 </script>
 <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
+<script data-goatcounter="https://ageofintellect.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>

@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /dashboard.html
+Disallow: /NSM/
+
+Sitemap: https://ageofintellect.com/sitemap.xml
