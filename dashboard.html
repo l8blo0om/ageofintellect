@@ -518,6 +518,26 @@ body {
   color: var(--ink-soft);
 }
 
+/* ── GLOW ACCENTS ── */
+.btn-glow {
+  background: #0a0a0a; color: #fff;
+  border: none; padding: 15px 28px; cursor: pointer;
+  box-shadow: 0 0 0 1.5px var(--gold), 0 0 22px rgba(184,149,74,0.3);
+  animation: breathe 3s ease-in-out infinite;
+}
+.btn-glow:hover { background: var(--gold); color: #0a0a0a; }
+@keyframes breathe {
+  0%,100% { box-shadow: 0 0 0 1.5px var(--gold), 0 0 18px rgba(184,149,74,0.25); }
+  50%     { box-shadow: 0 0 0 1.5px var(--gold), 0 0 32px rgba(184,149,74,0.5); }
+}
+
+.glow-line {
+  border-bottom: 2px solid transparent;
+  border-image: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold)) 1;
+}
+
+.accent { color: var(--gold); }
+
 /* ── MOBILE ── */
 @media (max-width: 900px) {
   .sidebar { transform: translateX(-100%); transition: transform 0.3s; }
@@ -546,7 +566,7 @@ body {
   <div class="login-box">
     <div class="login-logo">AI</div>
     <div class="login-brand">The Age of Intellect · Client Portal</div>
-    <div class="login-title">Welcome back.</div>
+    <div class="login-title accent">Welcome back.</div>
     <form onsubmit="doLogin(event)">
       <div class="login-field">
         <label class="login-label">Email</label>
@@ -556,7 +576,7 @@ body {
         <label class="login-label">Access Code</label>
         <input class="login-input" type="password" id="loginPass" placeholder="••••••" required>
       </div>
-      <button type="submit" class="login-btn">Enter Dashboard</button>
+      <button type="submit" class="login-btn btn-glow">Enter Dashboard</button>
       <div class="login-error" id="loginError">Invalid credentials. Try again.</div>
     </form>
     <div class="login-hint">Demo: any email · code: <strong style="color:rgba(255,255,255,0.4)">1936</strong></div>
@@ -617,7 +637,7 @@ body {
 
   <!-- MAIN -->
   <div class="main">
-    <div class="topbar">
+    <div class="topbar glow-line">
       <div style="display:flex;align-items:center;gap:16px;">
         <button class="mobile-menu-btn" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
         <div class="topbar-title" id="panelTitle">Dashboard</div>

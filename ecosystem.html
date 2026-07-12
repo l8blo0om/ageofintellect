@@ -305,6 +305,25 @@
     .gate .g{display:none;}
     section{padding:11vh 7vw;}
   }
+
+  /* glowing outlined button that breathes */
+  .btn-glow{
+    background:#0a0a0a;color:#fff;border:none;padding:15px 28px;cursor:pointer;
+    box-shadow:0 0 0 1.5px var(--gold), 0 0 22px rgba(182,126,30,0.3);
+    animation:breathe 3s ease-in-out infinite;
+  }
+  .btn-glow:hover{background:var(--gold);color:#0a0a0a}
+  @keyframes breathe{
+    0%,100%{box-shadow:0 0 0 1.5px var(--gold), 0 0 18px rgba(182,126,30,0.25)}
+    50%   {box-shadow:0 0 0 1.5px var(--gold), 0 0 32px rgba(182,126,30,0.5)}
+  }
+
+  /* glowing hairline (like the header border) */
+  .glow-line{border-bottom:2px solid transparent;
+    border-image:linear-gradient(90deg,var(--gold),var(--gold-b),var(--gold)) 1}
+
+  /* accent text (eyebrows, highlights) */
+  .accent{color:var(--gold)}
 </style>
 </head>
 <body>
@@ -317,7 +336,7 @@
     <img class="splash-logo" src="ecosystem-logo.png" alt="The Ecosystem">
     <p class="splash-tag">Before you begin — choose the sound in the room.</p>
     <div class="splash-choices">
-      <button class="splash-btn" onclick="enterWith('anthem')">▶ This Year's Gonna Be Different</button>
+      <button class="splash-btn btn-glow" onclick="enterWith('anthem')">▶ This Year's Gonna Be Different</button>
       <button class="splash-btn" onclick="enterWith('cup')">▶ The Cup, Spoken</button>
       <button class="splash-btn quiet" onclick="enterWith(null)">Enter in silence</button>
     </div>
@@ -343,7 +362,7 @@
 <!-- WHAT THIS IS -->
 <section class="fade">
   <div class="label">What This Is</div>
-  <div class="rule" style="margin-left:0"></div>
+  <div class="rule glow-line" style="margin-left:0"></div>
   <h2>An AI interface.<br>With a <em>belief system</em> built in.</h2>
   <p class="lead">Not a philosophy next to a piece of software. One object. Every screen a child
   touches carries the belief system inside it — how it talks to them, what it notices and never
@@ -686,7 +705,7 @@
       <h3>What clears it</h3>
       <ul>
         <li><strong>Clear</strong> — the truth said gently, a wrong made right</li>
-        <li><strong>Warm</strong> — attention freely given, presence that steadies</li>
+        <li><strong class="accent">Warm</strong> — attention freely given, presence that steadies</li>
         <li><strong>Held</strong> — care that stays warm without ever burning</li>
       </ul>
     </div>

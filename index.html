@@ -1735,6 +1735,60 @@ body { top: 0 !important; }
   text-transform: uppercase;
   color: rgba(240,232,216,0.7);
 }
+
+/* ============================================================ */
+/* ===== GLOW ACCENTS (hue-synced) ===========================  */
+/* Same living-gold formula as the display em / hero-title em /  */
+/* music-pill-dot above, just pushed to the brighter 90%/60%      */
+/* saturation-lightness the original snippet called for. Each     */
+/* rule carries its own huecycle animation so it ticks in sync    */
+/* with the rest of the page instead of sitting static.           */
+/* ============================================================ */
+.btn-glow {
+  background: #0a0a0a;
+  color: #fff;
+  border: none;
+  padding: 15px 28px;
+  cursor: pointer;
+  box-shadow:
+    0 0 0 1.5px hsl(calc(34 + (var(--hue) * 0.06)) 90% 60%),
+    0 0 22px hsl(calc(34 + (var(--hue) * 0.06)) 90% 60% / .3);
+  animation: breathe 3s ease-in-out infinite, huecycle 22s linear infinite;
+}
+.btn-glow:hover {
+  background: hsl(calc(34 + (var(--hue) * 0.06)) 90% 60%);
+  color: #0a0a0a;
+}
+@keyframes breathe {
+  0%, 100% {
+    box-shadow:
+      0 0 0 1.5px hsl(calc(34 + (var(--hue) * 0.06)) 90% 60%),
+      0 0 18px hsl(calc(34 + (var(--hue) * 0.06)) 90% 60% / .25);
+  }
+  50% {
+    box-shadow:
+      0 0 0 1.5px hsl(calc(34 + (var(--hue) * 0.06)) 90% 60%),
+      0 0 32px hsl(calc(34 + (var(--hue) * 0.06)) 90% 60% / .5);
+  }
+}
+
+/* glowing hairline (like the header border) — two-tone gold shimmer,
+   +15deg second stop keeps it inside the warm band instead of the
+   original snippet's +60deg swing into unrelated hues */
+.glow-line {
+  border-bottom: 2px solid transparent;
+  border-image: linear-gradient(90deg,
+    hsl(calc(34 + (var(--hue) * 0.06)) 90% 60%),
+    hsl(calc(34 + (var(--hue) * 0.06) + 15) 90% 60%),
+    hsl(calc(34 + (var(--hue) * 0.06)) 90% 60%)) 1;
+  animation: huecycle 22s linear infinite;
+}
+
+/* accent text (eyebrows, highlights) */
+.accent {
+  color: hsl(calc(34 + (var(--hue) * 0.06)) 90% 60%) !important;
+  animation: huecycle 22s linear infinite;
+}
 </style>
 </head>
 <body>
@@ -1825,7 +1879,7 @@ body { top: 0 !important; }
         </p>
 
         <div class="hero-ctas">
-          <a href="#contact" class="btn btn-arrow">Start a project</a>
+          <a href="#contact" class="btn btn-arrow btn-glow">Start a project</a>
           <a href="#work" class="btn btn-ghost btn-arrow">See selected work</a>
         </div>
       </div>
@@ -1847,7 +1901,7 @@ body { top: 0 !important; }
 <section class="section section-rule" id="capabilities">
   <div class="container">
 
-    <div class="sec-head reveal">
+    <div class="sec-head reveal glow-line">
       <p class="eyebrow">— Capabilities — 001</p>
       <h2 class="display">Four disciplines, <em>one</em> studio.</h2>
       <p>We work end-to-end across film, sound, identity, and campaigns —
@@ -1989,7 +2043,7 @@ body { top: 0 !important; }
   <div class="container">
 
     <div class="sec-head reveal">
-      <p class="eyebrow">— Selected Work — 003</p>
+      <p class="eyebrow accent">— Selected Work — 003</p>
       <h2 class="display">Work that <em>solved</em> something.</h2>
       <p>Every project here started with a real problem — a brand no one was noticing,
          a song that needed a visual, a business that looked smaller than it was.

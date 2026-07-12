@@ -62,6 +62,7 @@
   --white: #ffffff;
   --gold: #C9A84C;
   --gold-dim: #8a6e2f;
+  --gold-light: #DCC68B;
   --slate: #1a2535;
   --ink: #1c1c1c;
   --muted: #5a5a5a;
@@ -849,6 +850,31 @@ footer {
   letter-spacing: 0.08em;
 }
 
+/* ── GLOW EFFECTS ── */
+.btn-glow {
+  background: var(--black);
+  color: var(--white);
+  border: none;
+  padding: 15px 28px;
+  cursor: pointer;
+  box-shadow: 0 0 0 1.5px var(--gold), 0 0 22px rgba(201,168,76,0.3);
+  animation: breathe 3s ease-in-out infinite;
+}
+
+.btn-glow:hover { background: var(--gold); color: var(--black); }
+
+@keyframes breathe {
+  0%, 100% { box-shadow: 0 0 0 1.5px var(--gold), 0 0 18px rgba(201,168,76,0.25); }
+  50%      { box-shadow: 0 0 0 1.5px var(--gold), 0 0 32px rgba(201,168,76,0.5); }
+}
+
+.glow-line {
+  border-bottom: 2px solid transparent;
+  border-image: linear-gradient(90deg, var(--gold), var(--gold-light), var(--gold)) 1;
+}
+
+.accent { color: var(--gold); }
+
 /* ── RESPONSIVE ── */
 @media (max-width: 900px) {
   nav { padding: 16px 24px; }
@@ -886,7 +912,7 @@ footer {
 <section class="hero" id="top">
   <div class="hero-eyebrow">
     <span class="eyebrow-tag">Professional Development · Self-Paced</span>
-    <div class="eyebrow-divider"></div>
+    <div class="eyebrow-divider glow-line"></div>
     <span class="eyebrow-tag">Age of Intellect · 2026</span>
   </div>
 
@@ -897,7 +923,7 @@ footer {
     <h1>Best Practices &amp; Applications<br>of AI in <em>Education.</em></h1>
     <p class="hero-sub">Before you learn how to use AI in the classroom, there's a harder question to answer: what are you actually teaching — and does any of it still need to be taught by a human?</p>
     <div class="hero-actions">
-      <a href="#enroll" class="btn-primary">Enroll Now</a>
+      <a href="#enroll" class="btn-primary btn-glow">Enroll Now</a>
       <a href="#modules" class="btn-ghost">See the curriculum →</a>
     </div>
   </div>
@@ -1023,7 +1049,7 @@ footer {
         <span class="step-num">01</span>
         <div class="step-content">
           <h4>Watch the module video</h4>
-          <p>Short, direct, no filler. Dr. B teaches the concept and frames the exercise.</p>
+          <p>Short, direct, no filler. <span class="accent">Dr. B</span> teaches the concept and frames the exercise.</p>
         </div>
       </div>
       <div class="method-step">
