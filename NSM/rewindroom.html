@@ -237,6 +237,75 @@
   }
   .milestone-bottom input[type=date] { color: var(--gray); }
 
+  /* ── VIDEO BOARD (Progress Report) ── */
+  .video-card {
+    background: var(--white); border: 1px solid var(--line); border-radius: 12px;
+    padding: 18px 20px; margin-bottom: 16px;
+    border-left: 5px solid var(--rag-red);
+  }
+  .video-card[data-state="in_progress"] { border-left-color: var(--rag-yellow); }
+  .video-card[data-state="complete"] { border-left-color: var(--rag-green); }
+  .video-head {
+    display: grid; grid-template-columns: 1fr auto auto; gap: 14px; align-items: center;
+  }
+  @media (max-width: 640px) { .video-head { grid-template-columns: 1fr; } }
+  .video-title-input {
+    font-family: 'Playfair Display', serif; font-weight: 900; font-size: 19px; color: var(--navy);
+    border: 1px solid transparent; border-radius: 6px; padding: 4px 8px; width: 100%; background: transparent;
+  }
+  .video-title-input:hover, .video-title-input:focus { border-color: var(--line); background: var(--offwhite); outline: none; }
+  .video-pct {
+    font-family: 'Playfair Display', serif; font-weight: 900; font-size: 20px; color: var(--navy);
+    min-width: 54px; text-align: right;
+  }
+  .video-progress { height: 8px; background: var(--line); border-radius: 20px; margin: 12px 0 14px; overflow: hidden; }
+  .video-progress-fill { height: 100%; border-radius: 20px; transition: width .25s ease; }
+  .video-progress-fill[data-state="not_started"] { background: var(--rag-red); }
+  .video-progress-fill[data-state="in_progress"] { background: var(--rag-yellow); }
+  .video-progress-fill[data-state="complete"] { background: var(--rag-green); }
+
+  .checklist { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px 16px; margin-bottom: 14px; }
+  @media (max-width: 640px) { .checklist { grid-template-columns: 1fr 1fr; } }
+  .check-item { display: flex; align-items: center; gap: 8px; font-size: 13.5px; color: var(--navy); cursor: pointer; }
+  .check-item input { width: 16px; height: 16px; accent-color: var(--rag-green); cursor: pointer; flex: none; }
+  .check-item.done span { color: var(--gray); text-decoration: line-through; }
+
+  .video-meta { display: grid; grid-template-columns: 1fr 150px; gap: 10px; margin-bottom: 14px; }
+  @media (max-width: 640px) { .video-meta { grid-template-columns: 1fr; } }
+  .video-meta input {
+    border: 1px solid var(--line); border-radius: 6px; padding: 7px 10px;
+    font-family: inherit; font-size: 13px; color: var(--navy); width: 100%;
+  }
+  .video-meta input[type=date] { color: var(--gray); }
+
+  .artifacts { border-top: 1px dashed var(--line); padding-top: 12px; }
+  .artifacts-label {
+    font-size: 11px; letter-spacing: 1px; text-transform: uppercase; color: var(--gray);
+    font-weight: 700; margin-bottom: 8px;
+  }
+  .artifact-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; font-size: 13px; }
+  .artifact-row a { color: var(--red); font-weight: 600; text-decoration: none; word-break: break-all; }
+  .artifact-row a:hover { text-decoration: underline; }
+  .artifact-row .a-label { color: var(--navy); font-weight: 600; flex: none; }
+  .artifact-add { display: grid; grid-template-columns: 140px 1fr auto; gap: 6px; margin-top: 8px; }
+  @media (max-width: 640px) { .artifact-add { grid-template-columns: 1fr; } }
+  .artifact-add input {
+    border: 1px solid var(--line); border-radius: 6px; padding: 6px 9px;
+    font-family: inherit; font-size: 12.5px; color: var(--navy); width: 100%;
+  }
+  .artifact-add button {
+    background: var(--navy); color: var(--white); border: none; border-radius: 6px;
+    padding: 6px 14px; font-size: 12.5px; font-weight: 700; cursor: pointer; font-family: inherit;
+  }
+  .video-delete {
+    background: none; border: none; color: var(--gray); font-size: 20px; cursor: pointer; line-height: 1; padding: 4px;
+  }
+  .video-delete:hover { color: var(--red); }
+  .handoff-note {
+    background: var(--offwhite); border-left: 3px solid var(--gold);
+    padding: 12px 16px; margin-bottom: 20px; font-size: 13px; color: var(--navy-light); border-radius: 0 8px 8px 0;
+  }
+
   /* ── TEAM NOTES ── */
   .subsection-title {
     font-family: 'Playfair Display', serif; font-size: 19px; color: var(--navy);
@@ -276,6 +345,27 @@
   .note-card .note-body { color: #3a4a5f; font-size: 14px; white-space: pre-wrap; }
 
   footer { text-align: center; padding: 30px; color: var(--gray); font-size: 12px; }
+
+/* glowing outlined button that breathes — rides the tracker's red→yellow→green
+   --hue cycle at a calmer 68% saturation, not neon 90%. */
+.btn-glow{
+  background:var(--navy);color:var(--white);border:none;padding:14px 26px;cursor:pointer;
+  border-radius:8px;font-weight:700;font-family:inherit;
+  box-shadow:0 0 0 1.5px hsl(var(--hue) 68% 46%), 0 0 20px hsl(var(--hue) 68% 46% / .28);
+  animation:breathe 3s ease-in-out infinite;
+}
+.btn-glow:hover{background:hsl(var(--hue) 68% 44%);color:var(--white)}
+@keyframes breathe{
+  0%,100%{box-shadow:0 0 0 1.5px hsl(var(--hue) 68% 46%), 0 0 16px hsl(var(--hue) 68% 46% / .22)}
+  50%   {box-shadow:0 0 0 1.5px hsl(var(--hue) 68% 48%), 0 0 30px hsl(var(--hue) 68% 46% / .45)}
+}
+
+/* glowing hairline — warm shimmer across the traffic-light band */
+.glow-line{border-bottom:2px solid transparent;
+  border-image:linear-gradient(90deg,transparent,hsl(var(--hue) 68% 46%),hsl(calc(var(--hue) + 40) 68% 46%),hsl(var(--hue) 68% 46%),transparent) 1}
+
+/* accent text (eyebrows, highlights) */
+.accent{color:hsl(var(--hue) 68% 44%)}
 </style>
 </head>
 <body>
@@ -409,25 +499,21 @@
   <!-- ================= PROGRESS REPORT ================= -->
   <section id="view-progress" class="view">
 
-    <div class="stat-row" id="milestone-stat-row"></div>
+    <div class="stat-row" id="video-stat-row"></div>
 
-    <div class="add-form milestone-form">
-      <div><label>Milestone</label><input type="text" id="new-milestone-title" placeholder="e.g. Vid 5"></div>
-      <div><label>Assigned to</label><input type="text" id="new-milestone-assignee" placeholder="Moisés"></div>
-      <div><label>Due Date</label><input type="date" id="new-milestone-due"></div>
-      <div>
-        <label>Status</label>
-        <select id="new-milestone-status" style="width:100%; border:1px solid var(--line); border-radius:6px; padding:8px 10px; font-family:inherit; font-size:13.5px;">
-          <option value="not_started">Not Started</option>
-          <option value="in_progress">In Progress</option>
-          <option value="complete">Complete</option>
-        </select>
-      </div>
-      <button class="btn" id="add-milestone-btn" style="margin-top:14px;">+ Add Milestone</button>
+    <div class="handoff-note">
+      <strong>Each video = 6 steps:</strong> Research → Part 1 → Part 2 → Part 3 → Part 4 → HTML. Check them off as they're done; the bar and color update automatically (red → yellow → green). <strong>Handing off assets</strong> (Magnific, Higgsfield, Pika exports): download them, drop them in the shared Google Drive episode folder, then paste the link under that video's <em>Artifacts</em> — this page holds links, not the files themselves.
     </div>
 
-    <div id="milestone-list"></div>
-    <div class="empty-state" id="milestone-empty-state" style="display:none;">No milestones yet. Add the first one above.</div>
+    <div class="add-form milestone-form">
+      <div><label>New video</label><input type="text" id="new-video-title" placeholder="e.g. Simone Biles"></div>
+      <div><label>Assigned to</label><input type="text" id="new-video-assignee" placeholder="Moisés"></div>
+      <div><label>Due Date</label><input type="date" id="new-video-due"></div>
+      <button class="btn" id="add-video-btn" style="margin-top:14px;">+ Add Video</button>
+    </div>
+
+    <div id="video-list"></div>
+    <div class="empty-state" id="video-empty-state" style="display:none;">No videos yet. Add the first one above.</div>
 
   </section>
 
@@ -650,133 +736,66 @@
 
   renderAll();
 
-  /* ── PROGRESS REPORT ── */
-  const MS_STORAGE_KEY = 'rewindRoomMilestones_v1';
-  const MS_STATUS_LABELS = { not_started: 'Not Started', in_progress: 'In Progress', complete: 'Complete' };
-  const MS_STATUS_ORDER = ['not_started', 'in_progress', 'complete'];
-  const MS_DEFAULTS = [
-    { title: 'Research', status: 'complete' },
-    { title: 'HTML (Production Site)', status: 'complete' },
-    { title: 'Free-Use Image Grab', status: 'complete' },
-    { title: 'Narrative Creation — Series Arc', status: 'complete' },
-    { title: 'Video 1', status: 'complete' },
-    { title: 'Video 2', status: 'complete' },
-    { title: 'Video 3', status: 'complete' },
-    { title: 'Video 4', status: 'complete' },
-    { title: 'Music', status: 'not_started', linkPlaceholder: 'Suno link (see Team Notes for all tracks)' },
-    { title: 'Finished Videos', status: 'not_started', linkPlaceholder: 'Paste finished video URL here' }
+  /* ── PROGRESS REPORT · VIDEO BOARD ── */
+  const VID_KEY = 'rewindRoomVideos_v1';
+  const VID_SEED_FLAG = 'rewindRoomVideosSeeded_v1';
+  const TASK_DEFS = [
+    ['research', 'Research'],
+    ['part1', 'Part 1'],
+    ['part2', 'Part 2'],
+    ['part3', 'Part 3'],
+    ['part4', 'Part 4'],
+    ['html', 'HTML']
   ];
 
-  // Superseded 2026-07-07: this was the wrong source (the Style Lock episode
-  // arc, not Adam's actual list). Kept only so the v2 migration below can
-  // find and remove any copies it already seeded, carrying over user edits.
-  const MS_ADAM_EPISODES_V1 = [
-    { title: 'Ep 01 — Jesse Owens (Berlin, 1936)', key: 'owens' },
-    { title: 'Ep 02 — Jackie Robinson (Ebbets Field, 1947)', key: 'robinson' },
-    { title: 'Ep 03 — Tommie Smith & John Carlos (Mexico City, 1968)', key: 'smith' },
-    { title: 'Ep 04 — Muhammad Ali (Kinshasa, 1974)', key: 'ali' },
-    { title: "Ep 05 — US Women's Soccer / Brandi Chastain (Rose Bowl, 1999)", key: 'chastain' },
-    { title: 'Ep 06 — Wilma Rudolph (Rome, 1960)', key: 'rudolph' },
-    { title: 'Ep 07 — Kathrine Switzer (Boston Marathon, 1967)', key: 'switzer' },
-    { title: 'Ep 08 — Billie Jean King vs. Bobby Riggs (Houston, 1973)', key: 'king' },
-    { title: 'Ep 09 — Miracle on Ice (Lake Placid, 1980)', key: 'miracle' },
-    { title: 'Ep 10 — Simone Biles (Tokyo, 2021)', key: 'biles' }
+  const VID_SEED = [
+    { title: 'Miracle on Ice', assignee: 'Moisés', due: '' },
+    { title: "US Women's Soccer / Brandi Chastain", assignee: '', due: '2026-07-14' },
+    { title: 'Simone Biles', assignee: '', due: '2026-07-21' }
   ];
 
-  // Correct source per Niia 2026-07-07: historic_us_sports_moments-2.xlsx
-  // ("Top 28 Historic US Sports Moments with Social Impact"), Moments sheet,
-  // in sheet order (chronological).
-  const MS_ADAM_EPISODES = [
-    { title: "Jim Thorpe's 1912 Olympic Pentathlon and Decathlon Sweep", key: 'thorpe' },
-    { title: 'Babe Didrikson 1932 Los Angeles Olympics', key: 'didrikson' },
-    { title: 'Jesse Owens 1936 Berlin Olympics Four Gold Medals', key: 'owens' },
-    { title: 'Jackie Robinson Breaks MLB Color Barrier', key: 'robinson' },
-    { title: "John Wooden's Integrity and UCLA Dynasty", key: 'wooden' },
-    { title: "Arnold Palmer's 1960 US Open Comeback", key: 'palmer' },
-    { title: "Wilma Rudolph's Three Gold Medals at 1960 Rome Olympics", key: 'rudolph' },
-    { title: 'Kathrine Switzer 1967 Boston Marathon', key: 'switzer' },
-    { title: 'Muhammad Ali Refuses Vietnam Draft', key: 'ali' },
-    { title: 'Tommie Smith and John Carlos Black Power Salute', key: 'smith' },
-    { title: "Roberto Clemente's Plane Crash", key: 'clemente' },
-    { title: 'Title IX Signed into Law', key: 'title ix' },
-    { title: 'Billie Jean King Battle of the Sexes', key: 'king' },
-    { title: "Hank Aaron's 715th Home Run", key: 'aaron' },
-    { title: 'Miracle on Ice 1980', key: 'miracle' },
-    { title: 'Kareem Abdul-Jabbar Breaks NBA All-Time Scoring Record', key: 'abdul-jabbar' },
-    { title: 'Magic Johnson 1991 HIV Announcement', key: 'magic' },
-    { title: "Jim Abbott's No-Hitter", key: 'abbott' },
-    { title: "Tiger Woods' 12-Stroke 1997 Masters Victory", key: 'woods' },
-    { title: "Michael Jordan's The Last Shot", key: 'jordan' },
-    { title: "Brandi Chastain's Winning Penalty in 1999 Women's World Cup Final", key: 'chastain', due: '2026-07-14' },
-    { title: "George W. Bush's First Pitch, 2001 World Series Game 3", key: 'bush' },
-    { title: 'Michael Phelps 2008 Beijing Olympics Eight Gold Medals', key: 'phelps' },
-    { title: "Pat Summitt's 1,000th Win", key: 'summitt' },
-    { title: "Simone Biles' 2016 Rio Four Golds and 2021 Tokyo Mental Health Stand", key: 'biles', due: '2026-07-21' },
-    { title: "Super Bowl LI: Patriots' 28-3 Comeback", key: 'patriots' },
-    { title: 'LeBron James Breaks NBA All-Time Scoring Record', key: 'lebron' },
-    { title: 'Oksana Masters Wins 20th Paralympic Medal', key: 'masters' }
-  ];
+  let videos = vidLoad();
 
-  let milestones = msLoad();
-
-  function msSeedAdamEpisodes() {
-    const FLAG = 'rewindRoomAdamListSeeded_v2';
-    if (localStorage.getItem(FLAG)) return false;
-
-    // Carry over any edits (assignee/status/link) from the old wrong list
-    // onto the matching new entry, then drop the old ones.
-    const carryOver = {};
-    MS_ADAM_EPISODES_V1.forEach(old => {
-      const existing = milestones.find(m => m.title === old.title);
-      if (existing) carryOver[old.key] = existing;
-    });
-    milestones = milestones.filter(m => !MS_ADAM_EPISODES_V1.some(old => old.title === m.title));
-
-    const existingTitles = new Set(milestones.map(m => m.title));
-    let added = false;
-    MS_ADAM_EPISODES.forEach(ep => {
-      if (existingTitles.has(ep.title)) return;
-      const prior = carryOver[ep.key];
-      const item = msSeedItem({
-        title: ep.title,
-        status: prior ? prior.status : 'not_started',
-        assignee: prior ? prior.assignee : ''
-      });
-      item.due = ep.due || (prior ? prior.due : '') || '';
-      item.link = prior ? prior.link : '';
-      milestones.push(item);
-      added = true;
-    });
-    localStorage.setItem(FLAG, '1');
-    return true;
-  }
-  if (msSeedAdamEpisodes()) msSave();
-
-  function msLoad() {
-    const raw = localStorage.getItem(MS_STORAGE_KEY);
-    if (raw === null) {
-      return MS_DEFAULTS.map(m => msSeedItem(m));
+  function vidLoad() {
+    const raw = localStorage.getItem(VID_KEY);
+    if (raw !== null) {
+      try { return JSON.parse(raw); } catch (e) { return []; }
     }
-    try { return JSON.parse(raw); } catch (e) { return []; }
+    if (!localStorage.getItem(VID_SEED_FLAG)) {
+      localStorage.setItem(VID_SEED_FLAG, '1');
+      return VID_SEED.map(vidNew);
+    }
+    return [];
   }
-  function msSeedItem(m) {
+  function vidNew(v) {
+    const tasks = {};
+    TASK_DEFS.forEach(([k]) => { tasks[k] = false; });
     return {
-      id: 'ms_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7),
-      title: m.title, status: m.status || 'not_started',
-      due: '', assignee: m.assignee || '', link: '', linkPlaceholder: m.linkPlaceholder || 'Link (optional)',
+      id: 'vid_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7),
+      title: v.title || 'Untitled video',
+      assignee: v.assignee || '',
+      due: v.due || '',
+      tasks: tasks,
+      artifacts: [],
       updated: Date.now()
     };
   }
-  function msSave() {
-    localStorage.setItem(MS_STORAGE_KEY, JSON.stringify(milestones));
+  function vidSave() { localStorage.setItem(VID_KEY, JSON.stringify(videos)); }
+
+  function vidDone(v) { return TASK_DEFS.reduce((n, [k]) => n + (v.tasks[k] ? 1 : 0), 0); }
+  function vidState(v) {
+    const d = vidDone(v);
+    if (d === 0) return 'not_started';
+    if (d === TASK_DEFS.length) return 'complete';
+    return 'in_progress';
   }
 
-  function msRenderStats() {
-    const row = document.getElementById('milestone-stat-row');
+  function vidRenderStats() {
+    const row = document.getElementById('video-stat-row');
     const counts = { not_started: 0, in_progress: 0, complete: 0 };
-    milestones.forEach(m => { counts[m.status] = (counts[m.status] || 0) + 1; });
+    videos.forEach(v => { counts[vidState(v)]++; });
     const cells = [
-      ['Total Milestones', milestones.length],
+      ['Videos', videos.length],
       ['Not Started', counts.not_started],
       ['In Progress', counts.in_progress],
       ['Complete', counts.complete]
@@ -787,85 +806,123 @@
     ).join('');
   }
 
-  function msRenderList() {
-    const listEl = document.getElementById('milestone-list');
-    const emptyEl = document.getElementById('milestone-empty-state');
-    if (milestones.length === 0) {
+  function vidRenderList() {
+    const listEl = document.getElementById('video-list');
+    const emptyEl = document.getElementById('video-empty-state');
+    if (videos.length === 0) {
       listEl.innerHTML = '';
       emptyEl.style.display = 'block';
       return;
     }
     emptyEl.style.display = 'none';
 
-    listEl.innerHTML = milestones.map(m => `
-      <div class="milestone-card" data-id="${m.id}">
-        <div class="milestone-top">
-          <input type="text" class="milestone-title-input" value="${escapeAttr(m.title)}">
-          <select class="status-select status-${m.status}">
-            ${MS_STATUS_ORDER.map(st => `<option value="${st}" ${st === m.status ? 'selected' : ''}>${MS_STATUS_LABELS[st]}</option>`).join('')}
-          </select>
-          <button class="del-btn" title="Delete milestone">&times;</button>
+    listEl.innerHTML = videos.map(v => {
+      const done = vidDone(v);
+      const total = TASK_DEFS.length;
+      const pct = Math.round((done / total) * 100);
+      const state = vidState(v);
+      const checks = TASK_DEFS.map(([k, label]) => `
+        <label class="check-item ${v.tasks[k] ? 'done' : ''}">
+          <input type="checkbox" data-task="${k}" ${v.tasks[k] ? 'checked' : ''}>
+          <span>${label}</span>
+        </label>`).join('');
+      const artifacts = (v.artifacts || []).map(a => `
+        <div class="artifact-row" data-aid="${a.id}">
+          <span class="a-label">${escapeHtml(a.label || 'Link')}:</span>
+          <a href="${escapeAttr(a.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(a.url)}</a>
+          <button class="video-delete a-del" title="Remove">&times;</button>
+        </div>`).join('');
+      return `
+      <div class="video-card" data-id="${v.id}" data-state="${state}">
+        <div class="video-head">
+          <input type="text" class="video-title-input" value="${escapeAttr(v.title)}">
+          <div class="video-pct">${pct}%</div>
+          <button class="video-delete v-del" title="Delete video">&times;</button>
         </div>
-        <div class="milestone-bottom">
-          <input type="date" class="due-input" value="${escapeAttr(m.due || '')}">
-          <input type="text" class="assignee-input" value="${escapeAttr(m.assignee || '')}" placeholder="Assigned to">
-          <input type="text" class="link-input" value="${escapeAttr(m.link || '')}" placeholder="${escapeAttr(m.linkPlaceholder || 'Link (optional)')}">
+        <div class="video-progress"><div class="video-progress-fill" data-state="${state}" style="width:${pct}%"></div></div>
+        <div class="checklist">${checks}</div>
+        <div class="video-meta">
+          <input type="text" class="v-assignee" value="${escapeAttr(v.assignee || '')}" placeholder="Assigned to">
+          <input type="date" class="v-due" value="${escapeAttr(v.due || '')}">
         </div>
-      </div>
-    `).join('');
+        <div class="artifacts">
+          <div class="artifacts-label">Artifacts &amp; handoff links (${(v.artifacts || []).length})</div>
+          <div class="artifact-list">${artifacts}</div>
+          <div class="artifact-add">
+            <input type="text" class="a-new-label" placeholder="Label (e.g. Magnific)">
+            <input type="text" class="a-new-url" placeholder="Paste Drive / Higgsfield / video URL">
+            <button class="a-add-btn">+ Add</button>
+          </div>
+        </div>
+      </div>`;
+    }).join('');
 
-    listEl.querySelectorAll('.milestone-card').forEach(card => {
+    listEl.querySelectorAll('.video-card').forEach(card => {
       const id = card.dataset.id;
-      card.querySelector('.milestone-title-input').addEventListener('change', e => msUpdate(id, { title: e.target.value }));
-      const sel = card.querySelector('.status-select');
-      sel.addEventListener('change', e => {
-        sel.className = 'status-select status-' + e.target.value;
-        msUpdate(id, { status: e.target.value });
+      card.querySelector('.video-title-input').addEventListener('change', e => vidUpdate(id, v => v.title = e.target.value));
+      card.querySelector('.v-assignee').addEventListener('change', e => vidUpdate(id, v => v.assignee = e.target.value));
+      card.querySelector('.v-due').addEventListener('change', e => vidUpdate(id, v => v.due = e.target.value));
+      card.querySelectorAll('.check-item input').forEach(cb => {
+        cb.addEventListener('change', e => {
+          vidUpdate(id, v => v.tasks[e.target.dataset.task] = e.target.checked);
+          vidRenderAll();
+        });
       });
-      card.querySelector('.due-input').addEventListener('change', e => msUpdate(id, { due: e.target.value }));
-      card.querySelector('.assignee-input').addEventListener('change', e => msUpdate(id, { assignee: e.target.value }));
-      card.querySelector('.link-input').addEventListener('change', e => msUpdate(id, { link: e.target.value }));
-      card.querySelector('.del-btn').addEventListener('click', () => {
-        milestones = milestones.filter(m => m.id !== id);
-        msSave();
-        msRenderAll();
+      card.querySelector('.v-del').addEventListener('click', () => {
+        if (!confirm('Delete this video and its checklist?')) return;
+        videos = videos.filter(v => v.id !== id);
+        vidSave();
+        vidRenderAll();
+      });
+      card.querySelector('.a-add-btn').addEventListener('click', () => {
+        const label = card.querySelector('.a-new-label').value.trim();
+        const url = card.querySelector('.a-new-url').value.trim();
+        if (!url) { alert('Paste a link to add an artifact.'); return; }
+        vidUpdate(id, v => {
+          v.artifacts = v.artifacts || [];
+          v.artifacts.push({ id: 'a_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6), label: label || 'Link', url: url });
+        });
+        vidRenderAll();
+      });
+      card.querySelectorAll('.a-del').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const aid = btn.closest('.artifact-row').dataset.aid;
+          vidUpdate(id, v => { v.artifacts = (v.artifacts || []).filter(a => a.id !== aid); });
+          vidRenderAll();
+        });
       });
     });
   }
 
-  function msUpdate(id, patch) {
-    const m = milestones.find(m => m.id === id);
-    if (!m) return;
-    Object.assign(m, patch, { updated: Date.now() });
-    msSave();
-    msRenderStats();
+  function vidUpdate(id, mutator) {
+    const v = videos.find(v => v.id === id);
+    if (!v) return;
+    mutator(v);
+    v.updated = Date.now();
+    vidSave();
+    vidRenderStats();
   }
 
-  function msRenderAll() {
-    msRenderStats();
-    msRenderList();
+  function vidRenderAll() {
+    vidRenderStats();
+    vidRenderList();
   }
 
-  document.getElementById('add-milestone-btn').addEventListener('click', () => {
-    const title = document.getElementById('new-milestone-title').value.trim();
-    const assignee = document.getElementById('new-milestone-assignee').value.trim();
-    const due = document.getElementById('new-milestone-due').value;
-    const status = document.getElementById('new-milestone-status').value;
-    if (!title) {
-      alert('Milestone name is required.');
-      return;
-    }
-    milestones.push(Object.assign(msSeedItem({ title, status, assignee }), { due }));
-    msSave();
-    document.getElementById('new-milestone-title').value = '';
-    document.getElementById('new-milestone-assignee').value = '';
-    document.getElementById('new-milestone-due').value = '';
-    document.getElementById('new-milestone-status').value = 'not_started';
-    msRenderAll();
+  document.getElementById('add-video-btn').addEventListener('click', () => {
+    const title = document.getElementById('new-video-title').value.trim();
+    const assignee = document.getElementById('new-video-assignee').value.trim();
+    const due = document.getElementById('new-video-due').value;
+    if (!title) { alert('Give the video a name.'); return; }
+    videos.push(vidNew({ title, assignee, due }));
+    vidSave();
+    document.getElementById('new-video-title').value = '';
+    document.getElementById('new-video-assignee').value = '';
+    document.getElementById('new-video-due').value = '';
+    vidRenderAll();
   });
 
-  msSave();
-  msRenderAll();
+  vidSave();
+  vidRenderAll();
 
   /* ── MUSIC BOARD ── */
   const MUSIC_STORAGE_KEY = 'rewindRoomMusic_v1';
