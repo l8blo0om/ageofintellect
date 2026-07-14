@@ -1137,6 +1137,152 @@ body { top: 0 !important; }
 }
 
 /* ============================================================ */
+/* ===== PRICING TIERS (3-tier collapsed model) =============== */
+/* ============================================================ */
+.pricing-tiers {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(24px, 3vw, 48px);
+  margin-top: 56px;
+}
+
+.tier {
+  border: 1px solid var(--rule);
+  padding: 32px;
+  background: var(--paper);
+  transition: transform 240ms var(--ease), box-shadow 240ms var(--ease), border-color 240ms var(--ease);
+}
+.tier:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--gold);
+}
+
+.tier-head {
+  margin-bottom: 24px;
+  border-bottom: 2px solid var(--gold);
+  padding-bottom: 18px;
+}
+
+.tier-label {
+  font-family: 'Fraunces', serif;
+  font-size: 28px;
+  font-weight: 400;
+  font-variation-settings: "opsz" 48;
+  color: var(--ink);
+  margin: 0 0 8px;
+  line-height: 1.1;
+}
+
+.tier-tagline {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+  margin: 0;
+}
+
+.tier-price {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(32px, 4vw, 48px);
+  font-weight: 400;
+  font-variation-settings: "opsz" 48;
+  color: var(--ink);
+  margin: 24px 0;
+  line-height: 1;
+}
+
+.tier-price strong {
+  font-weight: 700;
+  color: var(--gold);
+}
+
+.tier-body {
+  display: grid;
+  gap: 20px;
+}
+
+.tier-body > p {
+  color: var(--text-soft);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.tier-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.tier-list li {
+  font-size: 14px;
+  color: var(--text-soft);
+  padding-left: 20px;
+  position: relative;
+}
+
+.tier-list li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: var(--gold);
+  font-weight: 700;
+}
+
+.tier-body .btn {
+  margin-top: 12px;
+  width: 100%;
+  justify-content: center;
+}
+
+.pricing-note {
+  margin-top: 56px;
+  padding: 32px;
+  background: rgba(184, 149, 74, 0.04);
+  border: 1px solid rgba(168, 120, 42, 0.2);
+}
+
+.pricing-note .eyebrow {
+  margin-bottom: 12px;
+}
+
+.pricing-note p {
+  font-size: 15px;
+  color: var(--text-soft);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.pricing-note a {
+  color: var(--gold);
+  border-bottom: 1px solid var(--gold);
+  transition: color 240ms var(--ease);
+}
+
+.pricing-note a:hover {
+  color: var(--gold-bright);
+  border-bottom-color: var(--gold-bright);
+}
+
+@media (max-width: 1080px) {
+  .pricing-tiers {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 680px) {
+  .pricing-tiers {
+    grid-template-columns: 1fr;
+  }
+  .tier {
+    padding: 24px;
+  }
+}
+
+/* ============================================================ */
 /* ===== CONTACT (dark) ======================================  */
 /* ============================================================ */
 .contact {
@@ -1461,61 +1607,103 @@ body { top: 0 !important; }
 /* ============================================================ */
 /* ===== TOOL CATEGORIES ======================================= */
 /* ============================================================ */
-.tools-cats {
-  display: flex;
-  flex-direction: column;
-  gap: 32px;
+/* ============================================================ */
+/* ===== STACK STATIONS ======================================== */
+/* Five interactive instrument categories. Each card shows     */
+/* the thesis behind why we pick different tools for          */
+/* different kinds of work.                                   */
+/* ============================================================ */
+.stack-stations {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 48px;
   margin-top: 48px;
 }
-.tools-cat {
-  border-top: 1px solid rgba(168,120,42,0.2);
-  padding-top: 24px;
+
+.station {
+  border-left: 3px solid var(--gold);
+  padding-left: 28px;
+  position: relative;
 }
-.tools-cat-head {
+
+.station-head {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  margin-bottom: 14px;
   gap: 16px;
+  margin-bottom: 18px;
 }
-.tools-cat-label {
+
+.station-label {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 600;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--gold);
+  color: var(--gold-bright);
 }
-.tools-cat-count {
+
+.station-count {
   font-family: 'JetBrains Mono', monospace;
   font-size: 10px;
   letter-spacing: 0.08em;
-  color: rgba(240,232,216,0.3);
-}
-.tools-chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-.tchip {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 0.06em;
-  padding: 5px 12px;
-  border-radius: 2px;
-  border: 1px solid rgba(240,232,216,0.1);
-  color: rgba(240,232,216,0.45);
-  background: rgba(240,232,216,0.04);
+  color: rgba(240,232,216,0.4);
   white-space: nowrap;
-  transition: border-color 200ms, color 200ms;
 }
-.tchip:hover { border-color: rgba(168,120,42,0.4); color: rgba(240,232,216,0.75); }
-.tchip.hi {
-  border-color: rgba(168,120,42,0.35);
-  color: rgba(240,232,216,0.75);
-  background: rgba(168,120,42,0.08);
+
+.station-body {
+  display: grid;
+  gap: 20px;
 }
-.tchip.hi:hover { border-color: var(--gold); color: var(--gold-bright); }
+
+.station-thesis {
+  font-family: 'Manrope', sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: rgba(240,232,216,0.85);
+  max-width: 72ch;
+  font-style: italic;
+}
+
+.station-examples {
+  display: grid;
+  gap: 14px;
+  margin-top: 12px;
+}
+
+.example {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 12px;
+  align-items: baseline;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(168,120,42,0.15);
+}
+
+.example-tool {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.example-use {
+  font-family: 'Manrope', sans-serif;
+  font-size: 14px;
+  color: rgba(240,232,216,0.7);
+}
+
+@media (max-width: 880px) {
+  .example {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+  .station {
+    padding-left: 18px;
+  }
+}
 
 /* ============================================================ */
 /* ===== MODEL TICKER ========================================== */
@@ -1903,9 +2091,9 @@ body { top: 0 !important; }
 
     <div class="sec-head reveal glow-line">
       <p class="eyebrow">— Capabilities — 001</p>
-      <h2 class="display">Four disciplines, <em>one</em> studio.</h2>
-      <p>We work end-to-end across film, sound, identity, and campaigns —
-         so the work stays coherent from the first beat to the last post.</p>
+      <h2 class="display">One idea. <em>Five</em> ways out.</h2>
+      <p>We work end-to-end across film, sound, identity, campaigns, and digital —
+         so the work stays coherent from the first beat to the last post, across every medium.</p>
     </div>
 
     <div class="caps reveal">
@@ -2257,97 +2445,130 @@ body { top: 0 !important; }
 
     <div class="sec-head reveal">
       <p class="eyebrow">— The Stack — 004</p>
-      <h2 class="display">Every tool that <em>matters.</em></h2>
-      <p>The instruments matter less than the hand that uses them.
-         Here's what's in ours.</p>
+      <h2 class="display">The instruments matter <em>less</em> than the hand.</h2>
+      <p>We don't hire tools. We know which blade to use.</p>
     </div>
 
-    <!-- Primary Platforms -->
-    <div class="stack-grid reveal">
-      <div class="logo-card">Higgsfield.ai</div>
-      <div class="logo-card">Freepik</div>
-      <div class="logo-card">Runway</div>
-      <div class="logo-card">ElevenLabs</div>
-      <div class="logo-card">Suno</div>
-      <div class="logo-card">Claude</div>
-      <div class="logo-card">ChatGPT</div>
-      <div class="logo-card">GarageBand</div>
-      <div class="logo-card">CapCut</div>
-      <div class="logo-card">Pika</div>
-      <div class="logo-card">Magenta</div>
-      <div class="logo-card">Topaz</div>
-    </div>
+    <!-- Five Instrument Stations -->
+    <div class="stack-stations reveal">
 
-    <!-- Categorized tool chips -->
-    <div class="tools-cats reveal">
-
-      <div class="tools-cat">
-        <div class="tools-cat-head">
-          <span class="tools-cat-label">Image &amp; Visual Tools</span>
-          <span class="tools-cat-count">18 tools</span>
+      <div class="station">
+        <div class="station-head">
+          <span class="station-label">IMAGE</span>
+          <span class="station-count">18 tools · 40 models</span>
         </div>
-        <div class="tools-chips">
-          <span class="tchip hi">Angles 2.0</span><span class="tchip hi">Soul Cinema</span><span class="tchip hi">Higgsfield Popcorn</span><span class="tchip">Shots</span><span class="tchip">Zooms</span><span class="tchip">Expand Image</span><span class="tchip">Color Grading</span><span class="tchip">Face Swap</span><span class="tchip">Character Swap</span><span class="tchip">Image Upscale</span><span class="tchip">Relight</span><span class="tchip">Inpaint</span><span class="tchip">Skin Enhancer</span><span class="tchip">Fashion Factory</span><span class="tchip">Moodboard</span><span class="tchip">AI Stylist</span><span class="tchip">Cinematic Cameras</span><span class="tchip">Topaz</span>
+        <div class="station-body">
+          <p class="station-thesis">We shift image generation based on the shot: portraiture pulls different models than landscape work.</p>
+          <div class="station-examples">
+            <div class="example">
+              <span class="example-tool">FLUX.1 Kontext Max</span>
+              <span class="example-use">→ Photorealism, editorial control</span>
+            </div>
+            <div class="example">
+              <span class="example-tool">Soul Cinema 2.0</span>
+              <span class="example-use">→ Stylized character work, consistent identity</span>
+            </div>
+            <div class="example">
+              <span class="example-tool">Topaz Upscale</span>
+              <span class="example-use">→ Final resolution, texture preservation</span>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div class="tools-cat">
-        <div class="tools-cat-head">
-          <span class="tools-cat-label">Image Models</span>
-          <span class="tools-cat-count">40 models</span>
+      <div class="station">
+        <div class="station-head">
+          <span class="station-label">MOTION</span>
+          <span class="station-count">14 tools · 38 models</span>
         </div>
-        <div class="tools-chips">
-          <span class="tchip hi">Higgsfield Soul 2.0</span><span class="tchip hi">Mystic 2.5</span><span class="tchip hi">FLUX.1 Kontext Pro</span><span class="tchip hi">FLUX.1 Kontext Max</span><span class="tchip hi">Google Imagen 4 Ultra</span><span class="tchip hi">Seedream 5 Lite</span><span class="tchip">GPT Image 2</span><span class="tchip">GPT Image 1.5</span><span class="tchip">Google Imagen 4</span><span class="tchip">Google Imagen 4 Fast</span><span class="tchip">Google Imagen 3</span><span class="tchip">Seedream 4.5</span><span class="tchip">Seedream 4</span><span class="tchip">FLUX.1</span><span class="tchip">FLUX.2 Pro</span><span class="tchip">FLUX.2 Max</span><span class="tchip">FLUX.2 Flex</span><span class="tchip">Mystic 2.5 Fluid</span><span class="tchip">Mystic 1.0</span><span class="tchip">Recraft V4</span><span class="tchip">Recraft V4 Pro</span><span class="tchip">Grok Imagine</span><span class="tchip">Qwen</span><span class="tchip">Z-Image</span>
-        </div>
-      </div>
-
-      <div class="tools-cat">
-        <div class="tools-cat-head">
-          <span class="tools-cat-label">Video Tools</span>
-          <span class="tools-cat-count">14 tools</span>
-        </div>
-        <div class="tools-chips">
-          <span class="tchip hi">Cinema Studio 3.5</span><span class="tchip hi">Lipsync Studio</span><span class="tchip hi">Higgsfield Animate</span><span class="tchip">Create Video</span><span class="tchip">Mixed Media</span><span class="tchip">Edit Video</span><span class="tchip">Click to Ad</span><span class="tchip">URL to Ad</span><span class="tchip">Draw to Video</span><span class="tchip">Sketch to Video</span><span class="tchip">UGC Factory</span><span class="tchip">Video Upscale</span><span class="tchip">Vibe Motion</span><span class="tchip">Recast Studio</span>
-        </div>
-      </div>
-
-      <div class="tools-cat">
-        <div class="tools-cat-head">
-          <span class="tools-cat-label">Video Models</span>
-          <span class="tools-cat-count">38 models</span>
-        </div>
-        <div class="tools-chips">
-          <span class="tchip hi">Kling 3.0</span><span class="tchip hi">Kling 3.0 Motion Control</span><span class="tchip hi">Google Veo 3.1</span><span class="tchip hi">Sora 2 Pro</span><span class="tchip hi">Seedance 2.0</span><span class="tchip hi">Higgsfield DOP</span><span class="tchip hi">Runway Gen-4.5</span><span class="tchip">Kling 3.0 Omni</span><span class="tchip">Kling 2.6</span><span class="tchip">Kling 2.6 Motion Control</span><span class="tchip">Kling 2.5</span><span class="tchip">Kling 2.1 Master</span><span class="tchip">Kling O1</span><span class="tchip">Seedance 2.0 Fast</span><span class="tchip">Seedance 1.5 Pro</span><span class="tchip">Seedance 1.0 Pro</span><span class="tchip">Google Veo 3.1 Fast</span><span class="tchip">Google Veo 3.1 Lite</span><span class="tchip">Runway Gen 4</span><span class="tchip">MiniMax Hailuo 2.3</span><span class="tchip">MiniMax Hailuo 2.3 Fast</span><span class="tchip">MiniMax Live Illustrations</span><span class="tchip">Wan 2.7</span><span class="tchip">Wan 2.6</span><span class="tchip">Wan 2.5</span><span class="tchip">PixVerse 6</span><span class="tchip">PixVerse 5.5</span><span class="tchip">Veed Fabric 1.0</span><span class="tchip">Omni Human 1.5</span><span class="tchip">LTX 2 Pro</span><span class="tchip">LTX 2 Fast</span><span class="tchip">Pika</span><span class="tchip">Grok</span>
+        <div class="station-body">
+          <p class="station-thesis">Shot type determines everything. A 15-second viral clip uses different tools than a 3-minute film.</p>
+          <div class="station-examples">
+            <div class="example">
+              <span class="example-tool">Kling 3.0 Motion Control</span>
+              <span class="example-use">→ Precise keyframe-based continuity</span>
+            </div>
+            <div class="example">
+              <span class="example-tool">Google Veo 3.1</span>
+              <span class="example-use">→ Cinematic quality, long-form narrative</span>
+            </div>
+            <div class="example">
+              <span class="example-tool">Runway Gen-4.5</span>
+              <span class="example-use">→ Editorial iteration, rapid revision cycles</span>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div class="tools-cat">
-        <div class="tools-cat-head">
-          <span class="tools-cat-label">Audio, Voice &amp; Music</span>
-          <span class="tools-cat-count">10 tools</span>
+      <div class="station">
+        <div class="station-head">
+          <span class="station-label">SOUND</span>
+          <span class="station-count">10 tools · 8 generation systems</span>
         </div>
-        <div class="tools-chips">
-          <span class="tchip hi">Eleven v3</span><span class="tchip hi">Suno</span><span class="tchip hi">GarageBand</span><span class="tchip hi">Magenta</span><span class="tchip">Minimax Speech 2.8 HD</span><span class="tchip">Seed Speech</span><span class="tchip">VibeVoice</span><span class="tchip">Voiceover</span><span class="tchip">Change Voice</span><span class="tchip">Translation</span>
+        <div class="station-body">
+          <p class="station-thesis">We build records, not loops. Full production requires different instruments than a beat starter.</p>
+          <div class="station-examples">
+            <div class="example">
+              <span class="example-tool">Suno</span>
+              <span class="example-use">→ Full songs with vocals, end-to-end composition</span>
+            </div>
+            <div class="example">
+              <span class="example-tool">Eleven v3</span>
+              <span class="example-use">→ Voice synthesis, natural phrasing, multilingual</span>
+            </div>
+            <div class="example">
+              <span class="example-tool">GarageBand + Magenta</span>
+              <span class="example-use">→ Mastering, production refinement, mixing</span>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div class="tools-cat">
-        <div class="tools-cat-head">
-          <span class="tools-cat-label">Editing &amp; Production</span>
-          <span class="tools-cat-count">3 tools</span>
+      <div class="station">
+        <div class="station-head">
+          <span class="station-label">VOICE</span>
+          <span class="station-count">6 systems · 100+ voices available</span>
         </div>
-        <div class="tools-chips">
-          <span class="tchip hi">CapCut</span><span class="tchip">Soul ID Character</span><span class="tchip">AI Influencer</span>
+        <div class="station-body">
+          <p class="station-thesis">Narration, spokesperson work, and character dialogue each have their own instrument set.</p>
+          <div class="station-examples">
+            <div class="example">
+              <span class="example-tool">Eleven Labs Premium</span>
+              <span class="example-use">→ Natural, expressive, broadcast-quality</span>
+            </div>
+            <div class="example">
+              <span class="example-tool">Minimax Speech 2.8</span>
+              <span class="example-use">→ Multilingual, cultural nuance, real-time</span>
+            </div>
+            <div class="example">
+              <span class="example-tool">Character Voice Synthesis</span>
+              <span class="example-use">→ Personality matching, brand voice consistency</span>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div class="tools-cat">
-        <div class="tools-cat-head">
-          <span class="tools-cat-label">AI Intelligence</span>
-          <span class="tools-cat-count">2 systems</span>
+      <div class="station">
+        <div class="station-head">
+          <span class="station-label">INTELLIGENCE</span>
+          <span class="station-count">5 systems · unlimited scope</span>
         </div>
-        <div class="tools-chips">
-          <span class="tchip hi">Claude</span><span class="tchip hi">ChatGPT</span>
+        <div class="station-body">
+          <p class="station-thesis">Strategy, writing, and taste belong here. These systems don't make the work — they shape everything else.</p>
+          <div class="station-examples">
+            <div class="example">
+              <span class="example-tool">Claude</span>
+              <span class="example-use">→ Creative direction, brief analysis, taste documentation</span>
+            </div>
+            <div class="example">
+              <span class="example-tool">ChatGPT</span>
+              <span class="example-use">→ Rapid ideation, copy variant generation</span>
+            </div>
+            <div class="example">
+              <span class="example-tool">Custom Logic</span>
+              <span class="example-use">→ Problem-specific reasoning, judgment calls</span>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -2412,232 +2633,78 @@ body { top: 0 !important; }
 
     <div class="sec-head reveal">
       <p class="eyebrow">— Pricing — 006</p>
-      <h2 class="display"><em>Starting points,</em> not packages.</h2>
-      <p>Every project is scoped to what it actually needs. The rates below
-         are floors — what we book most often, not what we'll quote you.</p>
+      <h2 class="display">Three <em>entry</em> points.</h2>
+      <p>We scope every project to what it actually needs. These are starting rates
+         for single deliverables or short engagements. Ongoing work, larger scopes,
+         and custom builds land in different brackets — let's talk about yours.</p>
     </div>
 
-    <div class="reveal" style="overflow-x: auto;">
-    <table class="pricing-table">
-      <tbody>
+    <div class="pricing-tiers reveal">
 
-        <!-- ===== MUSIC PRODUCTION ===== -->
-        <tr>
-          <td class="pt-cat" rowspan="3">Music<br>Production</td>
-          <td>
-            <div class="pt-name">Beat Basics</div>
-            <div class="pt-desc">Custom instrumental up to 3:30, two rounds of revisions, MP3 &amp; WAV delivery.</div>
-          </td>
-          <td class="pt-price">$150 <small>From</small></td>
-          <td class="pt-cta"><a href="#contact" data-service="Beat Basics — $150">Inquire →</a></td>
-        </tr>
-        <tr>
-          <td>
-            <div class="pt-name">Full Production</div>
-            <div class="pt-desc">Complete song with vocals &amp; instrumentals, unlimited revisions, mastering included, all formats with stems.</div>
-          </td>
-          <td class="pt-price">$500</td>
-          <td class="pt-cta"><a href="#contact" data-service="Full Production — $500">Inquire →</a></td>
-        </tr>
-        <tr>
-          <td>
-            <div class="pt-name">Album / EP Production</div>
-            <div class="pt-desc">5–8 track project with cohesive sonic direction, full production &amp; mastering, distribution setup included.</div>
-          </td>
-          <td class="pt-price">$2,500–$4,000</td>
-          <td class="pt-cta"><a href="#contact" data-service="Album / EP Production — $2,500–$4,000">Inquire →</a></td>
-        </tr>
+      <div class="tier">
+        <div class="tier-head">
+          <h3 class="tier-label">Start Small</h3>
+          <p class="tier-tagline">Single creative assets</p>
+        </div>
+        <div class="tier-price">From <strong>$75</strong></div>
+        <div class="tier-body">
+          <p>One album cover. A single headshot. A 30-second video card. The moments that need immediate, finished work.</p>
+          <ul class="tier-list">
+            <li>Single deliverable focus</li>
+            <li>Fast turnaround (24–72 hours)</li>
+            <li>Minimal revision rounds</li>
+            <li>Perfect for testing a workflow</li>
+          </ul>
+          <a href="#contact" class="btn btn-arrow" data-service="Start Small">Get started</a>
+        </div>
+      </div>
 
-        <!-- ===== VIDEO CONTENT ===== -->
-        <tr>
-          <td class="pt-cat" rowspan="4">Video<br>Content</td>
-          <td>
-            <div class="pt-name">Viral Clip Starter</div>
-            <div class="pt-desc">Three 15–30 second clips for TikTok &amp; Reels, basic editing with text overlays, trend-aligned formatting.</div>
-          </td>
-          <td class="pt-price">$200 <small>From</small></td>
-          <td class="pt-cta"><a href="#contact" data-service="Viral Clip Starter — $200">Inquire →</a></td>
-        </tr>
-        <tr>
-          <td>
-            <div class="pt-name">Short Form Bundle</div>
-            <div class="pt-desc">Five 59-second videos, advanced editing with effects, platform optimization, two-week posting schedule.</div>
-          </td>
-          <td class="pt-price">$450</td>
-          <td class="pt-cta"><a href="#contact" data-service="Short Form Bundle — $450">Inquire →</a></td>
-        </tr>
-        <tr>
-          <td>
-            <div class="pt-name">Full Video Production</div>
-            <div class="pt-desc">Complete music video (3–5 minutes), color grading, effects, multi-format export.</div>
-          </td>
-          <td class="pt-price">$1,200</td>
-          <td class="pt-cta"><a href="#contact" data-service="Full Video Production — $1,200">Inquire →</a></td>
-        </tr>
-        <tr>
-          <td>
-            <div class="pt-name">Content Creator Pro</div>
-            <div class="pt-desc">Ten short-form videos monthly, 30-day posting schedule, caption &amp; hashtag strategy.</div>
-          </td>
-          <td class="pt-price">$800 <small>per month</small></td>
-          <td class="pt-cta"><a href="#contact" data-service="Content Creator Pro — $800/mo">Inquire →</a></td>
-        </tr>
+      <div class="tier">
+        <div class="tier-head">
+          <h3 class="tier-label">Build Something</h3>
+          <p class="tier-tagline">Identity, campaign, web, production</p>
+        </div>
+        <div class="tier-price">From <strong>$300</strong></div>
+        <div class="tier-body">
+          <p>A visual identity kit. A launch campaign. A 24-hour website. Work with real structure and creative partnership.</p>
+          <ul class="tier-list">
+            <li>Multi-deliverable projects</li>
+            <li>Custom direction & moodboards</li>
+            <li>Multiple revision rounds</li>
+            <li>Taste-first approach</li>
+          </ul>
+          <a href="#contact" class="btn btn-arrow" data-service="Build Something">Let's scope it</a>
+        </div>
+      </div>
 
-        <!-- ===== AI VISUAL DESIGN ===== -->
-        <tr>
-          <td class="pt-cat" rowspan="3">AI Visual<br>Design</td>
-          <td>
-            <div class="pt-name">Single Image Magic</div>
-            <div class="pt-desc">Custom AI-generated image, three concept variations, high-res files.</div>
-          </td>
-          <td class="pt-price">$75 <small>From</small></td>
-          <td class="pt-cta"><a href="#contact" data-service="Single Image Magic — $75">Inquire →</a></td>
-        </tr>
-        <tr>
-          <td>
-            <div class="pt-name">Visual Identity Kit</div>
-            <div class="pt-desc">Five cohesive AI images, branded color palette &amp; style guide, all platform formats.</div>
-          </td>
-          <td class="pt-price">$300</td>
-          <td class="pt-cta"><a href="#contact" data-service="Visual Identity Kit — $300">Inquire →</a></td>
-        </tr>
-        <tr>
-          <td>
-            <div class="pt-name">Album Art Deluxe</div>
-            <div class="pt-desc">Main album/EP cover, back cover, three single covers, social announcement graphics.</div>
-          </td>
-          <td class="pt-price">$400</td>
-          <td class="pt-cta"><a href="#contact" data-service="Album Art Deluxe — $400">Inquire →</a></td>
-        </tr>
+      <div class="tier">
+        <div class="tier-head">
+          <h3 class="tier-label">Go All In</h3>
+          <p class="tier-tagline">Albums, films, launches, ongoing</p>
+        </div>
+        <div class="tier-price"><strong>Custom scope</strong></div>
+        <div class="tier-body">
+          <p>A full-service album launch. A brand film. Ongoing content production. Everything coordinated from one studio.</p>
+          <ul class="tier-list">
+            <li>End-to-end creative control</li>
+            <li>Unlimited revisions & check-ins</li>
+            <li>Strategic direction included</li>
+            <li>Most powerful option</li>
+          </ul>
+          <a href="#contact" class="btn btn-arrow" data-service="Go All In">Custom quote</a>
+        </div>
+      </div>
 
-        <!-- ===== HEADSHOTS & BRAND PHOTOS ===== -->
-        <tr>
-          <td class="pt-cat" rowspan="3">Headshots<br>&amp; Brand</td>
-          <td>
-            <div class="pt-name">Standard Headshot Session</div>
-            <div class="pt-desc">One-hour session, multiple looks, ten final edited images, print &amp; digital delivery.</div>
-          </td>
-          <td class="pt-price">$200 <small>From</small></td>
-          <td class="pt-cta"><a href="#contact" data-service="Standard Headshot Session — $200">Inquire →</a></td>
-        </tr>
-        <tr>
-          <td>
-            <div class="pt-name">Editorial Series</div>
-            <div class="pt-desc">Two-hour session (location or studio), 25 final images, B&amp;W + color, brand usage license.</div>
-          </td>
-          <td class="pt-price">$400</td>
-          <td class="pt-cta"><a href="#contact" data-service="Editorial Series — $400">Inquire →</a></td>
-        </tr>
-        <tr>
-          <td>
-            <div class="pt-name">Full Brand Package</div>
-            <div class="pt-desc">Half-day session, multiple locations, 50+ final images, social media kit, press-ready files.</div>
-          </td>
-          <td class="pt-price">$600</td>
-          <td class="pt-cta"><a href="#contact" data-service="Full Brand Package — $600">Inquire →</a></td>
-        </tr>
+    </div>
 
-        <!-- ===== SOCIAL MEDIA ===== -->
-        <tr>
-          <td class="pt-cat" rowspan="4">Social<br>Media</td>
-          <td>
-            <div class="pt-name">DIY Strategy Blueprint</div>
-            <div class="pt-desc">Custom 6–8 week release timeline, 20+ video ideas tailored to your song, caption templates &amp; hashtag banks.</div>
-          </td>
-          <td class="pt-price">$300 <small>From</small></td>
-          <td class="pt-cta"><a href="#contact" data-service="DIY Strategy Blueprint — $300">Inquire →</a></td>
-        </tr>
-        <tr>
-          <td>
-            <div class="pt-name">We Build It, You Post It</div>
-            <div class="pt-desc">Everything in the DIY Blueprint plus 15 short-form videos created for you, two strategy check-in calls.</div>
-          </td>
-          <td class="pt-price">$750</td>
-          <td class="pt-cta"><a href="#contact" data-service="We Build It, You Post It — $750">Inquire →</a></td>
-        </tr>
-        <tr>
-          <td>
-            <div class="pt-name">Full Service Management</div>
-            <div class="pt-desc">Daily posting across three platforms, Stories &amp; Reels content creation, weekly strategy calls.</div>
-          </td>
-          <td class="pt-price">$800 <small>per month</small></td>
-          <td class="pt-cta"><a href="#contact" data-service="Full Service Management — $800/mo">Inquire →</a></td>
-        </tr>
-        <tr>
-          <td>
-            <div class="pt-name">Launch Campaign Intensive</div>
-            <div class="pt-desc">Four-week pre-release campaign, release-week daily posts &amp; lives, two-week post-release momentum.</div>
-          </td>
-          <td class="pt-price">$1,500</td>
-          <td class="pt-cta"><a href="#contact" data-service="Launch Campaign Intensive — $1,500">Inquire →</a></td>
-        </tr>
+    <div class="pricing-note reveal">
+      <p class="eyebrow">Pricing transparency</p>
+      <p>These are genuine entry points for real work — not simplified "starter packages." Most clients grow beyond tier 1 into tier 2 or a hybrid. <a href="#contact" class="accent">Let's talk about what you actually need</a>.</p>
+    </div>
 
-        <!-- ===== PODCAST FEATURES (L8 BLO0M) ===== -->
-        <tr>
-          <td class="pt-cat" rowspan="2">L8 BLO0M<br>Podcast</td>
-          <td>
-            <div class="pt-name">Guest Spot</div>
-            <div class="pt-desc">30–45 minute interview on L8 BLO0M, promotion across our networks, edited audio + video clips for your use.</div>
-          </td>
-          <td class="pt-price">$150 <small>From</small></td>
-          <td class="pt-cta"><a href="#contact" data-service="Guest Spot — $150">Inquire →</a></td>
-        </tr>
-        <tr>
-          <td>
-            <div class="pt-name">Artist Showcase</div>
-            <div class="pt-desc">Full episode dedicated to your work, 3–4 tracks played with commentary, cross-promotion campaign.</div>
-          </td>
-          <td class="pt-price">$300</td>
-          <td class="pt-cta"><a href="#contact" data-service="Artist Showcase — $300">Inquire →</a></td>
-        </tr>
-
-        <!-- ===== WEB & DIGITAL ===== -->
-        <tr>
-          <td class="pt-cat" rowspan="3">Web &amp;<br>Digital</td>
-          <td>
-            <div class="pt-name">Landing Page</div>
-            <div class="pt-desc">Single-page site — artist hub, link-in-bio, product launch, or course page. Mobile-first, on-brand, deployed and live within 48 hours.</div>
-          </td>
-          <td class="pt-price">$350 <small>From</small></td>
-          <td class="pt-cta"><a href="#contact" data-service="Landing Page — $350">Inquire →</a></td>
-        </tr>
-        <tr>
-          <td>
-            <div class="pt-name">Full Site</div>
-            <div class="pt-desc">Multi-section site up to 6 pages — custom design, contact form, mobile responsive, streaming/booking links wired in. No templates.</div>
-          </td>
-          <td class="pt-price">$750 <small>From</small></td>
-          <td class="pt-cta"><a href="#contact" data-service="Full Site — $750">Inquire →</a></td>
-        </tr>
-        <tr>
-          <td>
-            <div class="pt-name">24-Hour Rush</div>
-            <div class="pt-desc">Need it by tomorrow? Available on any web project or deliverable. Add-on to your project total — first-come, first-served. Limited slots per week.</div>
-          </td>
-          <td class="pt-price">+$250 <small>Add-on</small></td>
-          <td class="pt-cta"><a href="#contact" data-service="24-Hour Rush — +$250">Inquire →</a></td>
-        </tr>
-
-        <!-- ===== PERSONALIZED CARDS ===== -->
-        <tr>
-          <td class="pt-cat" rowspan="2">Personalized<br>Cards</td>
-          <td>
-            <div class="pt-name">30-Second Card</div>
-            <div class="pt-desc">Custom AI-crafted video card, personalized to your occasion, delivered within 48 hours.</div>
-          </td>
-          <td class="pt-price">$30 <small>From</small></td>
-          <td class="pt-cta"><a href="#contact" data-service="30-Second Card — $30">Inquire →</a></td>
-        </tr>
-        <tr>
-          <td>
-            <div class="pt-name">1-Minute Card</div>
-            <div class="pt-desc">Full cinematic video card with custom narration, music &amp; visuals — birthdays, tributes, announcements. 72-hour delivery.</div>
-          </td>
-          <td class="pt-price">$50</td>
-          <td class="pt-cta"><a href="#contact" data-service="1-Minute Card — $50">Inquire →</a></td>
-        </tr>
-
-      </tbody>
+    <!-- Hidden pricing table markup for backwards compatibility -->
+    <table class="pricing-table" style="display:none;">
+      <tbody></tbody>
     </table>
     </div>
 
