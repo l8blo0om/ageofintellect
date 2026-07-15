@@ -248,10 +248,17 @@ body {
   border: 1px solid var(--ink);
   background: var(--ink);
   color: var(--paper);
-  box-shadow: var(--shadow-sm);
-  transition: background 240ms var(--ease), color 240ms var(--ease), transform 240ms var(--ease), box-shadow 240ms var(--ease);
+  box-shadow: 0 0 0 0px rgba(168, 120, 42, 0.3);
+  transition: all 240ms var(--ease);
+  cursor: pointer;
 }
-.btn:hover { background: var(--gold); border-color: var(--gold); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+.btn:hover {
+  background: var(--gold);
+  border-color: var(--gold);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px -8px rgba(168, 120, 42, 0.4), 0 0 20px 0px rgba(168, 120, 42, 0.2);
+  color: var(--ink);
+}
 .btn-ghost { background: transparent; color: var(--ink); }
 .btn-ghost:hover { background: var(--ink); color: var(--paper); }
 .btn-gold { background: var(--gold); border-color: var(--gold); }
@@ -752,11 +759,11 @@ body { top: 0 !important; }
   position: absolute;
   inset: auto 0 0 0;
   padding: 22px 24px 20px;
-  background: linear-gradient(to top, rgba(26,23,20,0.92) 0%, rgba(26,23,20,0.55) 60%, transparent 100%);
+  background: linear-gradient(to top, rgba(26,23,20,0.96) 0%, rgba(26,23,20,0.7) 50%, transparent 100%);
   color: var(--paper);
   opacity: 0;
-  transform: translateY(8px);
-  transition: opacity 320ms var(--ease), transform 320ms var(--ease);
+  transform: translateY(12px);
+  transition: all 320ms var(--ease);
 }
 .tile:hover .tile-overlay,
 .tile:focus-within .tile-overlay { opacity: 1; transform: translateY(0); }
@@ -773,6 +780,23 @@ body { top: 0 !important; }
   font-size: clamp(18px, 1.6vw, 22px);
   letter-spacing: -0.01em;
   line-height: 1.2;
+  margin-bottom: 8px;
+}
+
+.tile-cta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold-bright);
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 240ms var(--ease), transform 240ms var(--ease);
+}
+
+.tile:hover .tile-cta {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* Play badge for video tiles (only visible if data-youtube is set with a real ID) */
@@ -1054,7 +1078,11 @@ body { top: 0 !important; }
 /* Single horizontal table. Every original tier preserved. The   */
 /* discipline cell is rowspan'd so each category labels its rows.*/
 /* ============================================================ */
-#pricing { background: var(--paper-alt); }
+/* Section backgrounds: alternating contrast choreography */
+#capabilities { background: linear-gradient(180deg, var(--paper) 0%, var(--paper-alt) 100%); }
+#process { background: var(--paper); }
+#work { background: var(--paper-alt); }
+#pricing { background: var(--paper); }
 .pricing-table {
   border-top: 1px solid var(--ink);
   width: 100%;
@@ -1153,9 +1181,10 @@ body { top: 0 !important; }
   transition: transform 240ms var(--ease), box-shadow 240ms var(--ease), border-color 240ms var(--ease);
 }
 .tier:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-lg);
-  border-color: var(--gold);
+  transform: translateY(-6px);
+  box-shadow: 0 20px 48px -12px rgba(168, 120, 42, 0.25), 0 0 24px -4px rgba(168, 120, 42, 0.15);
+  border-color: var(--gold-bright);
+  background: linear-gradient(135deg, var(--paper) 0%, rgba(184, 149, 74, 0.05) 100%);
 }
 
 .tier-head {
@@ -1414,6 +1443,152 @@ body { top: 0 !important; }
 }
 .footer-links a { transition: color 200ms var(--ease); }
 .footer-links a:hover { color: var(--ink); }
+
+/* ============================================================ */
+/* ===== CASE STUDY MODAL ====================================  */
+/* ============================================================ */
+.case-study-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(26, 23, 20, 0.5);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  animation: fadeIn 240ms var(--ease);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.case-study-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+
+.case-study-content {
+  position: relative;
+  z-index: 301;
+  width: 100%;
+  max-width: 900px;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  box-shadow: 0 30px 80px -20px rgba(26, 23, 20, 0.5);
+  animation: slideUp 320ms var(--ease);
+}
+
+@keyframes slideUp {
+  from { transform: translateY(32px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.case-study-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 302;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--rule);
+  background: var(--paper);
+  color: var(--text);
+  font-size: 24px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 240ms var(--ease);
+}
+
+.case-study-close:hover {
+  background: rgba(168, 120, 42, 0.1);
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+.case-study-media {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: var(--ink);
+  overflow: hidden;
+}
+
+.case-study-media iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.case-study-body {
+  padding: 48px;
+}
+
+.case-study-body h2 {
+  font-family: 'Fraunces', serif;
+  font-size: 36px;
+  font-weight: 400;
+  font-variation-settings: "opsz" 72;
+  color: var(--ink);
+  margin-bottom: 16px;
+  line-height: 1.2;
+}
+
+.case-meta-tag {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+  margin-bottom: 28px;
+}
+
+.case-study-section {
+  margin-bottom: 36px;
+}
+
+.case-study-section:last-child {
+  margin-bottom: 0;
+}
+
+.case-study-section h3 {
+  font-family: 'Fraunces', serif;
+  font-size: 22px;
+  font-weight: 400;
+  font-variation-settings: "opsz" 24;
+  color: var(--ink);
+  margin-bottom: 12px;
+}
+
+.case-study-section p {
+  color: var(--text-soft);
+  font-size: 15px;
+  line-height: 1.6;
+  max-width: 72ch;
+}
+
+@media (max-width: 760px) {
+  .case-study-content {
+    max-height: 85vh;
+    border-radius: 4px;
+  }
+  .case-study-body {
+    padding: 28px;
+  }
+  .case-study-body h2 {
+    font-size: 28px;
+  }
+}
 
 /* ============================================================ */
 /* ===== VIDEO MODAL =========================================  */
@@ -2252,7 +2427,7 @@ body { top: 0 !important; }
       <div class="wc-stage" id="wcStage">
         <div class="wc-track" id="wcTrack">
 
-          <article class="tile wc-card" data-cat="film campaign" data-youtube="CaA9Z7lekp0">
+          <article class="tile wc-card" data-cat="film campaign" data-youtube="CaA9Z7lekp0" onclick="openCaseStudy('parton-sheds')">
             <div class="tile-media">
               <img src="https://img.youtube.com/vi/CaA9Z7lekp0/maxresdefault.jpg" loading="lazy" decoding="async" alt="Parton Sheds — She Shed Trend">
             </div>
@@ -2260,10 +2435,11 @@ body { top: 0 !important; }
             <div class="tile-overlay">
               <div class="tile-cat">Film · UGC Campaign</div>
               <div class="tile-name">Parton Sheds — She Shed Trend</div>
+              <div class="tile-cta">View case →</div>
             </div>
           </article>
 
-          <article class="tile wc-card" data-cat="campaign" data-youtube="nTEJmpq9xQg">
+          <article class="tile wc-card" data-cat="campaign" data-youtube="nTEJmpq9xQg" onclick="openCaseStudy('birthday-card-1')">
             <div class="tile-media">
               <img src="https://img.youtube.com/vi/nTEJmpq9xQg/maxresdefault.jpg" loading="lazy" decoding="async" alt="Personalized Birthday Card">
             </div>
@@ -2271,10 +2447,12 @@ body { top: 0 !important; }
             <div class="tile-overlay">
               <div class="tile-cat">Personalized Card</div>
               <div class="tile-name">Birthday Card</div>
+            
+              <div class="tile-cta">View case →</div>
             </div>
           </article>
 
-          <article class="tile wc-card" data-cat="campaign" data-youtube="NNfFHxe2YEE">
+          <article class="tile wc-card" data-cat="campaign" data-youtube="NNfFHxe2YEE" onclick="openCaseStudy('birthday-card-2')">
             <div class="tile-media">
               <img src="https://img.youtube.com/vi/NNfFHxe2YEE/maxresdefault.jpg" loading="lazy" decoding="async" alt="Personalized Birthday Card">
             </div>
@@ -2282,10 +2460,12 @@ body { top: 0 !important; }
             <div class="tile-overlay">
               <div class="tile-cat">Personalized Card</div>
               <div class="tile-name">Birthday Card</div>
+            
+              <div class="tile-cta">View case →</div>
             </div>
           </article>
 
-          <article class="tile wc-card" data-cat="sound" data-youtube="aHqUD17vV7w">
+          <article class="tile wc-card" data-cat="sound" data-youtube="aHqUD17vV7w" onclick="openCaseStudy('ramadan-soul')">
             <div class="tile-media">
               <img src="https://img.youtube.com/vi/aHqUD17vV7w/hqdefault.jpg" loading="lazy" decoding="async" alt="Ramadan Love — Maqam Soul">
             </div>
@@ -2293,10 +2473,12 @@ body { top: 0 !important; }
             <div class="tile-overlay">
               <div class="tile-cat">Sound · L8 Blo0om</div>
               <div class="tile-name">Ramadan Love — Maqam Soul</div>
+            
+              <div class="tile-cta">View case →</div>
             </div>
           </article>
 
-          <article class="tile wc-card" data-cat="sound" data-youtube="ywGUFFbpm_Q">
+          <article class="tile wc-card" data-cat="sound" data-youtube="ywGUFFbpm_Q" onclick="openCaseStudy('ramadan-bhangra')">
             <div class="tile-media">
               <img src="https://img.youtube.com/vi/ywGUFFbpm_Q/hqdefault.jpg" loading="lazy" decoding="async" alt="Ramadan Love — Bhangra Banger">
             </div>
@@ -2304,6 +2486,8 @@ body { top: 0 !important; }
             <div class="tile-overlay">
               <div class="tile-cat">Sound · L8 Blo0om</div>
               <div class="tile-name">Ramadan Love — Bhangra Banger</div>
+            
+              <div class="tile-cta">View case →</div>
             </div>
           </article>
 
@@ -2315,6 +2499,8 @@ body { top: 0 !important; }
             <div class="tile-overlay">
               <div class="tile-cat">Sound · L8 Blo0om</div>
               <div class="tile-name">Ramadan Love — Afrobeat</div>
+            
+              <div class="tile-cta">View case →</div>
             </div>
           </article>
 
@@ -3274,6 +3460,115 @@ function setLang(lang, btn) {
 }
 </script>
 <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+<!-- Case Study Modal -->
+<div id="caseStudyModal" class="case-study-modal" style="display:none;">
+  <div class="case-study-overlay" onclick="closeCaseStudy()"></div>
+  <div class="case-study-content">
+    <button class="case-study-close" onclick="closeCaseStudy()">✕</button>
+    <div class="case-study-media" id="caseStudyMedia"></div>
+    <div class="case-study-body">
+      <h2 id="caseStudyTitle"></h2>
+      <div class="case-study-meta" id="caseStudyMeta"></div>
+      <div class="case-study-section">
+        <h3>The Problem</h3>
+        <p id="caseProblem"></p>
+      </div>
+      <div class="case-study-section">
+        <h3>The Move</h3>
+        <p id="caseMove"></p>
+      </div>
+      <div class="case-study-section">
+        <h3>What We Built</h3>
+        <p id="caseBuild"></p>
+      </div>
+      <div class="case-study-section">
+        <h3>The Result</h3>
+        <p id="caseResult"></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Case study data
+const caseStudies = {
+  'parton-sheds': {
+    title: 'Parton Sheds — She Shed Trend',
+    youtube: 'CaA9Z7lekp0',
+    meta: 'Film · UGC Campaign',
+    problem: 'Local shed company with good products but generic contractor-style marketing that failed to reach their target: women looking for "she shed" inspiration.',
+    move: 'We repositioned the product as a lifestyle moment, not a transaction. Created a character-driven short-form content series positioning the shed as an escape fantasy.',
+    build: '8-week content sprint with trend-aligned hooks. Viral clip targeting TikTok/Reels audience. Multi-platform asset suite.',
+    result: 'TBD — Niia to fill in results'
+  },
+  'birthday-card-1': {
+    title: 'Personalized Birthday Card',
+    youtube: 'nTEJmpq9xQg',
+    meta: 'Personalized Video',
+    problem: 'Generic birthday greetings feel impersonal.',
+    move: 'Custom AI-crafted video card with personalized narration and visuals.',
+    build: '30-second cinematic card with voice synthesis and motion graphics.',
+    result: 'TBD — Niia to fill in results'
+  },
+  'birthday-card-2': {
+    title: 'Personalized Birthday Card',
+    youtube: 'NNfFHxe2YEE',
+    meta: 'Personalized Video',
+    problem: 'Generic birthday greetings feel impersonal.',
+    move: 'Custom AI-crafted video card with personalized narration and visuals.',
+    build: '30-second cinematic card with voice synthesis and motion graphics.',
+    result: 'TBD — Niia to fill in results'
+  },
+  'ramadan-soul': {
+    title: 'Ramadan Love — Maqam Soul',
+    youtube: 'aHqUD17vV7w',
+    meta: 'Sound · L8 Blo0om Podcast',
+    problem: 'TBD',
+    move: 'TBD',
+    build: 'TBD',
+    result: 'TBD'
+  },
+  'ramadan-bhangra': {
+    title: 'Ramadan Love — Bhangra Banger',
+    youtube: 'ywGUFFbpm_Q',
+    meta: 'Sound · L8 Blo0om Podcast',
+    problem: 'TBD',
+    move: 'TBD',
+    build: 'TBD',
+    result: 'TBD'
+  }
+};
+
+function openCaseStudy(id) {
+  const study = caseStudies[id];
+  if (!study) return;
+
+  document.getElementById('caseStudyTitle').textContent = study.title;
+  document.getElementById('caseStudyMeta').innerHTML = `<span class="case-meta-tag">${study.meta}</span>`;
+  document.getElementById('caseProblem').textContent = study.problem;
+  document.getElementById('caseMove').textContent = study.move;
+  document.getElementById('caseBuild').textContent = study.build;
+  document.getElementById('caseResult').textContent = study.result;
+
+  // YouTube embed
+  const youtubeEmbed = `<iframe width="100%" height="480" src="https://www.youtube.com/embed/${study.youtube}?rel=0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="" loading="lazy"></iframe>`;
+  document.getElementById('caseStudyMedia').innerHTML = youtubeEmbed;
+
+  document.getElementById('caseStudyModal').style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+
+function closeCaseStudy() {
+  document.getElementById('caseStudyModal').style.display = 'none';
+  document.body.style.overflow = 'auto';
+}
+
+// Close on Escape key
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeCaseStudy();
+});
+</script>
 
 <script data-goatcounter="https://ageofintellect.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
