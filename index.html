@@ -1057,6 +1057,27 @@ body { top: 0 !important; }
   margin-bottom: 18px;
   max-width: 56ch;
 }
+
+/* Dark About section overrides */
+#about .about-body p {
+  color: rgba(246, 241, 231, 0.75);
+}
+#about .about-quote {
+  color: var(--paper);
+}
+#about .signature {
+  border-top-color: rgba(168, 120, 42, 0.3);
+}
+#about .signature-name {
+  color: var(--paper);
+}
+#about .signature-role {
+  color: rgba(246, 241, 231, 0.55);
+}
+#about .eyebrow {
+  color: var(--gold-bright);
+}
+
 .signature {
   margin-top: 28px;
   padding-top: 24px;
@@ -1086,11 +1107,12 @@ body { top: 0 !important; }
 /* Single horizontal table. Every original tier preserved. The   */
 /* discipline cell is rowspan'd so each category labels its rows.*/
 /* ============================================================ */
-/* Section backgrounds: alternating contrast choreography */
-#capabilities { background: linear-gradient(180deg, var(--paper) 0%, var(--paper-alt) 100%); }
+/* Section backgrounds: strong contrast choreography */
+#capabilities { background: linear-gradient(180deg, var(--paper-alt) 0%, var(--paper-deep) 100%); }
 #process { background: var(--paper); }
-#work { background: var(--paper-alt); }
+#work { background: var(--paper-alt); border-top: 2px solid var(--gold); }
 #pricing { background: var(--paper); }
+#about { background: var(--ink); color: var(--paper); }
 .pricing-table {
   border-top: 1px solid var(--ink);
   width: 100%;
