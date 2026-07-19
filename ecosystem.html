@@ -11,8 +11,9 @@
 <meta property="og:site_name" content="Age of Intellect">
 <meta property="og:title" content="The Ecosystem — Age of Intellect">
 <meta property="og:description" content="An AI interface with a belief system built in — an education built on love, not fear.">
-<meta property="og:image" content="https://ageofintellect.com/assets/ecosystem-cover.jpg">
+<meta property="og:image" content="https://ageofintellect.com/assets/ecosystem-share.jpg">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://ageofintellect.com/assets/ecosystem-share.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Manrope:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Caveat:wght@500;600;700&display=swap" rel="stylesheet">
@@ -324,6 +325,48 @@
 
   /* accent text (eyebrows, highlights) */
   .accent{color:var(--gold)}
+
+  /* ── SCROLLING TICKER ── */
+  .ticker{overflow:hidden;background:var(--ink);padding:15px 0;
+    -webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);
+    mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);}
+  .ticker-track{display:inline-flex;white-space:nowrap;will-change:transform;
+    animation:ticker 36s linear infinite;}
+  .ticker:hover .ticker-track{animation-play-state:paused;}
+  .ticker span{font-family:'JetBrains Mono',monospace;font-size:12.5px;letter-spacing:0.2em;
+    text-transform:uppercase;color:var(--paper);padding:0 6px;display:inline-flex;align-items:center;}
+  .ticker span::after{content:"·";color:var(--gold-b);margin-left:24px;padding-left:24px;}
+  @keyframes ticker{to{transform:translateX(-50%);}}
+
+  /* ── FULL-BLEED MEDIA BAND ── */
+  .media-band{width:100vw;margin-left:calc(50% - 50vw);position:relative;max-width:none;padding:0;}
+  .media-band img{display:block;width:100%;height:clamp(300px,54vh,600px);object-fit:cover;}
+  .media-band figcaption{position:absolute;left:0;right:0;bottom:0;padding:52px 8vw 24px;
+    background:linear-gradient(0deg,rgba(20,16,10,0.74),rgba(20,16,10,0));color:#F5EDDC;
+    font-family:'Fraunces',serif;font-style:italic;font-size:clamp(18px,2.3vw,29px);
+    line-height:1.25;max-width:none;margin:0;}
+  .media-band figcaption small{display:block;font-family:'JetBrains Mono',monospace;font-style:normal;
+    font-size:10px;letter-spacing:0.24em;text-transform:uppercase;color:var(--gold-b);margin-bottom:9px;}
+
+  /* ── CAROUSEL ── */
+  .carousel{max-width:1000px;margin:0 auto;}
+  .carousel-view{position:relative;overflow:hidden;border-radius:14px;box-shadow:0 18px 60px rgba(138,94,18,0.18);}
+  .carousel-track{display:flex;transition:transform .6s var(--ease);}
+  .carousel-slide{min-width:100%;position:relative;}
+  .carousel-slide img{display:block;width:100%;height:clamp(280px,52vh,540px);object-fit:cover;}
+  .carousel-slide .cap{position:absolute;left:0;right:0;bottom:0;padding:40px 30px 22px;
+    background:linear-gradient(0deg,rgba(20,16,10,0.72),rgba(20,16,10,0));color:#F5EDDC;
+    font-family:'Fraunces',serif;font-style:italic;font-size:clamp(16px,2vw,23px);}
+  .carousel-dots{display:flex;gap:10px;justify-content:center;margin-top:20px;}
+  .carousel-dots button{width:9px;height:9px;border-radius:50%;border:none;padding:0;
+    background:var(--rule);cursor:pointer;transition:all .3s var(--ease);}
+  .carousel-dots button.on{background:var(--gold);transform:scale(1.3);}
+  .carousel-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:3;width:44px;height:44px;
+    border-radius:50%;border:none;cursor:pointer;background:rgba(252,248,239,0.9);color:var(--ink);
+    font-size:17px;box-shadow:0 4px 16px rgba(0,0,0,0.18);transition:background .3s var(--ease);}
+  .carousel-arrow:hover{background:var(--gold);color:#fff;}
+  .carousel-arrow.prev{left:14px;} .carousel-arrow.next{right:14px;}
+  @media(max-width:600px){.carousel-arrow{display:none;}}
 </style>
 </head>
 <body>
@@ -357,6 +400,13 @@
   the Cup. The <a href="canon.html" style="color:var(--gold-d);border-bottom:1px solid var(--gold);text-decoration:none;">full canon</a>
   — the rituals, ikigai, the spaces, the anthem, and the founder's own spoken word — holds the rest.</p>
 </section>
+
+<!-- TICKER -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track">
+    <span>Right Speech</span><span>The Cup</span><span>Jijang Bosal</span><span>Ikigai</span><span>The Buddy Bench</span><span>Solo Space</span><span>The butterfly leaves the screen</span><span>Notice, then choose</span><span>Serve without a claim</span><span>Different gifts, one family</span><span>Love, not fear</span><span>Right Speech</span><span>The Cup</span><span>Jijang Bosal</span><span>Ikigai</span><span>The Buddy Bench</span><span>Solo Space</span><span>The butterfly leaves the screen</span><span>Notice, then choose</span><span>Serve without a claim</span><span>Different gifts, one family</span><span>Love, not fear</span>
+  </div>
+</div>
 
 <!-- WHAT GETS BUILT, BY AGE -->
 <section class="fade">
@@ -412,6 +462,12 @@
   been practicing it for twelve years.</p>
 </section>
 
+<!-- MEDIA BAND · WONDER -->
+<figure class="media-band fade">
+  <img src="wonder.png" alt="A young child in wide-eyed wonder holding a tablet that glows warm gold, a monarch butterfly and a trail of sparks rising out of the screen into the room">
+  <figcaption><small>The butterfly leaves the screen</small>Wonder is the whole point — the tool exists to send a child back out into the world.</figcaption>
+</figure>
+
 <!-- THE PRODUCT -->
 <section class="fade" id="the-product">
   <div class="label">The Interface, Concretely</div>
@@ -464,6 +520,12 @@
   making love, attention, and awakening operational, one child at a time.</p>
 </section>
 
+<!-- MEDIA BAND · DIFFERENT GIFTS -->
+<figure class="media-band fade">
+  <img src="children.png" alt="A row of paper-doll children holding hands, each cut from a different material — newspaper, knit fabric, a green leaf, sheet music, a painting, a world map, denim — different gifts joined as one">
+  <figcaption><small>Different gifts · one human family</small>No two children take the same path — so the room accumulates instead of repeating.</figcaption>
+</figure>
+
 <!-- WHY THE SCREEN IS FREEDOM -->
 <section class="fade alt">
   <div class="label">Why the Screen Is Freedom</div>
@@ -488,6 +550,26 @@
   the space for it. Everything else is just infrastructure.</p>
   <p class="lead" style="margin-top:10px;">The device isn't the cage. It's the key.
   <em>Access is the freedom.</em></p>
+</section>
+
+<!-- CAROUSEL · THE WORLD THEY RETURN TO -->
+<section class="fade">
+  <div class="label" style="text-align:center">The World They Return To</div>
+  <div class="rule"></div>
+  <h2 style="text-align:center;margin-bottom:10px;">A doorway, not a <em>destination</em>.</h2>
+  <p style="text-align:center;max-width:600px;margin:0 auto 32px;">The screen sends a child outward — to the forest, the real question, the thing they build with their own hands.</p>
+  <div class="carousel">
+    <div class="carousel-view">
+      <button class="carousel-arrow prev" type="button" aria-label="Previous">‹</button>
+      <button class="carousel-arrow next" type="button" aria-label="Next">›</button>
+      <div class="carousel-track" id="carTrack">
+        <div class="carousel-slide"><img src="freedom-key.jpg" alt="A child at the edge of a golden-hour forest holding a softly glowing tablet"><div class="cap">The device is often the first thing that ever met them — and the first thing that sends them out.</div></div>
+        <div class="carousel-slide"><img src="ikigai.png" alt="Ikigai — overlapping figures for what you love, what you are good at, what the world needs, and what you can offer, meeting at the center"><div class="cap">Every child arrives with a reason for being. The work is to help each one find theirs.</div></div>
+        <div class="carousel-slide"><img src="splash-bg.jpg" alt="A child standing small at the edge of a vast, sunlit forest"><div class="cap">Research the real event. Cook the food. Interview the elder. Build the thing.</div></div>
+      </div>
+    </div>
+    <div class="carousel-dots" id="carDots"></div>
+  </div>
 </section>
 
 <!-- FROM THE FOUNDER -->
@@ -627,6 +709,28 @@
   },{threshold:0.15});
   document.querySelectorAll('.fade').forEach(function(el){io.observe(el);});
   var ves=document.getElementById('vessel'); if(ves)io.observe(ves);
+
+  // carousel — auto-advance, dots, arrows, pause on hover
+  (function(){
+    var track=document.getElementById('carTrack'); if(!track) return;
+    var slides=track.children, dotsWrap=document.getElementById('carDots'), n=slides.length, i=0, timer;
+    for(var d=0; d<n; d++){ (function(k){
+      var b=document.createElement('button'); b.setAttribute('aria-label','Slide '+(k+1));
+      b.onclick=function(){ go(k); reset(); }; dotsWrap.appendChild(b);
+    })(d); }
+    var dots=dotsWrap.children;
+    function go(k){ i=(k+n)%n; track.style.transform='translateX('+(-i*100)+'%)';
+      for(var j=0;j<n;j++) dots[j].className = j===i?'on':''; }
+    function next(){ go(i+1); } function prev(){ go(i-1); }
+    function reset(){ clearInterval(timer); timer=setInterval(next,5000); }
+    var pn=track.parentNode.querySelector('.next'), pp=track.parentNode.querySelector('.prev');
+    if(pn) pn.onclick=function(){ next(); reset(); };
+    if(pp) pp.onclick=function(){ prev(); reset(); };
+    var view=track.parentNode;
+    view.addEventListener('mouseenter',function(){ clearInterval(timer); });
+    view.addEventListener('mouseleave',reset);
+    go(0); reset();
+  })();
 </script>
 <script data-goatcounter="https://ageofintellect.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
