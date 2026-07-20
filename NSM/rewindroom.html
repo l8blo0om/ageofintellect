@@ -170,13 +170,21 @@
   }
   .shot-body textarea { resize: vertical; min-height: 40px; }
   .shot-meta { font-size: 12px; color: var(--gray); display: flex; gap: 10px; flex-wrap: wrap; margin-top: 4px; }
-  .shot-assign { display: grid; grid-template-columns: 1fr 150px; gap: 8px; margin-top: 8px; }
-  @media (max-width: 700px) { .shot-assign { grid-template-columns: 1fr; } }
-  .shot-assign input {
+  .shot-assign { display: grid; grid-template-columns: 1fr; gap: 8px; margin-top: 8px; }
+  .shot-assign select, .shot-assign input {
     border: 1px solid var(--line); border-radius: 6px; padding: 6px 9px;
     font-family: inherit; font-size: 12.5px; color: var(--navy); width: 100%;
   }
-  .shot-assign input[type=date] { color: var(--gray); }
+  .assignee-select { appearance: none; padding-right: 24px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%230a2240' d='M6 9L1 4h10z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 8px center; }
+
+  .research-link { margin: 8px 0; }
+  .research-link a { color: var(--red); font-size: 13px; font-weight: 600; text-decoration: none; }
+  .research-link a:hover { text-decoration: underline; }
+  .research-link input { border: 1px solid var(--line); border-radius: 6px; padding: 6px 9px; width: 100%; font-size: 12.5px; }
+
+  .prod-parts { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 6px; margin: 8px 0; font-size: 12px; }
+  .prod-parts label { display: flex; align-items: center; gap: 5px; cursor: pointer; }
+  .prod-parts input[type=checkbox] { cursor: pointer; width: 14px; height: 14px; }
 
   select.status-select {
     width: 100%; border: none; border-radius: 6px; padding: 8px 10px;
@@ -482,10 +490,9 @@
     <div class="add-form shot-form">
       <div><label>Section</label><input type="text" id="new-section" placeholder="3" inputmode="numeric"></div>
       <div><label>Shot</label><input type="text" id="new-shot" placeholder="15" inputmode="numeric"></div>
-      <div><label>Version</label><input type="text" id="new-version" placeholder="v1"></div>
-      <div><label>Description / notes</label><input type="text" id="new-desc" placeholder="e.g. wide shot, arena, crowd roar"></div>
-      <div><label>Assigned to</label><input type="text" id="new-assignee" placeholder="Moisés"></div>
-      <div><label>Due Date</label><input type="date" id="new-due"></div>
+      <div><label>Description</label><input type="text" id="new-desc" placeholder="Moment name"></div>
+      <div><label>Assigned to</label><select id="new-assignee"><option value="">—</option><option value="Niia">Niia</option><option value="Moisés">Moisés</option></select></div>
+      <div><label>Research Doc URL</label><input type="text" id="new-research" placeholder="Link to research HTML"></div>
       <button class="btn" id="add-shot-btn" style="margin-top:14px;">+ Add Shot</button>
     </div>
 
@@ -571,38 +578,38 @@
 
   function loadNSMMoments() {
     const NSM_MOMENTS = [
-      {section: '1', shot: '1', version: 'v1', desc: 'Kathrine Switzer 1967 Boston Marathon', assignee: 'Moisés', due: null, status: 'not_started'},
-      {section: '1', shot: '2', version: 'v1', desc: 'Title IX Signed into Law', assignee: 'Moisés', due: null, status: 'not_started'},
-      {section: '1', shot: '3', version: 'v1', desc: 'Billie Jean King Battle of the Sexes', assignee: 'Moisés', due: null, status: 'not_started'},
+      {section: '1', shot: '1', version: 'v1', desc: 'Kathrine Switzer 1967 Boston Marathon', assignee: '', research: null, parts: {opening: false, exposition: false, experience: false, wrapup: false}, status: 'not_started'},
+      {section: '1', shot: '2', version: 'v1', desc: 'Title IX Signed into Law', assignee: '', research: null, parts: {opening: false, exposition: false, experience: false, wrapup: false}, status: 'not_started'},
+      {section: '1', shot: '3', version: 'v1', desc: 'Billie Jean King Battle of the Sexes', assignee: '', research: null, parts: {opening: false, exposition: false, experience: false, wrapup: false}, status: 'not_started'},
       {section: '1', shot: '4', version: 'v1', desc: "Jim Abbott's No-Hitter", assignee: 'Moisés', due: null, status: 'not_started'},
       {section: '1', shot: '5', version: 'v1', desc: "Pat Summitt's 1,000th Win", assignee: 'Moisés', due: null, status: 'not_started'},
-      {section: '1', shot: '6', version: 'v1', desc: 'Oksana Masters Wins 20th Paralympic Medal', assignee: 'Moisés', due: null, status: 'not_started'},
+      {section: '1', shot: '6', version: 'v1', desc: 'Oksana Masters Wins 20th Paralympic Medal', assignee: '', research: null, parts: {opening: false, exposition: false, experience: false, wrapup: false}, status: 'not_started'},
       {section: '1', shot: '7', version: 'v1', desc: "Brad Snyder's Golden Anniversary — Gold One Year After Losing His Sight", assignee: 'Moisés', due: null, status: 'not_started'},
       {section: '1', shot: '8', version: 'v1', desc: "Lindsey Vonn — Vancouver Gold to Milan-Cortina: 'No Regrets' at 41", assignee: 'Moisés', due: null, status: 'not_started'},
       {section: '1', shot: '9', version: 'v1', desc: "Pat LaFontaine — America's Highest-Scoring Center and Hockey's Declaration of Principles", assignee: 'Moisés', due: null, status: 'not_started'},
-      {section: '1', shot: '10', version: 'v1', desc: 'Allyson Felix — Most Decorated US Olympian and the Mother Who Forced Sport to Change', assignee: 'Moisés', due: null, status: 'not_started'},
+      {section: '1', shot: '10', version: 'v1', desc: 'Allyson Felix — Most Decorated US Olympian and the Mother Who Forced Sport to Change', assignee: '', research: null, parts: {opening: false, exposition: false, experience: false, wrapup: false}, status: 'not_started'},
       {section: '1', shot: '11', version: 'v1', desc: "Jessica Mendoza — Olympic Champion, MLB Broadcasting Trailblazer, and Champion of Every Kid's Right to Play", assignee: 'Moisés', due: null, status: 'not_started'},
-      {section: '1', shot: '12', version: 'v1', desc: 'Tyler Adams — The 23-Year-Old Captain Who Answered Iran with Grace', assignee: 'Moisés', due: null, status: 'not_started'},
+      {section: '1', shot: '12', version: 'v1', desc: 'Tyler Adams — The 23-Year-Old Captain Who Answered Iran with Grace', assignee: '', research: null, parts: {opening: false, exposition: false, experience: false, wrapup: false}, status: 'not_started'},
       {section: '1', shot: '13', version: 'v1', desc: "Bill Walton — In Memoriam: The Counter-Culture Champion", assignee: 'Moisés', due: null, status: 'not_started'},
       {section: '1', shot: '14', version: 'v1', desc: "Lou Gehrig's 'Luckiest Man' Farewell Speech", assignee: 'Moisés', due: null, status: 'not_started'},
       {section: '1', shot: '15', version: 'v1', desc: "Billy Mills' Stunning 10,000m Gold at 1964 Tokyo Olympics", assignee: 'Moisés', due: null, status: 'not_started'},
-      {section: '2', shot: '1', version: 'v1', desc: 'Babe Didrikson 1932 Los Angeles Olympics', assignee: 'Moisés', due: null, status: 'not_started'},
-      {section: '2', shot: '2', version: 'v1', desc: 'Jackie Robinson Breaks MLB Color Barrier', assignee: 'Moisés', due: null, status: 'not_started'},
+      {section: '2', shot: '1', version: 'v1', desc: 'Babe Didrikson 1932 Los Angeles Olympics', assignee: '', research: null, parts: {opening: false, exposition: false, experience: false, wrapup: false}, status: 'not_started'},
+      {section: '2', shot: '2', version: 'v1', desc: 'Jackie Robinson Breaks MLB Color Barrier', assignee: '', research: null, parts: {opening: false, exposition: false, experience: false, wrapup: false}, status: 'not_started'},
       {section: '2', shot: '3', version: 'v1', desc: "Arnold Palmer's 1960 US Open Comeback", assignee: 'Moisés', due: null, status: 'not_started'},
       {section: '2', shot: '4', version: 'v1', desc: "Wilma Rudolph's Three Gold Medals at 1960 Rome Olympics", assignee: 'Moisés', due: null, status: 'not_started'},
-      {section: '2', shot: '5', version: 'v1', desc: 'Tommie Smith and John Carlos Black Power Salute', assignee: 'Moisés', due: null, status: 'not_started'},
-      {section: '2', shot: '6', version: 'v1', desc: 'Miracle on Ice 1980', assignee: 'Moisés', due: null, status: 'not_started'},
-      {section: '2', shot: '7', version: 'v1', desc: 'Kareem Abdul-Jabbar Breaks NBA All-Time Scoring Record', assignee: 'Moisés', due: null, status: 'not_started'},
-      {section: '2', shot: '8', version: 'v1', desc: 'Magic Johnson 1991 HIV Announcement', assignee: 'Moisés', due: null, status: 'not_started'},
+      {section: '2', shot: '5', version: 'v1', desc: 'Tommie Smith and John Carlos Black Power Salute', assignee: '', research: null, parts: {opening: false, exposition: false, experience: false, wrapup: false}, status: 'not_started'},
+      {section: '2', shot: '6', version: 'v1', desc: 'Miracle on Ice 1980', assignee: '', research: null, parts: {opening: false, exposition: false, experience: false, wrapup: false}, status: 'not_started'},
+      {section: '2', shot: '7', version: 'v1', desc: 'Kareem Abdul-Jabbar Breaks NBA All-Time Scoring Record', assignee: '', research: null, parts: {opening: false, exposition: false, experience: false, wrapup: false}, status: 'not_started'},
+      {section: '2', shot: '8', version: 'v1', desc: 'Magic Johnson 1991 HIV Announcement', assignee: '', research: null, parts: {opening: false, exposition: false, experience: false, wrapup: false}, status: 'not_started'},
       {section: '2', shot: '9', version: 'v1', desc: "Brandi Chastain's Winning Penalty in 1999 Women's World Cup Final", assignee: 'Moisés', due: null, status: 'not_started'},
-      {section: '2', shot: '10', version: 'v1', desc: 'Michael Phelps 2008 Beijing Olympics Eight Gold Medals', assignee: 'Moisés', due: null, status: 'not_started'},
+      {section: '2', shot: '10', version: 'v1', desc: 'Michael Phelps 2008 Beijing Olympics Eight Gold Medals', assignee: '', research: null, parts: {opening: false, exposition: false, experience: false, wrapup: false}, status: 'not_started'},
       {section: '2', shot: '11', version: 'v1', desc: "Simone Biles' 2016 Rio Four Golds and 2021 Tokyo Mental Health Stand", assignee: 'Moisés', due: null, status: 'not_started'},
-      {section: '2', shot: '12', version: 'v1', desc: 'All-American Girls Professional Baseball League Founding', assignee: 'Moisés', due: null, status: 'not_started'},
-      {section: '2', shot: '13', version: 'v1', desc: 'Texas Western Wins 1966 NCAA Championship with All-Black Starting Five', assignee: 'Moisés', due: null, status: 'not_started'},
+      {section: '2', shot: '12', version: 'v1', desc: 'All-American Girls Professional Baseball League Founding', assignee: '', research: null, parts: {opening: false, exposition: false, experience: false, wrapup: false}, status: 'not_started'},
+      {section: '2', shot: '13', version: 'v1', desc: 'Texas Western Wins 1966 NCAA Championship with All-Black Starting Five', assignee: '', research: null, parts: {opening: false, exposition: false, experience: false, wrapup: false}, status: 'not_started'},
       {section: '2', shot: '14', version: 'v1', desc: "Pay Equity in Sport: Venus Williams' 2006 Letter and USWNT's 2022 Victory", assignee: 'Moisés', due: null, status: 'not_started'},
-      {section: '2', shot: '15', version: 'v1', desc: 'Pat Tillman — From NFL to Army Ranger after 9/11', assignee: 'Moisés', due: null, status: 'not_started'},
+      {section: '2', shot: '15', version: 'v1', desc: 'Pat Tillman — From NFL to Army Ranger after 9/11', assignee: '', research: null, parts: {opening: false, exposition: false, experience: false, wrapup: false}, status: 'not_started'},
       {section: '2', shot: '16', version: 'v1', desc: "Fernandomania — Fernando Valenzuela's Rookie Season", assignee: 'Moisés', due: null, status: 'not_started'},
-      {section: '2', shot: '17', version: 'v1', desc: 'Bill Russell Becomes First Black Head Coach in Major US Pro Sports', assignee: 'Moisés', due: null, status: 'not_started'},
+      {section: '2', shot: '17', version: 'v1', desc: 'Bill Russell Becomes First Black Head Coach in Major US Pro Sports', assignee: '', research: null, parts: {opening: false, exposition: false, experience: false, wrapup: false}, status: 'not_started'},
       {section: '2', shot: '18', version: 'v1', desc: "WNBA Founded 1996 → Caitlin Clark's 2024 Inflection", assignee: 'Moisés', due: null, status: 'not_started'},
       {section: '3', shot: '1', version: 'v1', desc: "Jim Thorpe's 1912 Olympic Pentathlon and Decathlon Sweep", assignee: 'Moisés', due: null, status: 'not_started'},
       {section: '3', shot: '2', version: 'v1', desc: "John Wooden's Integrity and UCLA Dynasty", assignee: 'Moisés', due: null, status: 'not_started'},
@@ -610,13 +617,13 @@
       {section: '3', shot: '4', version: 'v1', desc: "Hank Aaron's 715th Home Run", assignee: 'Moisés', due: null, status: 'not_started'},
       {section: '3', shot: '5', version: 'v1', desc: "George W. Bush's First Pitch, 2001 World Series Game 3", assignee: 'Moisés', due: null, status: 'not_started'},
       {section: '3', shot: '6', version: 'v1', desc: "Super Bowl LI: Patriots' 28-3 Comeback", assignee: 'Moisés', due: null, status: 'not_started'},
-      {section: '3', shot: '7', version: 'v1', desc: 'LeBron James Breaks NBA All-Time Scoring Record', assignee: 'Moisés', due: null, status: 'not_started'},
-      {section: '3', shot: '8', version: 'v1', desc: 'Althea Gibson Wins 1957 Wimbledon', assignee: 'Moisés', due: null, status: 'not_started'},
-      {section: '3', shot: '9', version: 'v1', desc: 'Serena Williams Wins 23rd Grand Slam While Pregnant', assignee: 'Moisés', due: null, status: 'not_started'},
+      {section: '3', shot: '7', version: 'v1', desc: 'LeBron James Breaks NBA All-Time Scoring Record', assignee: '', research: null, parts: {opening: false, exposition: false, experience: false, wrapup: false}, status: 'not_started'},
+      {section: '3', shot: '8', version: 'v1', desc: 'Althea Gibson Wins 1957 Wimbledon', assignee: '', research: null, parts: {opening: false, exposition: false, experience: false, wrapup: false}, status: 'not_started'},
+      {section: '3', shot: '9', version: 'v1', desc: 'Serena Williams Wins 23rd Grand Slam While Pregnant', assignee: '', research: null, parts: {opening: false, exposition: false, experience: false, wrapup: false}, status: 'not_started'},
       {section: '3', shot: '10', version: 'v1', desc: "Arthur Ashe Wins 1968 US Open and 1975 Wimbledon", assignee: 'Moisés', due: null, status: 'not_started'},
-      {section: '3', shot: '11', version: 'v1', desc: '1958 NFL Championship — The Game That Made Pro Football', assignee: 'Moisés', due: null, status: 'not_started'},
-      {section: '4', shot: '1', version: 'v1', desc: 'Jesse Owens 1936 Berlin Olympics Four Gold Medals', assignee: 'Moisés', due: null, status: 'not_started'},
-      {section: '4', shot: '2', version: 'v1', desc: 'Muhammad Ali Refuses Vietnam Draft', assignee: 'Moisés', due: null, status: 'not_started'},
+      {section: '3', shot: '11', version: 'v1', desc: '1958 NFL Championship — The Game That Made Pro Football', assignee: '', research: null, parts: {opening: false, exposition: false, experience: false, wrapup: false}, status: 'not_started'},
+      {section: '4', shot: '1', version: 'v1', desc: 'Jesse Owens 1936 Berlin Olympics Four Gold Medals', assignee: '', research: null, parts: {opening: false, exposition: false, experience: false, wrapup: false}, status: 'not_started'},
+      {section: '4', shot: '2', version: 'v1', desc: 'Muhammad Ali Refuses Vietnam Draft', assignee: '', research: null, parts: {opening: false, exposition: false, experience: false, wrapup: false}, status: 'not_started'},
       {section: '4', shot: '3', version: 'v1', desc: "Tiger Woods' 12-Stroke 1997 Masters Victory", assignee: 'Moisés', due: null, status: 'not_started'},
       {section: '4', shot: '4', version: 'v1', desc: "Michael Jordan's The Last Shot", assignee: 'Moisés', due: null, status: 'not_started'}
     ];
@@ -694,12 +701,22 @@
 
     listEl.innerHTML = visible.map(s => `
       <div class="shot-card" data-id="${s.id}">
-        <div class="shot-id">${s.section}.${s.shot}<span class="v">${escapeHtml(s.version || '')}</span></div>
+        <div class="shot-id">${s.section}.${s.shot}</div>
         <div class="shot-body">
-          <input type="text" class="desc-input" value="${escapeAttr(s.desc || '')}" placeholder="Description / notes">
+          <input type="text" class="desc-input" value="${escapeAttr(s.desc || '')}" placeholder="Moment name">
           <div class="shot-assign">
-            <input type="text" class="assignee-input" value="${escapeAttr(s.assignee || '')}" placeholder="Assigned to">
-            <input type="date" class="due-input" value="${escapeAttr(s.due || '')}">
+            <select class="assignee-select">
+              <option value="">—</option>
+              <option value="Niia" ${s.assignee === 'Niia' ? 'selected' : ''}>Niia</option>
+              <option value="Moisés" ${s.assignee === 'Moisés' ? 'selected' : ''}>Moisés</option>
+            </select>
+          </div>
+          ${s.research ? `<div class="research-link"><a href="${escapeAttr(s.research)}" target="_blank">📄 Research</a></div>` : '<div class="research-link"><input type="text" class="research-input" placeholder="Research doc URL"></div>'}
+          <div class="prod-parts">
+            <label><input type="checkbox" class="part-opening" ${s.parts?.opening ? 'checked' : ''}> Opening</label>
+            <label><input type="checkbox" class="part-exposition" ${s.parts?.exposition ? 'checked' : ''}> Exposition</label>
+            <label><input type="checkbox" class="part-experience" ${s.parts?.experience ? 'checked' : ''}> Experience</label>
+            <label><input type="checkbox" class="part-wrapup" ${s.parts?.wrapup ? 'checked' : ''}> Wrap-up</label>
           </div>
           <div class="shot-meta">Last updated ${new Date(s.updated).toLocaleDateString()}</div>
         </div>
@@ -715,11 +732,28 @@
       card.querySelector('.desc-input').addEventListener('change', e => {
         updateShot(id, { desc: e.target.value });
       });
-      card.querySelector('.assignee-input').addEventListener('change', e => {
-        updateShot(id, { assignee: e.target.value });
-      });
-      card.querySelector('.due-input').addEventListener('change', e => {
-        updateShot(id, { due: e.target.value });
+      const assignSel = card.querySelector('.assignee-select');
+      if (assignSel) {
+        assignSel.addEventListener('change', e => {
+          updateShot(id, { assignee: e.target.value });
+        });
+      }
+      const researchInput = card.querySelector('.research-input');
+      if (researchInput) {
+        researchInput.addEventListener('change', e => {
+          updateShot(id, { research: e.target.value });
+          renderList();
+        });
+      }
+      const partChks = card.querySelectorAll('[class^="part-"]');
+      partChks.forEach(chk => {
+        chk.addEventListener('change', e => {
+          const shot = shots.find(s => s.id === id);
+          if (!shot.parts) shot.parts = {};
+          const part = e.target.className.replace('part-', '');
+          shot.parts[part] = e.target.checked;
+          updateShot(id, { parts: shot.parts });
+        });
       });
       const sel = card.querySelector('.status-select');
       sel.addEventListener('change', e => {
@@ -756,27 +790,26 @@
   document.getElementById('add-shot-btn').addEventListener('click', () => {
     const section = document.getElementById('new-section').value.trim();
     const shot = document.getElementById('new-shot').value.trim();
-    const version = document.getElementById('new-version').value.trim() || 'v1';
     const desc = document.getElementById('new-desc').value.trim();
     const assignee = document.getElementById('new-assignee').value.trim();
-    const due = document.getElementById('new-due').value;
+    const research = document.getElementById('new-research').value.trim();
     if (!section || !shot) {
       alert('Section and shot number are required.');
       return;
     }
     shots.push({
       id: 'shot_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7),
-      section, shot, version, desc, assignee, due,
+      section, shot, version: 'v1', desc, assignee, research,
       status: 'not_started',
+      parts: { opening: false, exposition: false, experience: false, wrapup: false },
       updated: Date.now()
     });
     save();
     document.getElementById('new-section').value = '';
     document.getElementById('new-shot').value = '';
-    document.getElementById('new-version').value = '';
     document.getElementById('new-desc').value = '';
     document.getElementById('new-assignee').value = '';
-    document.getElementById('new-due').value = '';
+    document.getElementById('new-research').value = '';
     renderAll();
   });
 
