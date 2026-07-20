@@ -568,6 +568,67 @@
       return raw ? JSON.parse(raw) : [];
     } catch (e) { return []; }
   }
+
+  function loadNSMMoments() {
+    const NSM_MOMENTS = [
+      {section: '1', shot: '1', version: 'v1', desc: 'Kathrine Switzer 1967 Boston Marathon', assignee: 'Moisés', due: null, status: 'not_started'},
+      {section: '1', shot: '2', version: 'v1', desc: 'Title IX Signed into Law', assignee: 'Moisés', due: null, status: 'not_started'},
+      {section: '1', shot: '3', version: 'v1', desc: 'Billie Jean King Battle of the Sexes', assignee: 'Moisés', due: null, status: 'not_started'},
+      {section: '1', shot: '4', version: 'v1', desc: "Jim Abbott's No-Hitter", assignee: 'Moisés', due: null, status: 'not_started'},
+      {section: '1', shot: '5', version: 'v1', desc: "Pat Summitt's 1,000th Win", assignee: 'Moisés', due: null, status: 'not_started'},
+      {section: '1', shot: '6', version: 'v1', desc: 'Oksana Masters Wins 20th Paralympic Medal', assignee: 'Moisés', due: null, status: 'not_started'},
+      {section: '1', shot: '7', version: 'v1', desc: "Brad Snyder's Golden Anniversary — Gold One Year After Losing His Sight", assignee: 'Moisés', due: null, status: 'not_started'},
+      {section: '1', shot: '8', version: 'v1', desc: "Lindsey Vonn — Vancouver Gold to Milan-Cortina: 'No Regrets' at 41", assignee: 'Moisés', due: null, status: 'not_started'},
+      {section: '1', shot: '9', version: 'v1', desc: "Pat LaFontaine — America's Highest-Scoring Center and Hockey's Declaration of Principles", assignee: 'Moisés', due: null, status: 'not_started'},
+      {section: '1', shot: '10', version: 'v1', desc: 'Allyson Felix — Most Decorated US Olympian and the Mother Who Forced Sport to Change', assignee: 'Moisés', due: null, status: 'not_started'},
+      {section: '1', shot: '11', version: 'v1', desc: "Jessica Mendoza — Olympic Champion, MLB Broadcasting Trailblazer, and Champion of Every Kid's Right to Play", assignee: 'Moisés', due: null, status: 'not_started'},
+      {section: '1', shot: '12', version: 'v1', desc: 'Tyler Adams — The 23-Year-Old Captain Who Answered Iran with Grace', assignee: 'Moisés', due: null, status: 'not_started'},
+      {section: '1', shot: '13', version: 'v1', desc: "Bill Walton — In Memoriam: The Counter-Culture Champion", assignee: 'Moisés', due: null, status: 'not_started'},
+      {section: '1', shot: '14', version: 'v1', desc: "Lou Gehrig's 'Luckiest Man' Farewell Speech", assignee: 'Moisés', due: null, status: 'not_started'},
+      {section: '1', shot: '15', version: 'v1', desc: "Billy Mills' Stunning 10,000m Gold at 1964 Tokyo Olympics", assignee: 'Moisés', due: null, status: 'not_started'},
+      {section: '2', shot: '1', version: 'v1', desc: 'Babe Didrikson 1932 Los Angeles Olympics', assignee: 'Moisés', due: null, status: 'not_started'},
+      {section: '2', shot: '2', version: 'v1', desc: 'Jackie Robinson Breaks MLB Color Barrier', assignee: 'Moisés', due: null, status: 'not_started'},
+      {section: '2', shot: '3', version: 'v1', desc: "Arnold Palmer's 1960 US Open Comeback", assignee: 'Moisés', due: null, status: 'not_started'},
+      {section: '2', shot: '4', version: 'v1', desc: "Wilma Rudolph's Three Gold Medals at 1960 Rome Olympics", assignee: 'Moisés', due: null, status: 'not_started'},
+      {section: '2', shot: '5', version: 'v1', desc: 'Tommie Smith and John Carlos Black Power Salute', assignee: 'Moisés', due: null, status: 'not_started'},
+      {section: '2', shot: '6', version: 'v1', desc: 'Miracle on Ice 1980', assignee: 'Moisés', due: null, status: 'not_started'},
+      {section: '2', shot: '7', version: 'v1', desc: 'Kareem Abdul-Jabbar Breaks NBA All-Time Scoring Record', assignee: 'Moisés', due: null, status: 'not_started'},
+      {section: '2', shot: '8', version: 'v1', desc: 'Magic Johnson 1991 HIV Announcement', assignee: 'Moisés', due: null, status: 'not_started'},
+      {section: '2', shot: '9', version: 'v1', desc: "Brandi Chastain's Winning Penalty in 1999 Women's World Cup Final", assignee: 'Moisés', due: null, status: 'not_started'},
+      {section: '2', shot: '10', version: 'v1', desc: 'Michael Phelps 2008 Beijing Olympics Eight Gold Medals', assignee: 'Moisés', due: null, status: 'not_started'},
+      {section: '2', shot: '11', version: 'v1', desc: "Simone Biles' 2016 Rio Four Golds and 2021 Tokyo Mental Health Stand", assignee: 'Moisés', due: null, status: 'not_started'},
+      {section: '2', shot: '12', version: 'v1', desc: 'All-American Girls Professional Baseball League Founding', assignee: 'Moisés', due: null, status: 'not_started'},
+      {section: '2', shot: '13', version: 'v1', desc: 'Texas Western Wins 1966 NCAA Championship with All-Black Starting Five', assignee: 'Moisés', due: null, status: 'not_started'},
+      {section: '2', shot: '14', version: 'v1', desc: "Pay Equity in Sport: Venus Williams' 2006 Letter and USWNT's 2022 Victory", assignee: 'Moisés', due: null, status: 'not_started'},
+      {section: '2', shot: '15', version: 'v1', desc: 'Pat Tillman — From NFL to Army Ranger after 9/11', assignee: 'Moisés', due: null, status: 'not_started'},
+      {section: '2', shot: '16', version: 'v1', desc: "Fernandomania — Fernando Valenzuela's Rookie Season", assignee: 'Moisés', due: null, status: 'not_started'},
+      {section: '2', shot: '17', version: 'v1', desc: 'Bill Russell Becomes First Black Head Coach in Major US Pro Sports', assignee: 'Moisés', due: null, status: 'not_started'},
+      {section: '2', shot: '18', version: 'v1', desc: "WNBA Founded 1996 → Caitlin Clark's 2024 Inflection", assignee: 'Moisés', due: null, status: 'not_started'},
+      {section: '3', shot: '1', version: 'v1', desc: "Jim Thorpe's 1912 Olympic Pentathlon and Decathlon Sweep", assignee: 'Moisés', due: null, status: 'not_started'},
+      {section: '3', shot: '2', version: 'v1', desc: "John Wooden's Integrity and UCLA Dynasty", assignee: 'Moisés', due: null, status: 'not_started'},
+      {section: '3', shot: '3', version: 'v1', desc: "Roberto Clemente's Plane Crash", assignee: 'Moisés', due: null, status: 'not_started'},
+      {section: '3', shot: '4', version: 'v1', desc: "Hank Aaron's 715th Home Run", assignee: 'Moisés', due: null, status: 'not_started'},
+      {section: '3', shot: '5', version: 'v1', desc: "George W. Bush's First Pitch, 2001 World Series Game 3", assignee: 'Moisés', due: null, status: 'not_started'},
+      {section: '3', shot: '6', version: 'v1', desc: "Super Bowl LI: Patriots' 28-3 Comeback", assignee: 'Moisés', due: null, status: 'not_started'},
+      {section: '3', shot: '7', version: 'v1', desc: 'LeBron James Breaks NBA All-Time Scoring Record', assignee: 'Moisés', due: null, status: 'not_started'},
+      {section: '3', shot: '8', version: 'v1', desc: 'Althea Gibson Wins 1957 Wimbledon', assignee: 'Moisés', due: null, status: 'not_started'},
+      {section: '3', shot: '9', version: 'v1', desc: 'Serena Williams Wins 23rd Grand Slam While Pregnant', assignee: 'Moisés', due: null, status: 'not_started'},
+      {section: '3', shot: '10', version: 'v1', desc: "Arthur Ashe Wins 1968 US Open and 1975 Wimbledon", assignee: 'Moisés', due: null, status: 'not_started'},
+      {section: '3', shot: '11', version: 'v1', desc: '1958 NFL Championship — The Game That Made Pro Football', assignee: 'Moisés', due: null, status: 'not_started'},
+      {section: '4', shot: '1', version: 'v1', desc: 'Jesse Owens 1936 Berlin Olympics Four Gold Medals', assignee: 'Moisés', due: null, status: 'not_started'},
+      {section: '4', shot: '2', version: 'v1', desc: 'Muhammad Ali Refuses Vietnam Draft', assignee: 'Moisés', due: null, status: 'not_started'},
+      {section: '4', shot: '3', version: 'v1', desc: "Tiger Woods' 12-Stroke 1997 Masters Victory", assignee: 'Moisés', due: null, status: 'not_started'},
+      {section: '4', shot: '4', version: 'v1', desc: "Michael Jordan's The Last Shot", assignee: 'Moisés', due: null, status: 'not_started'}
+    ];
+    shots = NSM_MOMENTS;
+    save();
+    location.reload();
+  }
+
+  // Auto-load NSM moments if tracker is empty
+  if (shots.length === 0) {
+    loadNSMMoments();
+  }
   function save() {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(shots));
   }
