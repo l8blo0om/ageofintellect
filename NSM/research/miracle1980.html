@@ -1108,12 +1108,21 @@
     });
   };
 
-  document.getElementById('playBtn').addEventListener('click', () => {
-    document.getElementById('start').classList.add('hide');
-    setTimeout(() => {
-      document.getElementById('panel-1').scrollIntoView({ behavior: 'smooth' });
-    }, 600);
-  });
+  const playBtn = document.getElementById('playBtn');
+  if (playBtn) {
+    playBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const startEl = document.getElementById('start');
+      const panel1El = document.getElementById('panel-1');
+      if (startEl) startEl.classList.add('hide');
+      if (panel1El) {
+        setTimeout(() => {
+          panel1El.scrollIntoView({ behavior: 'smooth' });
+        }, 600);
+      }
+    });
+  }
 
   const panels = document.querySelectorAll('.panel');
   const obs = new IntersectionObserver((entries) => {
