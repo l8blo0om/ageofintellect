@@ -90,6 +90,12 @@
     margin-bottom: 0.5rem;
     text-align: center;
     line-height: 1;
+    color: var(--warm);
+    text-shadow:
+      0 0 10px rgba(201,165,90,0.8),
+      0 0 20px rgba(201,165,90,0.6),
+      0 0 40px rgba(201,165,90,0.4),
+      0 0 80px rgba(201,165,90,0.2);
   }
   #start .sub {
     color: var(--grey);
@@ -164,8 +170,12 @@
     opacity: 0;
     transition: opacity 1.4s ease 0.2s, transform 1.4s ease 0.2s;
     transform: translateY(20px);
+    text-shadow:
+      0 0 10px rgba(201,165,90,0.6),
+      0 0 20px rgba(201,165,90,0.4),
+      0 0 40px rgba(201,165,90,0.2);
   }
-  .panel-title em { font-style: italic; color: var(--warm); }
+  .panel-title em { font-style: italic; color: var(--warm); text-shadow: inherit; }
   .panel-lead {
     font-family: var(--serif);
     font-size: clamp(1.15rem, 1.7vw, 1.35rem);
